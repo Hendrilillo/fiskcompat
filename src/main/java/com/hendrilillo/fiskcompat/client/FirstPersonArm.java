@@ -39,6 +39,8 @@ public final class FirstPersonArm {
     private static SuitModel<AbstractClientPlayer> model;
     /** Del brazo derecho de este fotograma, para dibujar después el izquierdo. */
     private static BodyAnimator.FirstPerson pendingLeft;
+    /** El pack ha dibujado su propio brazo delante de la cámara este fotograma. */
+    public static boolean packArmDrawn;
 
     private FirstPersonArm() {}
 
@@ -55,6 +57,7 @@ public final class FirstPersonArm {
     @SubscribeEvent
     public static void renderArm(RenderArmEvent event) {
         pendingLeft = null;
+        packArmDrawn = false;
         AbstractClientPlayer player = event.getPlayer();
         HeroRendererScript r = renderer(player);
         if (r == null) return;
@@ -79,14 +82,23 @@ public final class FirstPersonArm {
     }
 
     /** Brazo izquierdo en espejo cuando la animación usa las dos manos. */
+    /** Pose de la mano principal antes de colocar el brazo (para los efectos delante de la cámara). */
+    private static final org.joml.Matrix4f CAMERA_POSE = new org.joml.Matrix4f();
+    private static final org.joml.Matrix3f CAMERA_NORMAL = new org.joml.Matrix3f();
+
     @SubscribeEvent
     public static void renderHand(RenderHandEvent event) {
+        if (event.getHand() == InteractionHand.MAIN_HAND) {
+            CAMERA_POSE.set(event.getPoseStack().last().pose());
+            CAMERA_NORMAL.set(event.getPoseStack().last().normal());
+            return;
+        }
         if (event.getHand() != InteractionHand.OFF_HAND) return;
         BodyAnimator.FirstPerson fp = pendingLeft;
         pendingLeft = null;
         Minecraft mc = Minecraft.getInstance();
         AbstractClientPlayer player = mc.player;
-        if (fp == null || player == null || !event.getItemStack().isEmpty() || player.isInvisible()) return;
+        if (fp == null || packArmDrawn || player == null || !event.getItemStack().isEmpty() || player.isInvisible()) return;
         HeroRendererScript r = renderer(player);
         if (r == null) return;
         PoseStack pose = event.getPoseStack();
@@ -130,13 +142,26 @@ public final class FirstPersonArm {
             if (lights != null) {
                 arm.render(pose, buffers.getBuffer(RenderType.eyes(lights)), light, OverlayTexture.NO_OVERLAY);
             }
-            if (effects && r.hasFunction("render")) {
-                RenderContext.current = new RenderContext(pose, buffers, light, m, player, js, slot, r, parts);
-                RenderContext.current.firstPerson = true;
-                try {
-                    r.call("render", js, slot.name(), true);
-                } finally {
-                    RenderContext.current = null;
+            if (effects) {
+                // Como Fisk: render(entity, capa, true) para cada pieza del traje que se lleva puesta
+                // (el HUD del casco, por ejemplo, se dibuja en la capa HELMET)
+                EquipmentSlot[] slots = {EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
+                for (int i = 0; i < 4; i++) {
+                    String id = SuitItem.heroId(player.getItemBySlot(slots[i]));
+                    HeroRendererScript pr = id == null ? null : ClientHeroes.renderer(id);
+                    if (pr == null || !pr.hasFunction("render")) continue;
+                    HeroRendererScript.Slot ps = HeroRendererScript.Slot.values()[i];
+                    RenderContext.current = new RenderContext(pose, buffers, light, m, player, js, ps, pr, parts);
+                    RenderContext.current.firstPerson = true;
+                    RenderContext.current.cameraPose = CAMERA_POSE;
+                    RenderContext.current.cameraNormal = CAMERA_NORMAL;
+                    try {
+                        pr.call("render", js, ps.name(), true);
+                    } catch (Throwable e) {
+                        if (com.hendrilillo.fiskcompat.dev.AutoTest.ENABLED) FiskCompat.LOGGER.error("[autotest] fp render " + ps, e);
+                    } finally {
+                        RenderContext.current = null;
+                    }
                 }
             }
         } catch (Throwable e) {

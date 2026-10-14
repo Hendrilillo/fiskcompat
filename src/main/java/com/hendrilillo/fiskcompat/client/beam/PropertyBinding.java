@@ -20,6 +20,8 @@ public final class PropertyBinding extends AbstractJSObject {
     public BeamRendererDef beam;
     public final ColorRef color = new ColorRef();
     private Object condition;
+    /** fiskheroes:particles: el emisor de partículas (createResource("PARTICLE_EMITTER", ...)). */
+    public Object particles;
     private final Map<String, Object> members = new HashMap<>();
 
     public PropertyBinding(String type) {
@@ -45,6 +47,7 @@ public final class PropertyBinding extends AbstractJSObject {
             case "setAnchor": return new JsFunction(name, a -> { anchor = a.length > 0 && a[0] != null ? String.valueOf(a[0]) : null; return this; });
             case "setConstellation": return new JsFunction(name, a -> { if (a.length > 0 && a[0] instanceof BeamConstellation c) constellation = c; return this; });
             case "setRenderer": return new JsFunction(name, a -> { if (a.length > 0 && a[0] instanceof BeamRendererDef b) beam = b; return this; });
+            case "setParticles": return new JsFunction(name, a -> { particles = a.length > 0 ? a[0] : null; return this; });
             case "setCondition": return new JsFunction(name, a -> { condition = a.length > 0 ? a[0] : null; return this; });
             default:
                 Object v = members.get(name);
@@ -56,6 +59,21 @@ public final class PropertyBinding extends AbstractJSObject {
                 members.put(name, d);
                 return d;
         }
+    }
+
+    /** Valor numérico que el script ha puesto en la propiedad (shake.factor = ...). */
+    public double num(String name, double def) {
+        Object v = members.get(name);
+        if (v instanceof Number n) return n.doubleValue();
+        if (v instanceof Boolean b) return b ? 1 : 0;
+        return def;
+    }
+
+    public boolean bool(String name, boolean def) {
+        Object v = members.get(name);
+        if (v instanceof Boolean b) return b;
+        if (v instanceof Number n) return n.doubleValue() != 0;
+        return def;
     }
 
     @Override

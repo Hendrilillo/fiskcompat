@@ -96,10 +96,32 @@ public class EffectObject extends AbstractJSObject {
     private void safeRender() {
         RenderContext ctx = RenderContext.current;
         if (ctx == null) return;
-        // En primera persona solo se ve el brazo: no se dibujan los efectos anclados a otras partes
-        // ni los que no tienen ancla (brazos "falsos" del pack; ya se dibuja el izquierdo de verdad)
-        if (ctx.firstPerson && (anchor.ignore || anchor.part != null && !ctx.parts.contains(anchor.part))) return;
+        if (ctx.firstPerson) {
+            // Como en Fisk: los efectos con el ancla ignorada se dibujan delante de la cámara (HUD del casco...)
+            if (anchor.ignore) {
+                if (ctx.cameraPose != null) {
+                    renderInCamera(ctx);
+                    // un brazo "falso" del pack (Sind lo usa para la mano izquierda): no dibujar además el nuestro
+                    if ("leftArm".equals(anchor.part) || "rightArm".equals(anchor.part)) {
+                        com.hendrilillo.fiskcompat.client.FirstPersonArm.packArmDrawn = true;
+                    }
+                }
+                return;
+            }
+            // En primera persona solo se ve el brazo: no se dibujan los efectos anclados a otras partes
+            if (anchor.part != null && !ctx.parts.contains(anchor.part)) return;
+        }
         render(ctx);
+    }
+
+    private void renderInCamera(RenderContext ctx) {
+        PoseStack pose = new PoseStack();
+        pose.last().pose().set(ctx.cameraPose);
+        pose.last().normal().set(ctx.cameraNormal);
+        pose.translate(0, 0, -0.5f);
+        pose.mulPose(Axis.XP.rotationDegrees(180));
+        pose.mulPose(Axis.YP.rotationDegrees(180));
+        render(ctx.withPose(pose));
     }
 
     /** Dibuja el efecto. Por defecto nada (efecto aún sin implementar). */

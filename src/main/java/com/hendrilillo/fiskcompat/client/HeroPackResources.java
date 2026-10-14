@@ -57,6 +57,10 @@ public final class HeroPackResources extends AbstractPackResources {
         GENERATED.put("assets/" + namespace + "/" + path, content.getBytes(StandardCharsets.UTF_8));
     }
 
+    public static void putGeneratedBytes(String namespace, String path, byte[] content) {
+        GENERATED.put("assets/" + namespace + "/" + path, content);
+    }
+
     public static void clearGenerated() {
         GENERATED.clear();
     }
@@ -99,6 +103,7 @@ public final class HeroPackResources extends AbstractPackResources {
     @Override
     public IoSupplier<InputStream> getResource(PackType type, ResourceLocation location) {
         if (type != PackType.CLIENT_RESOURCES) return null;
+        com.hendrilillo.fiskcompat.client.particle.FiskParticles.generateTextures();
         String key = "assets/" + location.getNamespace() + "/" + location.getPath();
         byte[] gen = GENERATED.get(key);
         if (gen != null) return () -> new ByteArrayInputStream(gen);
@@ -118,6 +123,7 @@ public final class HeroPackResources extends AbstractPackResources {
     @Override
     public void listResources(PackType type, String namespace, String path, ResourceOutput output) {
         if (type != PackType.CLIENT_RESOURCES) return;
+        com.hendrilillo.fiskcompat.client.particle.FiskParticles.generateTextures();
         String genPrefix = "assets/" + namespace + "/" + path;
         GENERATED.forEach((k, v) -> {
             if (k.startsWith(genPrefix)) {

@@ -4,6 +4,6 @@
   "package": "com.hendrilillo.fiskcompat.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": ["ServerGamePacketListenerAccessor", "EntityStepMixin"],
-  "client": ["CapeLayerMixin", "LivingEntityRendererMixin"],
+  "client": ["CapeLayerMixin", "LivingEntityRendererMixin", "NightVisionMixin"],
   "injectors": { "defaultRequire": 1 }
 }

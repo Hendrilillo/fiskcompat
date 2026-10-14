@@ -34,6 +34,10 @@ public final class AutoTestClient {
             sentry(mc);
             return;
         }
+        if (AutoTest.MODE.equals("hud")) {
+            hud(mc);
+            return;
+        }
         if (ticks == 5) {
             mc.options.hideGui = true;
             mc.options.setCameraType(CameraType.FIRST_PERSON);
@@ -99,6 +103,46 @@ public final class AutoTestClient {
                     mc.player.getY(), com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "fiskheroes:flight_timer"));
             mc.stop();
         }
+    }
+
+    /** HUD del casco (JARVIS) y partículas. */
+    private static void hud(Minecraft mc) {
+        if (ticks == 5) {
+            mc.options.hideGui = false;
+            mc.options.setCameraType(CameraType.THIRD_PERSON_BACK);
+            mc.player.getInventory().selected = 8;
+            mc.player.setXRot(0);
+        }
+        if (ticks == 10) com.hendrilillo.fiskcompat.data.Sync.setLocal(mc.player, "sind:dyn/jarvis", true);
+        if (ticks == 60) mc.options.setCameraType(CameraType.FIRST_PERSON);
+        if (ticks == 100) mc.options.setCameraType(CameraType.THIRD_PERSON_BACK);
+        if (ticks == 109) mc.options.setCameraType(CameraType.FIRST_PERSON);
+        if (ticks == 90) shot(mc, "fiskcompat_hud.png");
+        if (ticks == 91) {
+            com.hendrilillo.fiskcompat.data.Sync.setLocal(mc.player, "fiskheroes:flying", true);
+            mc.player.setPos(mc.player.getX(), mc.player.getY() + 5, mc.player.getZ());
+        }
+        if (ticks == 110) shot(mc, "fiskcompat_hud_flying.png");
+        if (ticks == 50 || ticks == 108 || ticks == 130) FiskCompat.LOGGER.info("[autotest] pierna dcha={} izda={} cabeza={} yaw={} cam={}",
+                com.hendrilillo.fiskcompat.client.particle.ParticleEmitters.debugPoint(mc.player, "rightLeg", 0, 0.75f, 0),
+                com.hendrilillo.fiskcompat.client.particle.ParticleEmitters.debugPoint(mc.player, "leftLeg", 0, 0.75f, 0),
+                com.hendrilillo.fiskcompat.client.particle.ParticleEmitters.debugPoint(mc.player, "head", 0, 0, 0), mc.player.yBodyRot, mc.options.getCameraType());
+        if (ticks == 111) { mc.options.keyUp.setDown(true); mc.options.keySprint.setDown(true); }
+        if (ticks == 125) { mc.options.setCameraType(CameraType.THIRD_PERSON_BACK); }
+        if (ticks == 135) shot(mc, "fiskcompat_particles_back.png");
+        if (ticks == 136) mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT);
+        if (ticks == 146) shot(mc, "fiskcompat_particles_front.png");
+        if (ticks == 147) { mc.options.keyUp.setDown(false); mc.options.keySprint.setDown(false); mc.options.setCameraType(CameraType.FIRST_PERSON); }
+        if (ticks == 160) shot(mc, "fiskcompat_hud_fp_particles.png");
+        if (ticks == 162) {
+            var server = mc.getSingleplayerServer();
+            if (server != null) server.execute(() -> server.overworld().setDayTime(18000));
+            com.hendrilillo.fiskcompat.data.Sync.setLocal(mc.player, "fiskheroes:flying", false);
+        }
+        if (ticks == 180) shot(mc, "fiskcompat_night_closed.png");
+        if (ticks == 181) com.hendrilillo.fiskcompat.data.Sync.setLocal(mc.player, "fiskheroes:mask_open", true);
+        if (ticks == 205) shot(mc, "fiskcompat_night_open.png");
+        if (ticks == 210) mc.stop();
     }
 
     /** Sonidos y modo centinela. */

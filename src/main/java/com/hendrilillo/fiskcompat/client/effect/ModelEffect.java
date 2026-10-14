@@ -45,14 +45,18 @@ public class ModelEffect extends EffectObject {
 
         ctx.poseStack.pushPose();
         applyTransform(ctx.poseStack, ctx.model, 1);
-        int color = ((int) (Math.min(1, opacity) * 255) << 24) | 0xFFFFFF;
+        float a = (float) Math.min(1, opacity);
+        int color = ((int) (a * 255) << 24) | 0xFFFFFF;
+        // las luces se suman (sin transparencia): la opacidad se aplica oscureciendo el color
+        int c = (int) (a * 255);
+        int lightColor = 0xFF000000 | c << 16 | c << 8 | c;
         for (ModelPart root : tbl.roots) {
             if (normal != null) {
                 RenderType type = opacity < 1 ? RenderType.entityTranslucent(normal) : RenderType.entityCutoutNoCull(normal);
                 root.render(ctx.poseStack, ctx.buffers.getBuffer(type), ctx.light, OverlayTexture.NO_OVERLAY, color);
             }
             if (lights != null) {
-                root.render(ctx.poseStack, ctx.buffers.getBuffer(RenderType.eyes(lights)), ctx.light, OverlayTexture.NO_OVERLAY, color);
+                root.render(ctx.poseStack, ctx.buffers.getBuffer(RenderType.eyes(lights)), ctx.light, OverlayTexture.NO_OVERLAY, lightColor);
             }
         }
         ctx.poseStack.popPose();

@@ -52,6 +52,9 @@ public class SuitLayer<T extends LivingEntity, M extends HumanoidModel<T>> exten
                 if (!captured) {
                     captured = true;
                     com.hendrilillo.fiskcompat.client.beam.BeamRender.capture(entity, js, r, model, poseStack, partialTick);
+                    if (com.hendrilillo.fiskcompat.client.beam.BeamRender.inWorld()) {
+                        com.hendrilillo.fiskcompat.client.particle.ParticleEmitters.capture(entity, getParentModel(), poseStack, partialTick);
+                    }
                 }
                 List<String> parts = r.shownParts(slot);
                 model.showParts(parts != null ? parts : SuitModel.defaultParts(slot));

@@ -23,6 +23,7 @@ Mod para **Minecraft 1.21.1 (NeoForge)** que carga **heropacks de Fisk's Superhe
 - **Equipo del traje** (Alt izquierdo): con un objeto válido en la mano lo guarda en el traje (p. ej. TNT, pólvora o cargas de fuego para los cohetes del brazo de Sind); con la mano vacía saca el último.
 - **Cohetes del brazo y similares** (`lightning_cast`): clic derecho sin apuntar y con la mano vacía cuando el traje lo permite.
 - **Rayos y láseres** (energy_projection, heat_vision): mientras mantienes su tecla. Algunos trajes los usan con el clic izquierdo (entonces el clic no golpea).
+- **HUD del casco** (Sind): con el casco puesto, la mano vacía y la máscara cerrada, en primera persona. JARVIS/FRIDAY se enciende y se apaga agachándote y pulsando la habilidad 5 (G).
 - **Modo centinela** (en Sind, la habilidad 3 / B de los trajes que lo tienen): el traje se abre y te deja fuera; se queda como un centinela que te sigue y ataca a quien te ataque. Clic derecho sobre él: abrir/cerrar. Agachado + clic derecho: volar/aterrizar. Para volver a ponértelo, ábrelo y métete dentro.
 
 ## Sonidos
@@ -55,7 +56,9 @@ Como en Fisk, los sonidos no van dentro del heropack: el heropack dice de dónde
 | `entity.world()` para los scripts (bloques, entidades cercanas, bioma) | ✅ |
 | Sonidos de los heropacks (descarga, eventos de sonido, bucles, fundidos, funciones `override`, `entity.playSound`) | ✅ |
 | Modo centinela (`sentry_mode`): salir del traje, centinela que sigue y dispara, volver a entrar | ✅ |
-| Partículas, HUD de Fisk | ⏳ |
+| HUD del casco en primera persona (JARVIS/FRIDAY de Sind: brújula, altura, velocidad, coordenadas, estado del traje...) | ✅ |
+| Partículas de los trajes (humo de las botas y propulsores, explosiones, burbujas...) | ✅ |
+| Lista de teclas al estilo de Fisk, temblor de cámara con turbo, visión nocturna de los cascos | ✅ |
 
 ## Desarrollo
 

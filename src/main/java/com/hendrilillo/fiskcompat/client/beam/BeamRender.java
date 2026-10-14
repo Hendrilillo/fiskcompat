@@ -119,6 +119,11 @@ public final class BeamRender {
     }
 
     /** Llamado desde SuitLayer, con la pose del modelo de la entidad ya colocada. */
+    /** ¿Se está dibujando el mundo (y no un inventario)? */
+    public static boolean inWorld() {
+        return inWorld;
+    }
+
     public static void capture(LivingEntity e, JSEntity js, HeroRendererScript r, SuitModel<?> model, PoseStack pose, float pt) {
         if (!inWorld || CAPTURED.containsKey(e)) return;
         List<Start> list = new ArrayList<>();

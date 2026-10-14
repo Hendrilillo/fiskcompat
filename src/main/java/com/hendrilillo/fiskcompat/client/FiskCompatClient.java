@@ -51,6 +51,7 @@ public final class FiskCompatClient {
                 case "ANIMATION" -> new com.hendrilillo.fiskcompat.client.anim.BipedAnimation(path);
                 case "BEAM_CONSTELLATION" -> new com.hendrilillo.fiskcompat.client.beam.BeamConstellation();
                 case "BEAM_RENDERER" -> com.hendrilillo.fiskcompat.client.beam.BeamRendererDef.get(path);
+                case "PARTICLE_EMITTER" -> new com.hendrilillo.fiskcompat.client.particle.ParticleEmitterDef.Ref(path);
                 default -> null;
             };
         };
@@ -162,6 +163,7 @@ public final class FiskCompatClient {
             com.hendrilillo.fiskcompat.client.anim.BipedAnimation.clearCache();
             com.hendrilillo.fiskcompat.client.beam.BeamRendererDef.clearCache();
             com.hendrilillo.fiskcompat.client.sound.HeroSounds.clearCaches();
+            com.hendrilillo.fiskcompat.client.particle.ParticleEmitterDef.clearCache();
         });
     }
 }

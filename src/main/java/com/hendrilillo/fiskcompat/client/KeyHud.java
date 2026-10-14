@@ -30,15 +30,19 @@ public final class KeyHud {
         ActiveHero hero = ActiveHero.of(mc.player);
         if (hero == null) return;
         JSEntity js = JSEntity.of(mc.player);
-        int y = 4;
+        // Como Fisk: una línea por tecla, "TECLA - Habilidad", sobre un fondo negro semitransparente
+        int y = 0;
         for (int slot = 1; slot <= 5; slot++) {
-            for (String key : hero.keysInSlot(js, slot)) {
-                HeroDefinition.KeyBind kb = hero.def.keyBinds().get(key);
-                String name = kb.name().startsWith("key.") ? com.hendrilillo.fiskcompat.pack.PackLang.get(kb.name()) : kb.name();
-                String bind = ClientKeys.ABILITIES[slot - 1].getTranslatedKeyMessage().getString();
-                g.drawString(mc.font, "§7[" + bind + "] §f" + name, 4, y, 0xFFFFFF, true);
-                y += 10;
-            }
+            java.util.List<String> keys = hero.keysInSlot(js, slot);
+            if (keys.isEmpty()) continue;
+            HeroDefinition.KeyBind kb = hero.def.keyBinds().get(keys.get(0));
+            String name = kb.name().startsWith("key.") ? com.hendrilillo.fiskcompat.pack.PackLang.get(kb.name()) : kb.name();
+            String bind = ClientKeys.ABILITIES[slot - 1].getTranslatedKeyMessage().getString();
+            String line = "§e" + bind + "§7 - §r" + name;
+            int w = mc.font.width(line);
+            g.fill(18, 18 + y, 18 + w + 4, 18 + y + mc.font.lineHeight + 2, 0x4D000000);
+            g.drawString(mc.font, line, 20, 20 + y, 0xFFFFFF, false);
+            y += mc.font.lineHeight + 2;
         }
     }
 }
