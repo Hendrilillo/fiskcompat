@@ -22,8 +22,16 @@ public final class ModifierEntry {
         return json.has("key") ? json.get("key").getAsString() : null;
     }
 
+    /** Modificadores cuyo isToggle vale true por defecto en Fisk (el resto, false). */
+    private static final java.util.Set<String> TOGGLE_BY_DEFAULT = java.util.Set.of(
+            "fiskheroes:blade", "fiskheroes:charged_punch", "fiskheroes:hover", "fiskheroes:intangibility",
+            "fiskheroes:invisibility", "fiskheroes:shadowform", "fiskheroes:shield", "fiskheroes:slow_motion",
+            "fiskheroes:transformation", "fiskheroes:web_swinging");
+
     public boolean isToggle() {
-        return !json.has("isToggle") || json.get("isToggle").getAsBoolean();
+        JsonElement e = json.get("isToggle");
+        if (e != null && e.isJsonPrimitive()) return e.getAsBoolean();
+        return TOGGLE_BY_DEFAULT.contains(type);
     }
 
     public JsonObject obj(String name) {

@@ -18,6 +18,9 @@ Mod para **Minecraft 1.21.1 (NeoForge)** que carga **heropacks de Fisk's Superhe
 - **Volar**: doble salto en el aire. Adelante vuela hacia donde miras, correr = turbo, salto/agacharse = subir/bajar. Al tocar el suelo aterrizas.
 - **Habilidades 1-5**: C, V, B, N, G (se pueden cambiar en Controles). Arriba a la izquierda sale qué hace cada una con el traje puesto.
 - **Máscara**: M.
+- **Apuntar / repulsor**: mantén la tecla de apuntar (normalmente C) y haz clic derecho para disparar.
+- **Unibeam**: pulsa y mantén su tecla (normalmente V) para cargar; dispara solo al completarse la carga.
+- **Rayos y láseres** (energy_projection, heat_vision): mientras mantienes su tecla. Algunos trajes los usan con el clic izquierdo (entonces el clic no golpea).
 
 ## Estado
 
@@ -38,12 +41,13 @@ Mod para **Minecraft 1.21.1 (NeoForge)** que carga **heropacks de Fisk's Superhe
 | Scripts por tick (`setTickHandler`) y teclas de los scripts | ✅ |
 | Teclas de habilidad (C, V, B, N, G) y máscara (M) con lista en pantalla | ✅ |
 | Vuelo (doble salto), transformación, cooldown, escudo, inmunidades, atributos | ✅ |
-| Repulsores, rayos, unibeam, cohetes... | ⏳ |
+| Apuntar, repulsores, unibeam, rayos de energía y láseres (daño y dibujo) | ✅ |
+| Cohetes, bengalas, rayos que encadenan (`lightning_cast`), destrozos de bloques | ⏳ |
 | Sonidos, HUD, partículas | ⏳ |
 
 ## Desarrollo
 
 - `gradle build` → `build/libs/`.
 - `gradle test` carga los heropacks de `../testgame/heropacks` fuera del juego e imprime los errores y la API de Fisk que aún falta.
-- `gradle runAutotest` (con `run/saves/test` creado) abre el juego, monta una escena con trajes, hace capturas en `run/screenshots` y se cierra. Se puede elegir qué trajes con `-Dsuits=sind:mark2,sind:mark3`.
+- `gradle runAutotest` (con `run/saves/test` creado) abre el juego, monta una escena con trajes, hace capturas en `run/screenshots` y se cierra. Se puede elegir qué trajes con `-Dsuits=sind:mark2,sind:mark3`; con `-Dmode=attacks` prueba los ataques.
 - `docs/api/` tiene las firmas de la API JS de Fisk (para saber qué implementar) y `docs/sind-inventory.md` lo que usa el pack Sind.

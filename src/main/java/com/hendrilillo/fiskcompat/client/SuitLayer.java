@@ -38,6 +38,7 @@ public class SuitLayer<T extends LivingEntity, M extends HumanoidModel<T>> exten
                        float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
         JSEntity.partialTicks = partialTick;
         JSEntity js = null;
+        boolean captured = false;
         for (int i = 0; i < 4; i++) {
             ItemStack stack = entity.getItemBySlot(SLOTS[i]);
             String suitId = SuitItem.heroId(stack);
@@ -48,6 +49,10 @@ public class SuitLayer<T extends LivingEntity, M extends HumanoidModel<T>> exten
             HeroRendererScript.Slot slot = HeroRendererScript.Slot.values()[i];
             try {
                 getParentModel().copyPropertiesTo(model);
+                if (!captured) {
+                    captured = true;
+                    com.hendrilillo.fiskcompat.client.beam.BeamRender.capture(entity, js, r, model, poseStack, partialTick);
+                }
                 List<String> parts = r.shownParts(slot);
                 model.showParts(parts != null ? parts : SuitModel.defaultParts(slot));
 

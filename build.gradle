@@ -35,6 +35,7 @@ neoForge {
         autotest {
             client()
             systemProperty 'fiskcompat.autotest', 'true'
+            systemProperty 'fiskcompat.autotest.mode', System.getProperty('mode', 'suits')
             systemProperty 'fiskcompat.autotest.suits', System.getProperty('suits', 'sind:mark2,sind:mark3,sind:mark5,sind:mark7,sind:mark42,sind:mark43,sind:mark46,sind:mark50')
             programArguments.addAll('--quickPlaySingleplayer', 'test', '--width', '1280', '--height', '720')
         }

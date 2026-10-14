@@ -105,9 +105,24 @@ public final class HeroRendererScript {
         return effect;
     }
 
+    /** Crea las propiedades enlazadas (rayos, partículas...); el cliente pone la implementación real. */
+    public static EffectFactory propertyFactory = null;
+    private final List<Object> properties = new ArrayList<>();
+
     public Object bindProperty(String type) {
+        if (propertyFactory != null) {
+            Object p = propertyFactory.create(type, this);
+            if (p != null) {
+                properties.add(p);
+                return p;
+            }
+        }
         Unimplemented.report("renderer.bindProperty(" + type + ")");
         return new Dummy("property[" + type + "]");
+    }
+
+    public List<Object> properties() {
+        return properties;
     }
 
     public static EffectFactory resourceFactory = null;

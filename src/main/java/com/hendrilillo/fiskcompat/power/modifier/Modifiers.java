@@ -19,13 +19,16 @@ public final class Modifiers {
     private static final java.util.Set<String> PASSIVE = java.util.Set.of(
             "fiskheroes:fire_immunity", "fiskheroes:projectile_immunity", "fiskheroes:damage_immunity",
             "fiskheroes:water_breathing", "fiskheroes:fire_resistance", "fiskheroes:damage_resistance",
-            "fiskheroes:metal_skin", "fiskheroes:potion_immunity");
+            "fiskheroes:metal_skin", "fiskheroes:potion_immunity", Repulsor.TYPE);
 
     static {
         TICKING.put("fiskheroes:transformation", Modifiers::transformation);
         TICKING.put("fiskheroes:cooldown", Modifiers::cooldown);
         TICKING.put("fiskheroes:shield", Modifiers::shield);
         TICKING.put("fiskheroes:controlled_flight", ControlledFlight::tick);
+        TICKING.put("fiskheroes:charged_beam", Beams::chargedBeam);
+        TICKING.put("fiskheroes:energy_projection", Beams::energyProjection);
+        TICKING.put("fiskheroes:heat_vision", Beams::heatVision);
     }
 
     private Modifiers() {}
@@ -67,7 +70,6 @@ public final class Modifiers {
             c.set(cooldown, 0f);
             return;
         }
-        if (c.local && !m.isToggle() && m.key() != null) c.setLocal(toggle, c.keyPressed(m.key()));
         boolean on = c.bool(toggle);
         double v = c.num(cooldown);
         if (on && v < 1) {
@@ -82,11 +84,17 @@ public final class Modifiers {
     // ------------------------------------------------------------------ shield
 
     static void shield(ModifierContext c, ModifierEntry m, boolean enabled) {
-        if (c.local) {
-            boolean block = enabled && c.keyPressed("SHIELD") && c.num("fiskheroes:shield_cooldown") <= 0;
+        // Igual que Fisk: se bloquea con el clic derecho; si no es interruptor, con la tecla SHIELD
+        if (enabled && c.local) {
+            boolean block = (c.keys & com.hendrilillo.fiskcompat.hero.KeyState.USE) != 0;
+            if (!m.isToggle()) {
+                block = c.keyPressed("SHIELD");
+                c.setLocal("fiskheroes:shield", block);
+            }
             c.setLocal("fiskheroes:shield_blocking", block);
         }
-        if (!enabled && c.bool("fiskheroes:shield_blocking")) c.set("fiskheroes:shield_blocking", false);
-        DataManagerApi.incr(c.entity, "fiskheroes:shield_blocking_timer", 5, 5, c.bool("fiskheroes:shield_blocking"), !c.bool("fiskheroes:shield_blocking"));
+        boolean shield = c.bool("fiskheroes:shield"), blocking = c.bool("fiskheroes:shield_blocking");
+        DataManagerApi.incr(c.entity, "fiskheroes:shield_timer", 10, 10, shield, !shield);
+        DataManagerApi.incr(c.entity, "fiskheroes:shield_blocking_timer", 5, 5, blocking, !blocking);
     }
 }

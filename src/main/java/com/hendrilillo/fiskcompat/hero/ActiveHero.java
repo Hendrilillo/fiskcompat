@@ -114,14 +114,40 @@ public final class ActiveHero {
     public boolean isKeyPressed(JSEntity e, LivingEntity mc, String key, int held) {
         if (key == null) return false;
         HeroDefinition.KeyBind kb = def.keyBinds().get(key);
-        if (kb != null && kb.slot() >= 1 && kb.slot() <= 5) {
-            return (held & KeyState.abilityBit(kb.slot())) != 0 && isKeyBindEnabled(e, key);
+        if (kb == null) return false;
+        int bit = KeyState.slotBit(kb.slot());
+        return bit != 0 && (held & bit) != 0 && isKeyBindEnabled(e, key);
+    }
+
+    /** ¿Hay alguna tecla activa en la ranura -1 (clic izquierdo)? Entonces el clic no golpea. */
+    public boolean usesAttackKey(JSEntity e) {
+        return !keysInSlot(e, -1).isEmpty();
+    }
+
+    /** Primer modificador de ese tipo que esté activo ahora, o null. */
+    public ModifierEntry enabledModifier(JSEntity e, String type) {
+        for (ModifierEntry m : modifiers) {
+            if (m.type.equals(type) && isModifierEnabled(e, m)) return m;
         }
-        // Teclas sin ranura de habilidad: usan las del juego
-        return switch (key) {
-            case "SHIELD", "BLOCK" -> (held & KeyState.USE) != 0;
-            default -> false;
-        };
+        return null;
+    }
+
+    public boolean hasModifier(String type) {
+        for (ModifierEntry m : modifiers) if (m.type.equals(type)) return true;
+        return false;
+    }
+
+    /** Valor de una función de hero.supplyFunction(nombre, ...) como booleano. */
+    public boolean funcBoolean(JSEntity e, String name, boolean def) {
+        Object f = this.def.functions.get(name);
+        if (f == null) return def;
+        try {
+            if (f instanceof org.openjdk.nashorn.api.scripting.JSObject o && o.isFunction()) return truthy(o.call(null, e));
+            return truthy(f);
+        } catch (Throwable t) {
+            report(this.def.id() + " " + name, t);
+            return def;
+        }
     }
 
     /** Nombres de teclas activas en una ranura (1-5). */

@@ -32,7 +32,7 @@ import java.util.function.Predicate;
  */
 @EventBusSubscriber(modid = FiskCompat.MODID)
 public final class HeroTicker {
-    private static final Map<Player, ActiveHero> LAST = new WeakHashMap<>();
+    private static final com.hendrilillo.fiskcompat.util.EntityMap<Player, ActiveHero> LAST = new com.hendrilillo.fiskcompat.util.EntityMap<>();
 
     /** Lo pone el cliente: ¿es este jugador el jugador local? */
     public static Predicate<Player> isLocalPlayer = p -> false;
@@ -71,6 +71,7 @@ public final class HeroTicker {
         ModifierContext ctx = new ModifierContext(p, js, hero, local, keys);
 
         ControlledFlight.beginTick(p);
+        tickAiming(ctx);
         for (ModifierEntry m : hero.modifiers) {
             boolean enabled = hero.isModifierEnabled(js, m);
             Modifiers.tick(ctx, m, enabled);
@@ -85,6 +86,19 @@ public final class HeroTicker {
                 ((ServerGamePacketListenerAccessor) sp.connection).fiskcompat$setAboveGroundTickCount(0);
             }
         }
+    }
+
+    // ------------------------------------------------------------------ apuntar
+
+    private static void tickAiming(ModifierContext c) {
+        if (c.local) {
+            boolean aim = c.hero.funcBoolean(c.js, "canAim", false) && c.keyPressed("AIM");
+            Sync.setLocal(c.entity, "fiskheroes:aiming", aim);
+        }
+        boolean aiming = c.bool("fiskheroes:aiming");
+        DataManagerApi.incr(c.entity, "fiskheroes:aiming_timer", 4, 4, aiming, !aiming);
+        boolean aimed = c.num("fiskheroes:aiming_timer") >= 1;
+        DataManagerApi.incr(c.entity, "fiskheroes:aimed_timer", 10, 10, aimed, !aimed);
     }
 
     // ------------------------------------------------------------------ máscara
@@ -131,16 +145,43 @@ public final class HeroTicker {
         if ((pressed & KeyState.MASK) != 0 && hero.hasProperty(js, "MASK_TOGGLE")) {
             Sync.setLocal(p, "fiskheroes:mask_open", !(DataStore.get(p, "fiskheroes:mask_open") instanceof Boolean b && b));
         }
-        for (int slot = 1; slot <= 5; slot++) {
-            if ((pressed & KeyState.abilityBit(slot)) == 0) continue;
+        for (int slot = -1; slot <= 5; slot++) {
+            int bit = KeyState.slotBit(slot);
+            if (bit == 0 || (pressed & bit) == 0) continue;
             for (String key : hero.keysInSlot(js, slot)) {
                 for (ModifierEntry m : hero.modifiers) {
-                    if (!key.equals(m.key()) || !m.isToggle() || !hero.isModifierEnabled(js, m)) continue;
-                    String var = m.toggleVar();
+                    if (!hero.isModifierEnabled(js, m)) continue;
+                    if (m.type.equals("fiskheroes:charged_beam") && key.equals("CHARGED_BEAM")) {
+                        boolean charging = DataStore.get(p, "fiskheroes:beam_charging") instanceof Boolean b && b;
+                        double charge = DataStore.get(p, "fiskheroes:beam_charge") instanceof Number n ? n.doubleValue() : 0;
+                        if (!charging && charge <= 0) Sync.setLocal(p, "fiskheroes:beam_charging", true);
+                        else if (charging && m.isToggle()) Sync.setLocal(p, "fiskheroes:beam_charging", false);
+                        continue;
+                    }
+                    String var = toggledBy(m, key);
                     if (var != null) Sync.setLocal(p, var, !(DataStore.get(p, var) instanceof Boolean b && b));
                 }
             }
         }
+    }
+
+    /** Fisk: teclas que, si el modificador es interruptor, alternan una variable al pulsarse. */
+    private static final Map<String, String[]> KEY_TOGGLES = Map.of(
+            "fiskheroes:shield", new String[]{"SHIELD", "fiskheroes:shield"},
+            "fiskheroes:blade", new String[]{"BLADE", "fiskheroes:blade"},
+            "fiskheroes:invisibility", new String[]{"INVISIBILITY", "fiskheroes:invisible"},
+            "fiskheroes:charged_punch", new String[]{"CHARGED_PUNCH", "fiskheroes:charged_punch"},
+            "fiskheroes:slow_motion", new String[]{"SLOW_MOTION", "fiskheroes:slow_motion"},
+            "fiskheroes:web_swinging", new String[]{"WEB_SWINGING", "fiskheroes:web_swinging"},
+            "fiskheroes:energy_projection", new String[]{"ENERGY_PROJECTION", "fiskheroes:energy_projection"},
+            "fiskheroes:heat_vision", new String[]{"HEAT_VISION", "fiskheroes:heat_vision"});
+
+    /** Variable que alterna esta tecla en este modificador, o null. */
+    private static String toggledBy(ModifierEntry m, String key) {
+        if (!m.isToggle()) return null;
+        if (m.type.equals("fiskheroes:transformation")) return key.equals(m.key()) ? m.toggleVar() : null;
+        String[] t = KEY_TOGGLES.get(m.type);
+        return t != null && t[0].equals(key) ? t[1] : null;
     }
 
     /** Servidor: teclas recién pulsadas (funciones de tecla de los scripts). */
@@ -148,8 +189,8 @@ public final class HeroTicker {
         ActiveHero hero = ActiveHero.of(p);
         if (hero == null) return;
         JSEntity js = JSEntity.of(p);
-        for (int slot = 1; slot <= 5; slot++) {
-            if ((pressed & KeyState.abilityBit(slot)) == 0) continue;
+        for (int slot = -1; slot <= 5; slot++) {
+            if (KeyState.slotBit(slot) == 0 || (pressed & KeyState.slotBit(slot)) == 0) continue;
             for (String key : hero.keysInSlot(js, slot)) {
                 HeroDefinition.KeyBind kb = hero.def.keyBinds().get(key);
                 if (kb == null || kb.func() == null) continue;

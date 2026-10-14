@@ -13,7 +13,7 @@ public final class KeyState {
     /** Bits 0-4: habilidades 1-5. */
     public static final int USE = 1 << 5, ATTACK = 1 << 6, JUMP = 1 << 7, MASK = 1 << 8;
 
-    private static final Map<Entity, Integer> HELD = new WeakHashMap<>();
+    private static final com.hendrilillo.fiskcompat.util.EntityMap<Entity, Integer> HELD = new com.hendrilillo.fiskcompat.util.EntityMap<>();
 
     private KeyState() {}
 
@@ -24,6 +24,11 @@ public final class KeyState {
     public static synchronized int get(Entity e) {
         Integer v = HELD.get(e);
         return v == null ? 0 : v;
+    }
+
+    /** Bit de una ranura de tecla de Fisk: 1-5 habilidades, -1 el clic izquierdo (atacar). */
+    public static int slotBit(int slot) {
+        return slot == -1 ? ATTACK : abilityBit(slot);
     }
 
     public static int abilityBit(int slot) {

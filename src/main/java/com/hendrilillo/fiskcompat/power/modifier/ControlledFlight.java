@@ -15,13 +15,13 @@ import java.util.WeakHashMap;
  */
 public final class ControlledFlight {
     public static final String FLYING = "fiskheroes:flying";
-    private static final Map<Player, Input> INPUT = new WeakHashMap<>();
+    private static final com.hendrilillo.fiskcompat.util.EntityMap<Player, Input> INPUT = new com.hendrilillo.fiskcompat.util.EntityMap<>();
 
     /** Entrada de movimiento del jugador local (la rellena el cliente). */
     public record Input(float forward, float strafe, boolean jump, boolean sneak, boolean jumpPressed) {}
 
     /** Ticks desde la última pulsación de salto, para detectar el doble salto. */
-    private static final Map<Player, Integer> LAST_JUMP = new WeakHashMap<>();
+    private static final com.hendrilillo.fiskcompat.util.EntityMap<Player, Integer> LAST_JUMP = new com.hendrilillo.fiskcompat.util.EntityMap<>();
 
     private ControlledFlight() {}
 
@@ -30,7 +30,7 @@ public final class ControlledFlight {
     }
 
     /** Entrada de vuelo activa (la primera habilitada) para esta entidad este tick. */
-    private static final Map<net.minecraft.world.entity.Entity, ModifierEntry> ACTIVE = new WeakHashMap<>();
+    private static final com.hendrilillo.fiskcompat.util.EntityMap<net.minecraft.world.entity.Entity, ModifierEntry> ACTIVE = new com.hendrilillo.fiskcompat.util.EntityMap<>();
 
     public static void beginTick(net.minecraft.world.entity.Entity e) {
         ACTIVE.remove(e);

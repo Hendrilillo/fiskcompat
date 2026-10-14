@@ -3,7 +3,12 @@ package com.hendrilillo.fiskcompat.client;
 import com.hendrilillo.fiskcompat.FiskCompat;
 import com.hendrilillo.fiskcompat.data.DataStore;
 import com.hendrilillo.fiskcompat.data.Sync;
+import com.hendrilillo.fiskcompat.api.JSEntity;
+import com.hendrilillo.fiskcompat.hero.ActiveHero;
 import com.hendrilillo.fiskcompat.hero.HeroTicker;
+import com.hendrilillo.fiskcompat.power.ModifierEntry;
+import com.hendrilillo.fiskcompat.power.modifier.Repulsor;
+import net.neoforged.neoforge.client.event.InputEvent;
 import com.hendrilillo.fiskcompat.hero.KeyState;
 import com.hendrilillo.fiskcompat.net.Net;
 import com.hendrilillo.fiskcompat.power.modifier.ControlledFlight;
@@ -34,7 +39,8 @@ public final class ClientKeys {
     public static final KeyMapping MASK = new KeyMapping("key.fiskcompat.mask", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_M, CATEGORY);
 
     private static int held, lastSent = -1;
-    private static boolean prevJump;
+    private static boolean prevJump, prevAttack;
+    private static long lastRepulsor = -1000;
 
     private ClientKeys() {}
 
@@ -70,7 +76,10 @@ public final class ClientKeys {
                 while (ABILITIES[i].consumeClick()) if (!gui) pressed |= 1 << i;
             }
             if (!gui && mc.options.keyUse.isDown()) now |= KeyState.USE;
-            if (!gui && mc.options.keyAttack.isDown()) now |= KeyState.ATTACK;
+            boolean attack = !gui && mc.options.keyAttack.isDown();
+            if (attack) now |= KeyState.ATTACK;
+            if (attack && !prevAttack) pressed |= KeyState.ATTACK;
+            prevAttack = attack;
             boolean jump = !gui && mc.options.keyJump.isDown();
             if (jump) now |= KeyState.JUMP;
             if (!gui && MASK.isDown()) now |= KeyState.MASK;
@@ -82,9 +91,39 @@ public final class ClientKeys {
             prevJump = jump;
 
             if (pressed != 0) HeroTicker.onLocalKeysPressed(p, pressed);
+            if ((now & KeyState.USE) != 0) tryRepulsor(p);
             if (now != lastSent || pressed != 0) {
                 PacketDistributor.sendToServer(new Net.Keys(now, pressed));
                 lastSent = now;
+            }
+        }
+
+        /** Clic derecho apuntando: disparo de repulsor (con su tiempo de espera). */
+        private static void tryRepulsor(LocalPlayer p) {
+            if (!(DataStore.get(p, Repulsor.AIMING) instanceof Boolean b && b)) return;
+            ActiveHero hero = ActiveHero.of(p);
+            if (hero == null) return;
+            ModifierEntry m = hero.enabledModifier(JSEntity.of(p), Repulsor.TYPE);
+            if (m == null) return;
+            long now = p.level().getGameTime();
+            if (now - lastRepulsor < Repulsor.cooldown(m)) return;
+            lastRepulsor = now;
+            PacketDistributor.sendToServer(new Net.Fire(0));
+        }
+
+        /** Mientras se apunta, el clic derecho no usa objetos; con teclas en el clic izquierdo, no se golpea. */
+        @SubscribeEvent
+        public static void interaction(InputEvent.InteractionKeyMappingTriggered event) {
+            LocalPlayer p = Minecraft.getInstance().player;
+            if (p == null) return;
+            ActiveHero hero = ActiveHero.of(p);
+            if (hero == null) return;
+            if (event.isUseItem() && DataStore.get(p, Repulsor.AIMING) instanceof Boolean b && b) {
+                event.setCanceled(true);
+                event.setSwingHand(false);
+            } else if (event.isAttack() && hero.usesAttackKey(JSEntity.of(p))) {
+                event.setCanceled(true);
+                event.setSwingHand(false);
             }
         }
 

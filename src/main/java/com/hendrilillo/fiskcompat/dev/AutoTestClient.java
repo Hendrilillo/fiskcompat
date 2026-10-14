@@ -22,6 +22,10 @@ public final class AutoTestClient {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null) return;
         ticks++;
+        if (AutoTest.MODE.equals("attacks")) {
+            attacks(mc);
+            return;
+        }
         if (ticks == 5) {
             mc.options.hideGui = true;
             mc.options.setCameraType(CameraType.FIRST_PERSON);
@@ -87,6 +91,72 @@ public final class AutoTestClient {
                     mc.player.getY(), com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "fiskheroes:flight_timer"));
             mc.stop();
         }
+    }
+
+    private static void set(net.minecraft.world.entity.Entity e, String var, Object v) {
+        com.hendrilillo.fiskcompat.data.DataStore.set(e, var, v);
+        com.hendrilillo.fiskcompat.data.DataStore.snapshot(e);
+    }
+
+    private static void log(Minecraft mc, String what) {
+        var golems = mc.level.getEntitiesOfClass(net.minecraft.world.entity.animal.IronGolem.class, mc.player.getBoundingBox().inflate(40));
+        FiskCompat.LOGGER.info("[autotest] {} aiming={} aim_t={} charging={} charge={} shooting={} heat={} golem={}", what,
+                com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "fiskheroes:aiming"),
+                com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "fiskheroes:aiming_timer"),
+                com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "fiskheroes:beam_charging"),
+                com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "fiskheroes:beam_charge"),
+                com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "fiskheroes:beam_shooting_timer"),
+                com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "fiskheroes:heat_vision_timer"),
+                golems.isEmpty() ? "-" : golems.get(0).getHealth());
+    }
+
+    /** Prueba de ataques: rayos en un soporte de armadura (vista lateral) y disparos del jugador. */
+    private static void attacks(Minecraft mc) {
+        var keys = com.hendrilillo.fiskcompat.client.ClientKeys.ABILITIES;
+        var stands = mc.level.getEntitiesOfClass(net.minecraft.world.entity.decoration.ArmorStand.class, mc.player.getBoundingBox().inflate(20));
+        var stand = stands.isEmpty() ? null : stands.get(0);
+        if (ticks == 5) {
+            mc.options.hideGui = true;
+            mc.options.setCameraType(CameraType.FIRST_PERSON);
+        }
+        // Soporte: unibeam, láser del brazo y rayos de energía forzando sus variables
+        if (ticks == 60 && stand != null) { set(stand, "fiskheroes:beam_charging", true); set(stand, "fiskheroes:beam_charge", 1f); set(stand, "fiskheroes:beam_shooting_timer", 1f); }
+        if (ticks == 64) shot(mc, "fiskcompat_stand_unibeam.png");
+        if (ticks == 65 && stand != null) { set(stand, "fiskheroes:beam_shooting_timer", 0f); set(stand, "fiskheroes:heat_vision", true); set(stand, "fiskheroes:heat_vision_timer", 1f); set(stand, "fiskheroes:aiming_timer", 1f); }
+        if (ticks == 69) shot(mc, "fiskcompat_stand_laser.png");
+        if (ticks == 70 && stand != null) { set(stand, "fiskheroes:heat_vision_timer", 0f); set(stand, "fiskheroes:aiming_timer", 0f); set(stand, "fiskheroes:energy_projection_timer", 1f); }
+        if (ticks == 74) shot(mc, "fiskcompat_stand_energy.png");
+        if (ticks == 75 && stand != null) set(stand, "fiskheroes:energy_projection_timer", 0f);
+        // Jugador: apuntar y repulsor
+        if (ticks == 80) { mc.options.setCameraType(CameraType.THIRD_PERSON_BACK); keys[0].setDown(true); }
+        if (ticks == 95) { log(mc, "aim"); mc.options.keyUse.setDown(true); }
+        if (ticks == 102) mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT);
+        if (ticks == 100 || ticks == 104 || ticks == 108) { FiskCompat.LOGGER.info("[autotest] shot tick {}", mc.level.getGameTime()); shot(mc, "fiskcompat_repulsor_back" + ticks + ".png"); }
+        if (ticks == 97) mc.options.keyUse.setDown(false);
+        if (ticks == 120) mc.options.setCameraType(CameraType.THIRD_PERSON_BACK);
+        if (ticks == 125) shot(mc, "fiskcompat_aim_back.png");
+        if (ticks == 130) { mc.options.setCameraType(CameraType.FIRST_PERSON); mc.options.keyUse.setDown(true); }
+        if (ticks == 134 || ticks == 138) shot(mc, "fiskcompat_repulsor_fp" + ticks + ".png");
+        if (ticks == 131) mc.options.keyUse.setDown(false);
+        if (ticks == 140) { keys[0].setDown(false); log(mc, "after repulsor"); }
+        // Unibeam
+        if (ticks == 150) {
+            mc.options.setCameraType(CameraType.THIRD_PERSON_BACK);
+            net.minecraft.client.KeyMapping.click(keys[1].getKey());
+            keys[1].setDown(true);
+        }
+        if (ticks == 170) log(mc, "charging");
+        if (ticks == 215) { log(mc, "unibeam"); shot(mc, "fiskcompat_unibeam_back.png"); }
+        if (ticks == 216) mc.options.setCameraType(CameraType.FIRST_PERSON);
+        if (ticks == 222) shot(mc, "fiskcompat_unibeam_fp.png");
+        if (ticks == 260) { keys[1].setDown(false); log(mc, "after unibeam"); }
+        // Láser del brazo (HEAT_VISION en la tecla 5)
+        if (ticks == 330) { mc.options.setCameraType(CameraType.THIRD_PERSON_BACK); keys[4].setDown(true); }
+        if (ticks == 345) { log(mc, "laser"); shot(mc, "fiskcompat_laser_back.png"); }
+        if (ticks == 346) mc.options.setCameraType(CameraType.FIRST_PERSON);
+        if (ticks == 350) shot(mc, "fiskcompat_laser_fp.png");
+        if (ticks == 380) { keys[4].setDown(false); log(mc, "end"); }
+        if (ticks == 390) mc.stop();
     }
 
     private static void shot(Minecraft mc, String name) {

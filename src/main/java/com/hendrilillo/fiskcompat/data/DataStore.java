@@ -22,7 +22,7 @@ public final class DataStore {
         final Map<String, Long> ownerSynced = new HashMap<>();
     }
 
-    private static final Map<Entity, Entry> ENTRIES = new WeakHashMap<>();
+    private static final com.hendrilillo.fiskcompat.util.EntityMap<Entity, Entry> ENTRIES = new com.hendrilillo.fiskcompat.util.EntityMap<>();
 
     private DataStore() {}
 
@@ -74,7 +74,7 @@ public final class DataStore {
 
     /** snapshot() de todas las entidades de un nivel (cliente, al principio del tick). */
     public static synchronized void snapshotAll(net.minecraft.world.level.Level level) {
-        ENTRIES.forEach((e, en) -> { if (e.level() == level) en.prev = new HashMap<>(en.values); });
+        ENTRIES.snapshot(level.isClientSide).forEach((e, en) -> { if (e.level() == level) en.prev = new HashMap<>(en.values); });
     }
 
     public static synchronized Map<String, Object> drainDirty(Entity entity) {

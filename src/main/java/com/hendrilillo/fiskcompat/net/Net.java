@@ -98,6 +98,34 @@ public final class Net {
         public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
 
+    /** Cliente -> servidor: disparar una habilidad (0 = repulsor). */
+    public record Fire(int kind) implements CustomPacketPayload {
+        public static final Type<Fire> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(FiskCompat.MODID, "fire"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, Fire> CODEC = StreamCodec.composite(ByteBufCodecs.VAR_INT, Fire::kind, Fire::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
+    /** Servidor -> cliente: alguien ha disparado un repulsor (para dibujarlo). */
+    public record RepulsorShot(int shooter, double x, double y, double z, float dx, float dy, float dz,
+                               float speed, float range, float radius) implements CustomPacketPayload {
+        public static final Type<RepulsorShot> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(FiskCompat.MODID, "repulsor_shot"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, RepulsorShot> CODEC = StreamCodec.of((buf, m) -> {
+            buf.writeVarInt(m.shooter);
+            buf.writeDouble(m.x); buf.writeDouble(m.y); buf.writeDouble(m.z);
+            buf.writeFloat(m.dx); buf.writeFloat(m.dy); buf.writeFloat(m.dz);
+            buf.writeFloat(m.speed); buf.writeFloat(m.range); buf.writeFloat(m.radius);
+        }, buf -> new RepulsorShot(buf.readVarInt(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
+                buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readFloat()));
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
+    /** Lo pone el cliente: qué hacer al recibir un RepulsorShot. */
+    public static java.util.function.Consumer<RepulsorShot> onRepulsorShot = m -> {};
+
     public static void register(IEventBus modBus) {
         modBus.addListener(Net::registerPayloads);
     }
@@ -107,6 +135,10 @@ public final class Net {
         r.playToClient(DataSync.TYPE, DataSync.CODEC, Net::handleDataSync);
         r.playToServer(ClientData.TYPE, ClientData.CODEC, Net::handleClientData);
         r.playToServer(Keys.TYPE, Keys.CODEC, Net::handleKeys);
+        r.playToServer(Fire.TYPE, Fire.CODEC, (msg, ctx) -> ctx.enqueueWork(() -> {
+            if (ctx.player() instanceof ServerPlayer p && msg.kind() == 0) com.hendrilillo.fiskcompat.power.modifier.Repulsor.shoot(p);
+        }));
+        r.playToClient(RepulsorShot.TYPE, RepulsorShot.CODEC, (msg, ctx) -> ctx.enqueueWork(() -> onRepulsorShot.accept(msg)));
     }
 
     private static void handleDataSync(DataSync msg, IPayloadContext ctx) {

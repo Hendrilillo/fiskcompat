@@ -21,6 +21,8 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 @EventBusSubscriber(modid = FiskCompat.MODID)
 public final class AutoTest {
     public static final boolean ENABLED = Boolean.getBoolean("fiskcompat.autotest");
+    /** "attacks": prueba de rayos y repulsores en vez de la de trajes. */
+    public static final String MODE = System.getProperty("fiskcompat.autotest.mode", "suits");
 
     private AutoTest() {}
 
@@ -40,6 +42,24 @@ public final class AutoTest {
         player.teleportTo(level, 0.5, y, -4.5, 0, 0);
         String[] suits = suits();
         equip(player, suits[0]);
+        if (MODE.equals("attacks")) {
+            for (var old : level.getEntities((net.minecraft.world.entity.Entity) null, player.getBoundingBox().inflate(64),
+                    e -> e instanceof ArmorStand || e instanceof net.minecraft.world.entity.animal.IronGolem)) old.discard();
+            ArmorStand stand = EntityType.ARMOR_STAND.create(level);
+            if (stand != null) {
+                stand.moveTo(4.0, y, 1.5, 90, 0);
+                stand.setYHeadRot(90);
+                equip(stand, suits[0]);
+                level.addFreshEntity(stand);
+            }
+            var golem = EntityType.IRON_GOLEM.create(level);
+            if (golem != null) {
+                golem.moveTo(0.5, y, 12.5, 180, 0);
+                golem.setNoAi(true);
+                level.addFreshEntity(golem);
+            }
+            return;
+        }
         for (int i = 0; i < suits.length; i++) {
             ArmorStand stand = EntityType.ARMOR_STAND.create(level);
             if (stand == null) continue;

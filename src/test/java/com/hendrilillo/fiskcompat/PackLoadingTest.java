@@ -25,6 +25,16 @@ public class PackLoadingTest {
         Path gameDir = Path.of(System.getProperty("fiskcompat.testGameDir"));
         HeroPackManager.load(gameDir);
         HeroRegistry.loadAll();
+        // Las clases de rayos no dependen del render: se pueden probar aquí
+        HeroRendererScript.propertyFactory = (type, r) -> new com.hendrilillo.fiskcompat.client.beam.PropertyBinding(type);
+        HeroRendererScript.resourceFactory = (spec, r) -> {
+            String type = spec.substring(0, spec.indexOf('|')), path = spec.substring(spec.indexOf('|') + 1);
+            return switch (type) {
+                case "BEAM_CONSTELLATION" -> new com.hendrilillo.fiskcompat.client.beam.BeamConstellation();
+                case "BEAM_RENDERER" -> com.hendrilillo.fiskcompat.client.beam.BeamRendererDef.get(path);
+                default -> null;
+            };
+        };
 
         String only = System.getProperty("fiskcompat.onlyDomain", "sind");
         Map<String, String> rendererErrors = new LinkedHashMap<>();
@@ -46,6 +56,18 @@ public class PackLoadingTest {
             try {
                 HeroRendererScript r = HeroRendererScript.load(id);
                 ok++;
+                if (id.equals(only + ":mark7") || id.equals(only + ":mark85")) {
+                    System.out.println(id + " anims=" + r.customAnimations().keySet());
+                    for (Object o : r.properties()) {
+                        if (o instanceof com.hendrilillo.fiskcompat.client.beam.PropertyBinding pb && pb.constellation != null) {
+                            var en = pb.constellation.entries.isEmpty() ? null : pb.constellation.entries.get(0);
+                            System.out.println(id + " " + pb.type + " anchor=" + pb.anchor + " color=" + Integer.toHexString(pb.color.rgb)
+                                    + " beam=" + (pb.beam == null ? null : pb.beam.id + "/" + pb.beam.aspects.size())
+                                    + " entries=" + pb.constellation.entries.size()
+                                    + (en == null ? "" : " off=" + java.util.Arrays.toString(en.offset()) + " fp=" + java.util.Arrays.toString(en.firstPerson()) + " size=" + java.util.Arrays.toString(en.size())));
+                        }
+                    }
+                }
                 if (id.equals(only + ":mark2")) {
                     System.out.println("mark2 layer1 = " + r.texturePath(r.textureKey(new com.hendrilillo.fiskcompat.js.Dummy("entity"), HeroRendererScript.Slot.CHESTPLATE)));
                     System.out.println("mark2 icon0 = " + r.itemIcon(0));
