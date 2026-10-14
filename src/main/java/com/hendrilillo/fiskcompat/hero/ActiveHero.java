@@ -59,6 +59,13 @@ public final class ActiveHero {
         return CACHE.computeIfAbsent(suitId, id -> new ActiveHero(def, id));
     }
 
+    /** Héroe de un traje por su id ("sind:mark7"), sin mirar quién lo lleva. */
+    public static ActiveHero forSuit(String suitId) {
+        if (suitId == null) return null;
+        HeroDefinition def = HeroRegistry.get(SuitItem.baseHeroId(suitId));
+        return def == null ? null : CACHE.computeIfAbsent(suitId, id -> new ActiveHero(def, id));
+    }
+
     // ------------------------------------------------------------------ llamadas a funciones del script
 
     private static void report(String what, Throwable t) {

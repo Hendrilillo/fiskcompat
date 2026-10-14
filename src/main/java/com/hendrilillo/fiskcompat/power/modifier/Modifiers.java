@@ -29,6 +29,7 @@ public final class Modifiers {
         TICKING.put("fiskheroes:charged_beam", Beams::chargedBeam);
         TICKING.put("fiskheroes:energy_projection", Beams::energyProjection);
         TICKING.put("fiskheroes:heat_vision", Beams::heatVision);
+        TICKING.put(SentryMode.TYPE, SentryMode::tick);
     }
 
     private Modifiers() {}

@@ -169,7 +169,14 @@ public class JSEntity {
         return (t % ticks) / ticks;
     }
 
-    public void playSound(String sound, double volume, double pitch) { Unimplemented.report("entity.playSound"); }
+    /** Como en Fisk, solo suena si lo llama el servidor (lo oyen todos los que estén cerca). */
+    public void playSound(String sound, double volume, double pitch) {
+        if (entity.level().isClientSide || entity.isSilent()) return;
+        net.minecraft.resources.ResourceLocation rl = LegacySounds.map(sound);
+        if (rl == null) return;
+        entity.level().playSound(null, entity.getX(), entity.getY(), entity.getZ(),
+                net.minecraft.sounds.SoundEvent.createVariableRangeEvent(rl), entity.getSoundSource(), (float) volume, (float) pitch);
+    }
     public Object team() { return new Dummy("team"); }
     /** Daño de un script (solo en el servidor). El mensaje de muerte de Fisk no se usa. */
     public void hurt(Object hero, String type, String deathMessage, float amount) {

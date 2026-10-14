@@ -30,6 +30,10 @@ public final class AutoTestClient {
             attacks(mc);
             return;
         }
+        if (AutoTest.MODE.equals("sentry")) {
+            sentry(mc);
+            return;
+        }
         if (ticks == 5) {
             mc.options.hideGui = true;
             mc.options.setCameraType(CameraType.FIRST_PERSON);
@@ -95,6 +99,116 @@ public final class AutoTestClient {
                     mc.player.getY(), com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "fiskheroes:flight_timer"));
             mc.stop();
         }
+    }
+
+    /** Sonidos y modo centinela. */
+    private static void sentry(Minecraft mc) {
+        var server = mc.getSingleplayerServer();
+        if (ticks == 5) { mc.options.hideGui = true; mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT); }
+        if (ticks == 30) {
+            var sm = mc.getSoundManager();
+            for (String n : new String[]{"sind:unibeam", "sind:beep", "fiskheroes:suit.ironman.beam.loop", "fiskheroes:suit.ironman.boost.loop"}) {
+                var ev = sm.getSoundEvent(net.minecraft.resources.ResourceLocation.parse(n));
+                FiskCompat.LOGGER.info("[autotest] sonido registrado {} -> {}", n, ev == null ? "NO" : ev.getSound(net.minecraft.util.RandomSource.create()).getLocation());
+            }
+            FiskCompat.LOGGER.info("[autotest] zips de sonidos: {}", com.hendrilillo.fiskcompat.client.sound.SoundPacks.namespaces());
+            int ok = 0, bad = 0;
+            var res = mc.getResourceManager().listResources("events/sounds", rl -> rl.getPath().endsWith(".json"));
+            for (var rl : res.keySet()) {
+                String id = rl.getNamespace() + ":" + rl.getPath().substring("events/sounds/".length(), rl.getPath().length() - 5);
+                var def = com.hendrilillo.fiskcompat.client.sound.SoundEventDef.get(id);
+                if (def == null) { if (!id.endsWith("sound_base")) bad++; continue; }
+                def.shouldStart(mc.player, null); def.shouldContinue(mc.player, null); def.volume(mc.player, null); def.pitch(mc.player, null);
+                if (mc.getSoundManager().getSoundEvent(net.minecraft.resources.ResourceLocation.parse(def.sound())) == null) {
+                    FiskCompat.LOGGER.info("[autotest] evento {} usa un sonido que no existe: {}", id, def.sound());
+                    bad++;
+                } else ok++;
+            }
+            FiskCompat.LOGGER.info("[autotest] eventos de sonido: {} bien, {} mal", ok, bad);
+        }
+        if (ticks == 40) com.hendrilillo.fiskcompat.data.Sync.setLocal(mc.player, "fiskheroes:mask_open", true);
+        if (ticks == 55) com.hendrilillo.fiskcompat.data.Sync.setLocal(mc.player, "fiskheroes:mask_open", false);
+        if (ticks == 75) { mc.options.setCameraType(CameraType.THIRD_PERSON_BACK); com.hendrilillo.fiskcompat.power.modifier.SentryMode.keyPressed(mc.player); }
+        if (ticks == 79) shot(mc, "fiskcompat_sentry_opening.png");
+        if ((ticks == 78 || ticks == 82 || ticks == 95) && server != null) server.execute(() -> {
+            var p = server.getPlayerList().getPlayers().get(0);
+            var h = com.hendrilillo.fiskcompat.hero.ActiveHero.of(p);
+            FiskCompat.LOGGER.info("[autotest] servidor: open={} timer={} mask={} hero={} sentryMod={}", com.hendrilillo.fiskcompat.data.DataStore.get(p, "fiskheroes:suit_open"),
+                    com.hendrilillo.fiskcompat.data.DataStore.get(p, "fiskheroes:suit_open_timer"), com.hendrilillo.fiskcompat.data.DataStore.get(p, "fiskheroes:mask_open_timer"),
+                    h == null ? null : h.suitId, h == null ? null : h.enabledModifier(com.hendrilillo.fiskcompat.api.JSEntity.of(p), "fiskheroes:sentry_mode"));
+        });
+        if (ticks == 110) {
+            var sentries = mc.level.getEntitiesOfClass(com.hendrilillo.fiskcompat.entity.SentryEntity.class, mc.player.getBoundingBox().inflate(20));
+            FiskCompat.LOGGER.info("[autotest] centinelas={} pecho_jugador={} open={} timer={}", sentries.size(),
+                    mc.player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST),
+                    sentries.isEmpty() ? "-" : com.hendrilillo.fiskcompat.data.DataStore.get(sentries.get(0), "fiskheroes:suit_open"),
+                    sentries.isEmpty() ? "-" : com.hendrilillo.fiskcompat.data.DataStore.get(sentries.get(0), "fiskheroes:suit_open_timer"));
+            mc.options.setCameraType(CameraType.FIRST_PERSON);
+            mc.player.setXRot(15);
+            mc.player.setPos(mc.player.getX(), mc.player.getY(), mc.player.getZ() - 2.5);
+        }
+        if (ticks == 114) shot(mc, "fiskcompat_sentry_open.png");
+        if (ticks == 115 && server != null) server.execute(() -> {
+            for (var s : server.overworld().getEntitiesOfClass(com.hendrilillo.fiskcompat.entity.SentryEntity.class, new net.minecraft.world.phys.AABB(-50, -100, -50, 50, 400, 50))) {
+                com.hendrilillo.fiskcompat.data.DataStore.set(s, "fiskheroes:suit_open", false);
+            }
+        });
+        if (ticks == 116 && server != null) server.execute(() -> {
+            for (var se : server.overworld().getEntitiesOfClass(com.hendrilillo.fiskcompat.entity.SentryEntity.class, new net.minecraft.world.phys.AABB(-50, -100, -50, 50, 400, 50))) {
+                var z = net.minecraft.world.entity.EntityType.ZOMBIE.create(server.overworld());
+                if (z == null) continue;
+                z.moveTo(se.getX() + 7, se.getY(), se.getZ(), 0, 0);
+                z.setNoAi(true);
+                z.setPersistenceRequired();
+                server.overworld().addFreshEntity(z);
+            }
+        });
+        if (ticks == 135) shot(mc, "fiskcompat_sentry_closed.png");
+        if (ticks == 158 && server != null) server.execute(() -> {
+            for (var se : server.overworld().getEntitiesOfClass(com.hendrilillo.fiskcompat.entity.SentryEntity.class, new net.minecraft.world.phys.AABB(-50, -100, -50, 50, 400, 50))) {
+                var zs = server.overworld().getEntitiesOfClass(net.minecraft.world.entity.monster.Zombie.class, se.getBoundingBox().inflate(20));
+                FiskCompat.LOGGER.info("[autotest] centinela objetivo={} apuntando={} zombi={}", se.getTarget(), com.hendrilillo.fiskcompat.data.DataStore.get(se, "fiskheroes:aiming"),
+                        zs.stream().map(z -> z.getHealth() + (z.isAlive() ? "" : " muerto")).toList());
+            }
+        });
+        if (ticks == 136) FiskCompat.LOGGER.info("[autotest] centinela cerrado: {}", mc.level.getEntitiesOfClass(com.hendrilillo.fiskcompat.entity.SentryEntity.class,
+                mc.player.getBoundingBox().inflate(20)).stream().map(e -> com.hendrilillo.fiskcompat.data.DataStore.get(e, "fiskheroes:suit_open_timer") + "/" + e.getHealth()).toList());
+        if (ticks == 140 && server != null) server.execute(() -> {
+            for (var s : server.overworld().getEntitiesOfClass(com.hendrilillo.fiskcompat.entity.SentryEntity.class, new net.minecraft.world.phys.AABB(-50, -100, -50, 50, 400, 50))) {
+                com.hendrilillo.fiskcompat.data.DataStore.set(s, "fiskheroes:suit_open", true);
+            }
+        });
+        if (ticks == 145) {
+            for (var se : mc.level.getEntitiesOfClass(com.hendrilillo.fiskcompat.entity.SentryEntity.class, mc.player.getBoundingBox().inflate(20))) {
+                mc.player.setPos(se.getX(), se.getY(), se.getZ() + 3);
+                mc.player.setYRot(180);
+                mc.player.setXRot(15);
+            }
+        }
+        if (ticks == 155) shot(mc, "fiskcompat_sentry_front_open.png");
+        if (ticks == 160 && server != null) server.execute(() -> {
+            var p = server.getPlayerList().getPlayers().get(0);
+            for (var s : server.overworld().getEntitiesOfClass(com.hendrilillo.fiskcompat.entity.SentryEntity.class, new net.minecraft.world.phys.AABB(-50, -100, -50, 50, 400, 50))) {
+                p.teleportTo(s.getX(), s.getY(), s.getZ());
+            }
+        });
+        if (ticks == 185) {
+            var sentries = mc.level.getEntitiesOfClass(com.hendrilillo.fiskcompat.entity.SentryEntity.class, mc.player.getBoundingBox().inflate(20));
+            FiskCompat.LOGGER.info("[autotest] tras entrar: centinelas={} pecho_jugador={} timer={}", sentries.size(),
+                    mc.player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST),
+                    com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "fiskheroes:suit_open_timer"));
+            mc.options.setCameraType(CameraType.THIRD_PERSON_BACK);
+        }
+        if (ticks == 190) shot(mc, "fiskcompat_sentry_back_in.png");
+        if (ticks == 200) { mc.options.keyUp.setDown(true); FiskCompat.LOGGER.info("[autotest] andar desde {} suelo={}", mc.player.position(), mc.player.onGround()); }
+        if (ticks == 214) FiskCompat.LOGGER.info("[autotest] andar hasta {}", mc.player.position());
+        if (ticks == 215) mc.options.keyUp.setDown(false);
+        if (ticks == 220) {
+            com.hendrilillo.fiskcompat.data.Sync.setLocal(mc.player, "fiskheroes:flying", true);
+            mc.player.setPos(mc.player.getX(), mc.player.getY() + 4, mc.player.getZ());
+        }
+        if (ticks == 240) com.hendrilillo.fiskcompat.data.Sync.setLocal(mc.player, "fiskheroes:flying", false);
+        if (ticks == 270) mc.stop();
     }
 
     private static void set(net.minecraft.world.entity.Entity e, String var, Object v) {

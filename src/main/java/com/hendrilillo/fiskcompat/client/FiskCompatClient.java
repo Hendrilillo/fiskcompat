@@ -42,6 +42,7 @@ public final class FiskCompatClient {
         com.hendrilillo.fiskcompat.render.HeroRendererScript.propertyFactory =
                 (type, renderer) -> new com.hendrilillo.fiskcompat.client.beam.PropertyBinding(type);
         com.hendrilillo.fiskcompat.client.beam.BeamRender.init();
+        initSounds();
         com.hendrilillo.fiskcompat.render.HeroRendererScript.resourceFactory = (spec, renderer) -> {
             int bar = spec.indexOf('|');
             String type = spec.substring(0, bar), path = spec.substring(bar + 1);
@@ -57,6 +58,34 @@ public final class FiskCompatClient {
 
     private FiskCompatClient() {}
 
+    private static void initSounds() {
+        com.hendrilillo.fiskcompat.client.sound.SoundPacks.ensureStarted();
+        com.hendrilillo.fiskcompat.net.Net.onSoundTrigger = m -> {
+            var level = net.minecraft.client.Minecraft.getInstance().level;
+            var e = level == null ? null : level.getEntity(m.entity());
+            if (e == null) return;
+            if (!m.suit().isEmpty()) com.hendrilillo.fiskcompat.client.sound.HeroSounds.fireForSuit(e, m.suit(), m.modifier(), m.trigger());
+            else if (m.modifier().isEmpty()) com.hendrilillo.fiskcompat.client.sound.HeroSounds.fireHero(e, m.trigger());
+            else com.hendrilillo.fiskcompat.client.sound.HeroSounds.fireModifier(e, m.modifier(), m.trigger());
+        };
+        var repulsor = com.hendrilillo.fiskcompat.net.Net.onRepulsorShot;
+        com.hendrilillo.fiskcompat.net.Net.onRepulsorShot = m -> {
+            repulsor.accept(m);
+            var level = net.minecraft.client.Minecraft.getInstance().level;
+            var e = level == null ? null : level.getEntity(m.shooter());
+            if (e != null) com.hendrilillo.fiskcompat.client.sound.HeroSounds.fireModifier(e,
+                    com.hendrilillo.fiskcompat.power.modifier.Repulsor.TYPE, "SHOOT");
+        };
+        var lightning = com.hendrilillo.fiskcompat.net.Net.onLightningCast;
+        com.hendrilillo.fiskcompat.net.Net.onLightningCast = m -> {
+            lightning.accept(m);
+            var level = net.minecraft.client.Minecraft.getInstance().level;
+            var e = level == null ? null : level.getEntity(m.shooter());
+            if (e != null) com.hendrilillo.fiskcompat.client.sound.HeroSounds.fireModifier(e,
+                    com.hendrilillo.fiskcompat.power.modifier.LightningCast.TYPE, "SHOOT");
+        };
+    }
+
     /** Añade el resource pack virtual con los assets de los heropacks (siempre activo). */
     @SubscribeEvent
     public static void addPacks(AddPackFindersEvent event) {
@@ -66,6 +95,11 @@ public final class FiskCompatClient {
                     PackType.CLIENT_RESOURCES, new PackSelectionConfig(true, Pack.Position.TOP, false));
             if (pack != null) consumer.accept(pack);
         });
+    }
+
+    @SubscribeEvent
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(com.hendrilillo.fiskcompat.entity.ModEntities.SENTRY.get(), SentryRenderer::new);
     }
 
     @SubscribeEvent
@@ -127,6 +161,7 @@ public final class FiskCompatClient {
             com.hendrilillo.fiskcompat.client.model.ModelResource.clearCache();
             com.hendrilillo.fiskcompat.client.anim.BipedAnimation.clearCache();
             com.hendrilillo.fiskcompat.client.beam.BeamRendererDef.clearCache();
+            com.hendrilillo.fiskcompat.client.sound.HeroSounds.clearCaches();
         });
     }
 }

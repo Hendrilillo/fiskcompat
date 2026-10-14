@@ -23,6 +23,11 @@ Mod para **Minecraft 1.21.1 (NeoForge)** que carga **heropacks de Fisk's Superhe
 - **Equipo del traje** (Alt izquierdo): con un objeto válido en la mano lo guarda en el traje (p. ej. TNT, pólvora o cargas de fuego para los cohetes del brazo de Sind); con la mano vacía saca el último.
 - **Cohetes del brazo y similares** (`lightning_cast`): clic derecho sin apuntar y con la mano vacía cuando el traje lo permite.
 - **Rayos y láseres** (energy_projection, heat_vision): mientras mantienes su tecla. Algunos trajes los usan con el clic izquierdo (entonces el clic no golpea).
+- **Modo centinela** (en Sind, la habilidad 3 / B de los trajes que lo tienen): el traje se abre y te deja fuera; se queda como un centinela que te sigue y ataca a quien te ataque. Clic derecho sobre él: abrir/cerrar. Agachado + clic derecho: volar/aterrizar. Para volver a ponértelo, ábrelo y métete dentro.
+
+## Sonidos
+
+Como en Fisk, los sonidos no van dentro del heropack: el heropack dice de dónde descargarlos (`"sounds"` en su `heropack.json`). La primera vez que arranca el juego con un heropack nuevo, el mod los descarga de GitHub y los guarda en `.minecraft/fiskcompat/sounds` (los del Sind ocupan unos 6 MB y los de Fisk unos 25 MB). Las siguientes veces ya no hace falta internet. Si estás sin conexión, puedes poner el zip a mano en esa carpeta con el nombre `<dominio>-<versión>.zip` (por ejemplo `sind-18.zip`).
 
 ## Estado
 
@@ -48,8 +53,9 @@ Mod para **Minecraft 1.21.1 (NeoForge)** que carga **heropacks de Fisk's Superhe
 | `lightning_cast` (cohetes del brazo), equipo guardado en el traje, bengalas | ✅ |
 | Láseres que derriten hielo y funden bloques (si `mobGriefing` está activado) | ✅ |
 | `entity.world()` para los scripts (bloques, entidades cercanas, bioma) | ✅ |
-| Modo centinela (`sentry_mode`), sonidos, partículas, HUD | ⏳ |
-| Sonidos, HUD, partículas | ⏳ |
+| Sonidos de los heropacks (descarga, eventos de sonido, bucles, fundidos, funciones `override`, `entity.playSound`) | ✅ |
+| Modo centinela (`sentry_mode`): salir del traje, centinela que sigue y dispara, volver a entrar | ✅ |
+| Partículas, HUD de Fisk | ⏳ |
 
 ## Desarrollo
 

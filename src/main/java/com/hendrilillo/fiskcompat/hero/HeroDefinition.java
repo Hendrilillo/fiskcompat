@@ -150,6 +150,8 @@ public final class HeroDefinition {
     public List<Attribute> attributes() { return attributes; }
     public Map<String, KeyBind> keyBinds() { return keyBinds; }
     public BiFunction<Object, Object, Object> tickHandler() { return tickHandler; }
+    /** Eventos de sonido de hero.addSoundEvent para un trigger (STEP, MASK_OPEN...), o null. */
+    public List<String> soundEvents(String trigger) { return soundEvents.get(trigger); }
 
     /** Piezas de armadura que tiene el héroe (null = no tiene esa pieza). */
     public String piece(int slot) {

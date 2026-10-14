@@ -10,5 +10,6 @@
   "key.fiskcompat.ability5": "Suit ability 5",
   "key.fiskcompat.mask": "Open/close mask",
   "key.fiskcompat.equip": "Store/take suit equipment",
-  "key.categories.fiskcompat": "FiskCompat (heropacks)"
+  "key.categories.fiskcompat": "FiskCompat (heropacks)",
+  "entity.fiskcompat.iron_man": "Iron Man Sentry"
 }

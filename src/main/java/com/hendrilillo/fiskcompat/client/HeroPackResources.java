@@ -105,6 +105,10 @@ public final class HeroPackResources extends AbstractPackResources {
         byte[] icon = iconModel(location);
         if (icon != null) return () -> new ByteArrayInputStream(icon);
         if (!allowedNamespace(location.getNamespace())) return null;
+        if (com.hendrilillo.fiskcompat.client.sound.SoundPacks.isSoundPath(location.getPath())
+                && com.hendrilillo.fiskcompat.client.sound.SoundPacks.has(location.getNamespace(), location.getPath())) {
+            return () -> com.hendrilillo.fiskcompat.client.sound.SoundPacks.open(location.getNamespace(), location.getPath());
+        }
         Optional<HeroPack> pack = HeroPackManager.findAsset(location.getNamespace(), location.getPath());
         if (pack.isEmpty()) return null;
         HeroPack p = pack.get();
@@ -135,6 +139,13 @@ public final class HeroPackResources extends AbstractPackResources {
             }
         }
         if (!allowedNamespace(namespace)) return;
+        if (path.equals("sounds") || path.startsWith("sounds/")) {
+            // Minecraft busca así los .ogg que existen (los zips de sonidos de los heropacks)
+            for (String f : com.hendrilillo.fiskcompat.client.sound.SoundPacks.list(namespace, path)) {
+                ResourceLocation rl = ResourceLocation.tryBuild(namespace, f);
+                if (rl != null) output.accept(rl, () -> com.hendrilillo.fiskcompat.client.sound.SoundPacks.open(namespace, f));
+            }
+        }
         for (HeroPack pack : HeroPackManager.packs()) {
             if (!pack.namespaces().contains(namespace)) continue;
             String base = "assets/" + namespace + "/";
@@ -153,6 +164,8 @@ public final class HeroPackResources extends AbstractPackResources {
             for (String ns : pack.namespaces()) if (allowedNamespace(ns) && ResourceLocation.isValidNamespace(ns)) out.add(ns);
         }
         for (String k : GENERATED.keySet()) out.add(k.split("/")[1]);
+        com.hendrilillo.fiskcompat.client.sound.SoundPacks.ensureStarted();
+        for (String ns : com.hendrilillo.fiskcompat.client.sound.SoundPacks.namespaces()) if (allowedNamespace(ns)) out.add(ns);
         out.add(FiskCompat.MODID); // modelos de iconos generados al vuelo
         return out;
     }

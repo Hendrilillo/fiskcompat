@@ -145,6 +145,32 @@ public final class Net {
 
     public static java.util.function.Consumer<LightningCast> onLightningCast = m -> {};
 
+    /** Trigger de sonido enviado por el servidor (pasos, aterrizar, golpear, salir del traje...). */
+    public record SoundTrigger(int entity, String suit, String modifier, String trigger) implements CustomPacketPayload {
+        public static final Type<SoundTrigger> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(FiskCompat.MODID, "sound_trigger"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, SoundTrigger> CODEC = StreamCodec.composite(
+                ByteBufCodecs.VAR_INT, SoundTrigger::entity, ByteBufCodecs.STRING_UTF8, SoundTrigger::suit,
+                ByteBufCodecs.STRING_UTF8, SoundTrigger::modifier, ByteBufCodecs.STRING_UTF8, SoundTrigger::trigger, SoundTrigger::new);
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
+    /** Lo pone el cliente: qué hacer con un SoundTrigger. */
+    public static java.util.function.Consumer<SoundTrigger> onSoundTrigger = m -> {};
+
+    /** Servidor: hace sonar un trigger de sonido de una entidad para quien la ve (y ella misma). */
+    public static void soundTrigger(Entity entity, String modifierType, String trigger) {
+        soundTrigger(entity, null, modifierType, trigger);
+    }
+
+    /** Con "suit" (id del traje) el cliente no necesita que la entidad lo lleve puesto todavía. */
+    public static void soundTrigger(Entity entity, String suit, String modifierType, String trigger) {
+        if (entity.level().isClientSide) return;
+        PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity, new SoundTrigger(entity.getId(),
+                suit == null ? "" : suit, modifierType == null ? "" : modifierType, trigger));
+    }
+
     /** Lo pone el cliente: qué hacer al recibir un RepulsorShot. */
     public static java.util.function.Consumer<RepulsorShot> onRepulsorShot = m -> {};
 
@@ -165,6 +191,7 @@ public final class Net {
         }));
         r.playToClient(RepulsorShot.TYPE, RepulsorShot.CODEC, (msg, ctx) -> ctx.enqueueWork(() -> onRepulsorShot.accept(msg)));
         r.playToClient(LightningCast.TYPE, LightningCast.CODEC, (msg, ctx) -> ctx.enqueueWork(() -> onLightningCast.accept(msg)));
+        r.playToClient(SoundTrigger.TYPE, SoundTrigger.CODEC, (msg, ctx) -> ctx.enqueueWork(() -> onSoundTrigger.accept(msg)));
     }
 
     private static void handleDataSync(DataSync msg, IPayloadContext ctx) {

@@ -68,7 +68,11 @@ public final class Repulsor {
         Long last = LAST_SHOT.get(p);
         if (last != null && now - last < Math.max(0, cooldown(m) - 2)) return;
         LAST_SHOT.put(p, now);
+        fire(p, m);
+    }
 
+    /** Dispara un repulsor desde los ojos de la entidad hacia donde mira (jugador o centinela). */
+    public static void fire(LivingEntity p, ModifierEntry m) {
         double scale = DataStore.get(p, "fiskheroes:scale") instanceof Number n && n.doubleValue() > 0 ? n.doubleValue() : 1;
         double range = m.num("range", 32) * scale, speed = Math.max(0.5, m.num("speed", 10) * scale);
         double radius = m.num("radius", 0.1) * scale, spread = m.num("spread", 0);

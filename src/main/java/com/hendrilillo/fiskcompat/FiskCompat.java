@@ -21,6 +21,7 @@ public class FiskCompat {
 
     public FiskCompat(IEventBus modBus) {
         ModItems.register(modBus);
+        com.hendrilillo.fiskcompat.entity.ModEntities.register(modBus);
         com.hendrilillo.fiskcompat.net.Net.register(modBus);
         reloadHeroPacks();
     }

@@ -16,6 +16,7 @@ import com.hendrilillo.fiskcompat.power.modifier.ControlledFlight;
 import com.hendrilillo.fiskcompat.power.modifier.ModifierContext;
 import com.hendrilillo.fiskcompat.power.modifier.Modifiers;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -32,7 +33,7 @@ import java.util.function.Predicate;
  */
 @EventBusSubscriber(modid = FiskCompat.MODID)
 public final class HeroTicker {
-    private static final com.hendrilillo.fiskcompat.util.EntityMap<Player, ActiveHero> LAST = new com.hendrilillo.fiskcompat.util.EntityMap<>();
+    private static final com.hendrilillo.fiskcompat.util.EntityMap<LivingEntity, ActiveHero> LAST = new com.hendrilillo.fiskcompat.util.EntityMap<>();
 
     /** Lo pone el cliente: ¿es este jugador el jugador local? */
     public static Predicate<Player> isLocalPlayer = p -> false;
@@ -51,7 +52,14 @@ public final class HeroTicker {
         if (!client) Net.broadcastChanges(p);
     }
 
-    private static void tick(Player p, boolean client, boolean local) {
+    /** Tick del traje de una entidad que no es un jugador (el centinela de Iron Man); solo en el servidor. */
+    public static void tickEntity(LivingEntity e) {
+        if (e.level().isClientSide) return;
+        tick(e, false, false);
+        Net.broadcastChanges(e);
+    }
+
+    private static void tick(LivingEntity p, boolean client, boolean local) {
         ActiveHero hero = ActiveHero.of(p);
         ActiveHero prev = LAST.get(p);
         if (hero == null) {
@@ -60,12 +68,19 @@ public final class HeroTicker {
                 DataStore.resetWithoutSuit(p);
                 DataStore.set(p, ControlledFlight.FLYING, false);
                 if (local) Sync.setLocal(p, ControlledFlight.FLYING, false);
+                // Fisk reinicia también el estado del traje abierto y la máscara
+                for (String v : new String[]{"fiskheroes:suit_open", "fiskheroes:mask_open"}) {
+                    DataStore.set(p, v, false);
+                    if (local) Sync.setLocal(p, v, false);
+                }
+                DataStore.setNoInterp(p, "fiskheroes:suit_open_timer", (byte) 0);
                 p.setNoGravity(false);
                 if (!client) HeroAttributes.remove(p);
             }
             return;
         }
         LAST.put(p, hero);
+        Movement.tick(p);
         JSEntity js = JSEntity.of(p);
         int keys = local ? localKeys.getAsInt() : KeyState.get(p);
         ModifierContext ctx = new ModifierContext(p, js, hero, local, keys);
@@ -145,12 +160,18 @@ public final class HeroTicker {
         if ((pressed & KeyState.MASK) != 0 && hero.hasProperty(js, "MASK_TOGGLE")) {
             Sync.setLocal(p, "fiskheroes:mask_open", !(DataStore.get(p, "fiskheroes:mask_open") instanceof Boolean b && b));
         }
+        boolean sentryDone = false;
         for (int slot = -1; slot <= 5; slot++) {
             int bit = KeyState.slotBit(slot);
             if (bit == 0 || (pressed & bit) == 0) continue;
             for (String key : hero.keysInSlot(js, slot)) {
                 for (ModifierEntry m : hero.modifiers) {
                     if (!hero.isModifierEnabled(js, m)) continue;
+                    if (m.type.equals(com.hendrilillo.fiskcompat.power.modifier.SentryMode.TYPE) && key.equals(com.hendrilillo.fiskcompat.power.modifier.SentryMode.KEY)) {
+                        if (!sentryDone) com.hendrilillo.fiskcompat.power.modifier.SentryMode.keyPressed(p);
+                        sentryDone = true;
+                        continue;
+                    }
                     if (m.type.equals("fiskheroes:charged_beam") && key.equals("CHARGED_BEAM")) {
                         boolean charging = DataStore.get(p, "fiskheroes:beam_charging") instanceof Boolean b && b;
                         double charge = DataStore.get(p, "fiskheroes:beam_charge") instanceof Number n ? n.doubleValue() : 0;
