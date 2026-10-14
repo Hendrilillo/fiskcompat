@@ -4,6 +4,6 @@
   "package": "com.hendrilillo.fiskcompat.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
-  "client": [],
+  "client": ["CapeLayerMixin"],
   "injectors": { "defaultRequire": 1 }
 }
