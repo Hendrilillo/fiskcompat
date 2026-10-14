@@ -59,10 +59,9 @@ configurations {
 }
 
 dependencies {
-    // Motor JavaScript (el mismo que usaba Fisk en Java 8, ahora como librería aparte)
-    implementation "org.openjdk.nashorn:nashorn-core:${nashorn_version}"
-    jarJar("org.openjdk.nashorn:nashorn-core:[${nashorn_version},)") { version { prefer nashorn_version } }
-    additionalRuntimeClasspath "org.openjdk.nashorn:nashorn-core:${nashorn_version}"
+    // Motor JavaScript: NeoForge ya incluye Nashorn (lo usa para sus coremods), así que no se empaqueta.
+    compileOnly "org.openjdk.nashorn:nashorn-core:${nashorn_version}"
+    testImplementation "org.openjdk.nashorn:nashorn-core:${nashorn_version}"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
