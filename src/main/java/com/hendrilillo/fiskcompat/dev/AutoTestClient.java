@@ -79,7 +79,10 @@ public final class AutoTestClient {
         if (ticks == 395) shot(mc, "fiskcompat_nano_end.png");
         if (ticks == 396) com.hendrilillo.fiskcompat.data.Sync.setLocal(mc.player, "fiskheroes:mask_open", true);
         if (ticks == 425) shot(mc, "fiskcompat_mask_zoom.png");
-        if (ticks == 430) {
+        if (ticks == 426) mc.player.setYRot(mc.player.getYRot() + 60);
+        if (ticks == 428) mc.player.setYBodyRot(mc.player.getYRot());
+        if (ticks == 429) shot(mc, "fiskcompat_mask_side.png");
+        if (ticks == 432) {
             FiskCompat.LOGGER.info("[autotest] flying={} y={} timer={}", com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "fiskheroes:flying"),
                     mc.player.getY(), com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "fiskheroes:flight_timer"));
             mc.stop();

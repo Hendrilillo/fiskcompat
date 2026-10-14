@@ -34,11 +34,12 @@ public final class DataManagerApi {
 
     /** Sube (hasta 1) en "up" ticks si inc, baja (hasta 0) en "down" ticks si dec. */
     public static void incr(Entity e, String name, double up, double down, boolean inc, boolean dec) {
+        // Cuentas en float, igual que Fisk (los scripts comparan "== 1")
         Object cur = DataStore.get(e, name);
-        double v = cur instanceof Number n ? n.doubleValue() : 0;
-        if (inc && v < 1) v += 1 / up;
-        else if (dec && v > 0) v -= 1 / down;
-        DataStore.set(e, name, Math.max(0, Math.min(1, v)));
+        float v = cur instanceof Number n ? n.floatValue() : 0;
+        if (inc && v < 1) v += 1f / (float) up;
+        else if (dec && v > 0) v -= 1f / (float) down;
+        DataStore.set(e, name, Math.max(0f, Math.min(1f, v)));
     }
 
     public void incrementData(JSEntity e, String name, double up, double down, boolean inc, boolean dec) {

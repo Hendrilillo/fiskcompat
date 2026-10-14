@@ -194,7 +194,19 @@ public final class ModelResource extends AbstractJSObject {
             }
         }
 
-        private static double[] builtins(Entity e, float pt) {
+        /** Como builtins0 pero con la guiñada relativa al cuerpo acotada y, durmiendo, mirando al frente. */
+    private static double[] builtins(net.minecraft.world.entity.Entity e, float pt) {
+        double[] b = builtins0(e instanceof LivingEntity l ? l : null, e, pt);
+        if (e instanceof LivingEntity l && l.isSleeping()) {
+            b[10] = b[9];
+            b[11] = 0;
+        } else {
+            b[10] = b[9] + Mth.wrapDegrees(b[10] - b[9]);
+        }
+        return b;
+    }
+
+    private static double[] builtins0(LivingEntity unused, Entity e, float pt) {
             Vec3 look = e.getViewVector(pt);
             double limbSwing = 0, limbAmount = 0, bodyYaw = e.getViewYRot(pt);
             if (e instanceof LivingEntity l) {
