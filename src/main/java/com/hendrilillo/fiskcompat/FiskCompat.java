@@ -28,6 +28,7 @@ public class FiskCompat {
     public static void reloadHeroPacks() {
         HeroPackManager.load(FMLPaths.GAMEDIR.get());
         DataVars.load();
+        com.hendrilillo.fiskcompat.pack.PackLang.clear();
         com.hendrilillo.fiskcompat.power.PowerRegistry.clear();
         com.hendrilillo.fiskcompat.hero.ActiveHero.clearCache();
         HeroRegistry.loadAll();

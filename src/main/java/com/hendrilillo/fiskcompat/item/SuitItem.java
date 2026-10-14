@@ -67,7 +67,7 @@ public class SuitItem extends ArmorItem {
         String alt = suitId.equals(hero.id()) ? null : suitId.substring(hero.id().length() + 1);
         if (alt != null) {
             String altName = ModItems.alts(hero.id()).get(alt);
-            if (altName != null && !altName.contains(".name")) name = name + " §r(" + altName + "§r)";
+            if (altName != null) name = name + " §r(" + com.hendrilillo.fiskcompat.pack.PackLang.get(altName) + "§r)";
         }
         return Component.literal(name + "§r " + hero.pieceDisplayName(pieceIndex()));
     }

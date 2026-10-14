@@ -91,6 +91,7 @@ public final class BodyAnimator {
                         }
                     }
                 }
+                outputs.add(new FskScript.Output("firstPerson", new double[]{0})); // cada animación empieza en tercera persona
                 s.run(vars, outputs);
                 for (int i = 0; i < vars.length; i++) {
                     if (map[i] >= 0) set(part(model, map[i] / 6), map[i] % 6, (float) vars[i]);
@@ -106,7 +107,7 @@ public final class BodyAnimator {
             pm.leftPants.copyFrom(pm.leftLeg);
             pm.rightPants.copyFrom(pm.rightLeg);
         }
-        if (outputs.isEmpty()) return;
+        if (outputs.stream().allMatch(o -> o.channel().equals("firstPerson"))) return;
 
         // Las salidas están en el espacio del cuerpo antes del volteo de Minecraft (y hacia arriba, en bloques).
         float scale = 0.9375f;
@@ -114,8 +115,15 @@ public final class BodyAnimator {
         pose.scale(1 / scale, 1 / scale, 1 / scale);
         pose.scale(-1, -1, 1);
         Vec3 pivot = Vec3.ZERO;
+        boolean firstPersonOnly = false;
         for (FskScript.Output o : outputs) {
             double[] a = o.args();
+            if (o.channel().equals("firstPerson")) {
+                // Lo que viene después solo es para la vista en primera persona
+                firstPersonOnly = a.length > 0 && a[0] != 0;
+                continue;
+            }
+            if (firstPersonOnly) continue;
             switch (o.channel()) {
                 case "pivot" -> { if (a.length >= 3) pivot = new Vec3(a[0], a[1], a[2]); }
                 case "translate" -> { if (a.length >= 3) pose.translate(a[0], a[1], a[2]); }

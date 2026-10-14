@@ -163,6 +163,8 @@ public final class HeroDefinition {
     public String pieceDisplayName(int slot) {
         String p = piece(slot);
         if (p == null) return "";
+        String translated = com.hendrilillo.fiskcompat.pack.PackLang.get(p + ".name");
+        if (!translated.equals(p + ".name")) return translated;
         if (p.startsWith("item.superhero_armor.piece.")) {
             String raw = p.substring("item.superhero_armor.piece.".length()).replace('_', ' ');
             StringBuilder sb = new StringBuilder();

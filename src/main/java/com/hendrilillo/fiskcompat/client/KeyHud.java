@@ -34,7 +34,7 @@ public final class KeyHud {
         for (int slot = 1; slot <= 5; slot++) {
             for (String key : hero.keysInSlot(js, slot)) {
                 HeroDefinition.KeyBind kb = hero.def.keyBinds().get(key);
-                String name = kb.name().startsWith("key.") ? Component.translatable(kb.name()).getString() : kb.name();
+                String name = kb.name().startsWith("key.") ? com.hendrilillo.fiskcompat.pack.PackLang.get(kb.name()) : kb.name();
                 String bind = ClientKeys.ABILITIES[slot - 1].getTranslatedKeyMessage().getString();
                 g.drawString(mc.font, "§7[" + bind + "] §f" + name, 4, y, 0xFFFFFF, true);
                 y += 10;

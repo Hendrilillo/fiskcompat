@@ -23,7 +23,7 @@ public final class ModifierEntry {
     }
 
     public boolean isToggle() {
-        return json.has("isToggle") && json.get("isToggle").getAsBoolean();
+        return !json.has("isToggle") || json.get("isToggle").getAsBoolean();
     }
 
     public JsonObject obj(String name) {

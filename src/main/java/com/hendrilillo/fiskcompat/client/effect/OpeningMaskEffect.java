@@ -31,7 +31,7 @@ public class OpeningMaskEffect extends EffectObject {
         if (anchorPart != null) anchorPart.translateAndRotate(ctx.poseStack);
         float p = (float) Math.max(0, Math.min(1, progress));
         ctx.poseStack.translate(offset[0] / 16f, offset[1] / 16f, offset[2] / 16f);
-        if (rotation[0] != 0) ctx.poseStack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(rotation[0] * p));
+        if (rotation[0] != 0) ctx.poseStack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(-rotation[0] * p));
         if (rotation[1] != 0) ctx.poseStack.mulPose(com.mojang.math.Axis.YP.rotationDegrees(-rotation[1] * p));
         if (rotation[2] != 0) ctx.poseStack.mulPose(com.mojang.math.Axis.ZP.rotationDegrees(-rotation[2] * p));
         ctx.poseStack.translate(-offset[0] / 16f, -offset[1] / 16f, -offset[2] / 16f);
