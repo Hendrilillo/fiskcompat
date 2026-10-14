@@ -46,10 +46,47 @@ public final class BodyAnimator {
 
     /** Se llama justo después de setupAnim del modelo de la entidad. */
     public static void apply(LivingEntity entity, HumanoidModel<?> model, PoseStack pose, float pt) {
-        if (!(entity instanceof Player) || ActiveHero.of(entity) == null) return;
+        List<FskScript.Output> outputs = run(entity, model, pt, builtins(entity, pt));
+        if (outputs == null) return;
+        model.hat.copyFrom(model.head);
+        if (model instanceof PlayerModel<?> pm) {
+            pm.jacket.copyFrom(pm.body);
+            pm.leftSleeve.copyFrom(pm.leftArm);
+            pm.rightSleeve.copyFrom(pm.rightArm);
+            pm.leftPants.copyFrom(pm.leftLeg);
+            pm.rightPants.copyFrom(pm.rightLeg);
+        }
+        if (outputs.stream().allMatch(o -> o.channel().equals("firstPerson"))) return;
+
+        // Las salidas están en el espacio del cuerpo antes del volteo de Minecraft (y hacia arriba, en bloques).
+        float scale = 0.9375f;
+        pose.translate(0, 1.501f, 0);
+        pose.scale(1 / scale, 1 / scale, 1 / scale);
+        pose.scale(-1, -1, 1);
+        applyOutputs(outputs, pose, false);
+        pose.scale(-1, -1, 1);
+        pose.scale(scale, scale, scale);
+        pose.translate(0, -1.501f, 0);
+    }
+
+    /**
+     * Primera persona (brazo con la mano vacía): como Fisk, solo se aplican las salidas marcadas con
+     * out "firstPerson" (true), sobre la pose del brazo que prepara Minecraft. Las partes no se mueven.
+     */
+    public static void applyFirstPerson(LivingEntity entity, PoseStack pose, float pt) {
+        Vec3 look = entity.getViewVector(pt);
+        double[] b = {entity.getX() - entity.xo, entity.getY() - entity.yo, entity.getZ() - entity.zo, look.x, look.y, look.z,
+                0, 0, entity.tickCount + pt, 0, 0, 0};
+        List<FskScript.Output> outputs = run(entity, null, pt, b);
+        if (outputs != null) applyOutputs(outputs, pose, true);
+    }
+
+    /** Ejecuta las animaciones del héroe (por prioridad). Con modelo, mueve sus partes. Null si no hay. */
+    private static List<FskScript.Output> run(LivingEntity entity, HumanoidModel<?> model, float pt, double[] builtins) {
+        if (!(entity instanceof Player) || ActiveHero.of(entity) == null) return null;
         ActiveHero hero = ActiveHero.of(entity);
         HeroRendererScript r = ClientHeroes.renderer(hero.suitId);
-        if (r == null || r.customAnimations().isEmpty()) return;
+        if (r == null || r.customAnimations().isEmpty()) return null;
         JSEntity.partialTicks = pt;
         JSEntity js = JSEntity.of(entity);
 
@@ -57,7 +94,6 @@ public final class BodyAnimator {
         for (Object o : r.customAnimations().values()) if (o instanceof BipedAnimation b) anims.add(b);
         anims.sort((a, b) -> Double.compare(a.priority, b.priority));
 
-        double[] builtins = builtins(entity, pt);
         List<FskScript.Output> outputs = new ArrayList<>();
         for (BipedAnimation a : anims) {
             FskScript s = a.script();
@@ -86,60 +122,51 @@ public final class BodyAnimator {
                         for (int p = 0; p < PARTS.length; p++) {
                             if (!PARTS[p].equals(pn)) continue;
                             for (int c = 0; c < CHANNELS.length; c++) {
-                                if (CHANNELS[c].equals(ch)) { map[i] = p * 6 + c; vars[i] = get(part(model, p), c); }
+                                if (CHANNELS[c].equals(ch)) {
+                                    map[i] = p * 6 + c;
+                                    vars[i] = model != null ? get(part(model, p), c) : 0;
+                                }
                             }
                         }
                     }
                 }
                 outputs.add(new FskScript.Output("firstPerson", new double[]{0})); // cada animación empieza en tercera persona
                 s.run(vars, outputs);
-                for (int i = 0; i < vars.length; i++) {
-                    if (map[i] >= 0) set(part(model, map[i] / 6), map[i] % 6, (float) vars[i]);
+                if (model != null) {
+                    for (int i = 0; i < vars.length; i++) {
+                        if (map[i] >= 0) set(part(model, map[i] / 6), map[i] % 6, (float) vars[i]);
+                    }
                 }
             } catch (Throwable ignored) {
             }
         }
-        model.hat.copyFrom(model.head);
-        if (model instanceof PlayerModel<?> pm) {
-            pm.jacket.copyFrom(pm.body);
-            pm.leftSleeve.copyFrom(pm.leftArm);
-            pm.rightSleeve.copyFrom(pm.rightArm);
-            pm.leftPants.copyFrom(pm.leftLeg);
-            pm.rightPants.copyFrom(pm.rightLeg);
-        }
-        if (outputs.stream().allMatch(o -> o.channel().equals("firstPerson"))) return;
+        return outputs;
+    }
 
-        // Las salidas están en el espacio del cuerpo antes del volteo de Minecraft (y hacia arriba, en bloques).
-        float scale = 0.9375f;
-        pose.translate(0, 1.501f, 0);
-        pose.scale(1 / scale, 1 / scale, 1 / scale);
-        pose.scale(-1, -1, 1);
-        Vec3 pivot = Vec3.ZERO;
-        boolean firstPersonOnly = false;
+    /** Aplica las salidas de la vista indicada (como Fisk: el pivote va en fracciones de 0.6 x 1.8 x 0.6). */
+    private static void applyOutputs(List<FskScript.Output> outputs, PoseStack pose, boolean firstPersonView) {
+        double[] pivot = null;
+        boolean firstPerson = false;
         for (FskScript.Output o : outputs) {
             double[] a = o.args();
             if (o.channel().equals("firstPerson")) {
-                // Lo que viene después solo es para la vista en primera persona
-                firstPersonOnly = a.length > 0 && a[0] != 0;
+                firstPerson = a.length > 0 && a[0] == 1;
                 continue;
             }
-            if (firstPersonOnly) continue;
+            if (firstPerson != firstPersonView) continue;
             switch (o.channel()) {
-                case "pivot" -> { if (a.length >= 3) pivot = new Vec3(a[0], a[1], a[2]); }
+                case "pivot" -> pivot = new double[]{a.length > 0 ? a[0] : 0, a.length > 1 ? a[1] : 0, a.length > 2 ? a[2] : 0};
                 case "translate" -> { if (a.length >= 3) pose.translate(a[0], a[1], a[2]); }
                 case "rotate" -> {
                     if (a.length >= 4 && a[0] != 0 && (a[1] != 0 || a[2] != 0 || a[3] != 0)) {
-                        pose.translate(pivot.x, pivot.y, pivot.z);
+                        if (pivot != null) pose.translate(pivot[0] * 0.6, pivot[1] * 1.8, pivot[2] * 0.6);
                         pose.mulPose(new Quaternionf().rotationAxis((float) Math.toRadians(a[0]), (float) a[1], (float) a[2], (float) a[3]));
-                        pose.translate(-pivot.x, -pivot.y, -pivot.z);
+                        if (pivot != null) pose.translate(-pivot[0] * 0.6, -pivot[1] * 1.8, -pivot[2] * 0.6);
                     }
                 }
                 default -> { }
             }
         }
-        pose.scale(-1, -1, 1);
-        pose.scale(scale, scale, scale);
-        pose.translate(0, -1.501f, 0);
     }
 
     /** Como builtins0 pero con la guiñada relativa al cuerpo acotada y, durmiendo, mirando al frente. */

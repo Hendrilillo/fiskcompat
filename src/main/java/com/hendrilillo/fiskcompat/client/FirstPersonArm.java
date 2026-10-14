@@ -35,6 +35,12 @@ public final class FirstPersonArm {
             model = new SuitModel<>(Minecraft.getInstance().getEntityModels().bakeLayer(SuitModel.LAYER));
         }
         try {
+            // Animaciones en primera persona (p. ej. al apuntar): mueven el brazo antes de dibujarlo
+            float pt = Minecraft.getInstance().getTimer().getGameTimeDeltaPartialTick(true);
+            com.hendrilillo.fiskcompat.client.anim.BodyAnimator.applyFirstPerson(player, event.getPoseStack(), pt);
+        } catch (Throwable ignored) {
+        }
+        try {
             JSEntity js = JSEntity.of(player);
             HeroRendererScript.Slot slot = HeroRendererScript.Slot.CHESTPLATE;
             model.attackTime = 0;

@@ -55,7 +55,7 @@ public class JSEntity {
     }
 
     public JSEntity as(String t) { return this; }
-    public Object world() { Unimplemented.report("entity.world()"); return new Dummy("world"); }
+    public JSWorld world() { return JSWorld.wrap(entity.level()); }
 
     public JSItem getEquipmentInSlot(int slot) {
         LivingEntity l = living();
@@ -171,8 +171,18 @@ public class JSEntity {
 
     public void playSound(String sound, double volume, double pitch) { Unimplemented.report("entity.playSound"); }
     public Object team() { return new Dummy("team"); }
-    public void hurt(Object hero, String type, String damageType, float amount) { Unimplemented.report("entity.hurt"); }
-    public void hurtByAttacker(Object hero, String type, String damageType, float amount, JSEntity attacker) { Unimplemented.report("entity.hurtByAttacker"); }
+    /** Daño de un script (solo en el servidor). El mensaje de muerte de Fisk no se usa. */
+    public void hurt(Object hero, String type, String deathMessage, float amount) {
+        if (!entity.level().isClientSide) entity.hurt(entity.damageSources().generic(), amount);
+    }
+
+    public void hurtByAttacker(Object hero, String type, String deathMessage, float amount, JSEntity attacker) {
+        if (entity.level().isClientSide) return;
+        Entity a = attacker == null ? null : attacker.entity;
+        var src = a instanceof net.minecraft.world.entity.player.Player p ? entity.damageSources().playerAttack(p)
+                : a instanceof LivingEntity l ? entity.damageSources().mobAttack(l) : entity.damageSources().generic();
+        if (a != entity) entity.hurt(src, amount);
+    }
 
     private static JSVector.Vec3 vec(Vec3 v) { return new JSVector.Vec3(v.x, v.y, v.z); }
 

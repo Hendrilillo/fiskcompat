@@ -20,6 +20,8 @@ Mod para **Minecraft 1.21.1 (NeoForge)** que carga **heropacks de Fisk's Superhe
 - **Máscara**: M.
 - **Apuntar / repulsor**: mantén la tecla de apuntar (normalmente C) y haz clic derecho para disparar.
 - **Unibeam**: pulsa y mantén su tecla (normalmente V) para cargar; dispara solo al completarse la carga.
+- **Equipo del traje** (Alt izquierdo): con un objeto válido en la mano lo guarda en el traje (p. ej. TNT, pólvora o cargas de fuego para los cohetes del brazo de Sind); con la mano vacía saca el último.
+- **Cohetes del brazo y similares** (`lightning_cast`): clic derecho sin apuntar y con la mano vacía cuando el traje lo permite.
 - **Rayos y láseres** (energy_projection, heat_vision): mientras mantienes su tecla. Algunos trajes los usan con el clic izquierdo (entonces el clic no golpea).
 
 ## Estado
@@ -42,7 +44,11 @@ Mod para **Minecraft 1.21.1 (NeoForge)** que carga **heropacks de Fisk's Superhe
 | Teclas de habilidad (C, V, B, N, G) y máscara (M) con lista en pantalla | ✅ |
 | Vuelo (doble salto), transformación, cooldown, escudo, inmunidades, atributos | ✅ |
 | Apuntar, repulsores, unibeam, rayos de energía y láseres (daño y dibujo) | ✅ |
-| Cohetes, bengalas, rayos que encadenan (`lightning_cast`), destrozos de bloques | ⏳ |
+| Animaciones en primera persona (brazo al apuntar, etc.) | ✅ |
+| `lightning_cast` (cohetes del brazo), equipo guardado en el traje, bengalas | ✅ |
+| Láseres que derriten hielo y funden bloques (si `mobGriefing` está activado) | ✅ |
+| `entity.world()` para los scripts (bloques, entidades cercanas, bioma) | ✅ |
+| Modo centinela (`sentry_mode`), sonidos, partículas, HUD | ⏳ |
 | Sonidos, HUD, partículas | ⏳ |
 
 ## Desarrollo

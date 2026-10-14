@@ -33,8 +33,9 @@ public final class JSNbt {
     public byte[] getByteArray(String k) { return tag.getByteArray(k); }
     public int[] getIntArray(String k) { return tag.getIntArray(k); }
     public boolean getBoolean(String k) { return tag.getBoolean(k); }
-    public JSNbt getCompoundTag(String k) { return new JSNbt(tag.getCompound(k)); }
-    public JSNbtList getTagList(String k) { return new JSNbtList(tag.getList(k, Tag.TAG_COMPOUND)); }
+    // Lo anidado comparte el guardado con el ítem: cambiar una parte guarda todo el NBT
+    public JSNbt getCompoundTag(String k) { return new JSNbt(tag.getCompound(k), writeBack); }
+    public JSNbtList getTagList(String k) { return new JSNbtList(tag.getList(k, Tag.TAG_COMPOUND), writeBack); }
     public JSNbtList getStringList(String k) { return new JSNbtList(tag.getList(k, Tag.TAG_STRING)); }
     public JSNbtList getIntArrayList(String k) { return new JSNbtList(tag.getList(k, Tag.TAG_INT_ARRAY)); }
     public JSNbtList getDoubleList(String k) { return new JSNbtList(tag.getList(k, Tag.TAG_DOUBLE)); }

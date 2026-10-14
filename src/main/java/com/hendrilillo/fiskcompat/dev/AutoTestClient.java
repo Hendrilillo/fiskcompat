@@ -110,6 +110,14 @@ public final class AutoTestClient {
                 golems.isEmpty() ? "-" : golems.get(0).getHealth());
     }
 
+    private static void logNbt(Minecraft mc, String what) {
+        var chest = mc.player.getItemBySlot(net.minecraft.world.entity.EquipmentSlot.CHEST);
+        var data = chest.get(net.minecraft.core.component.DataComponents.CUSTOM_DATA);
+        FiskCompat.LOGGER.info("[autotest] {} hand={} armgun={} armtimer={} nbt={}", what, mc.player.getMainHandItem(),
+                com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "sind:dyn/armgun_bool"),
+                com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "sind:dyn/armrockets_timer"), data);
+    }
+
     /** Prueba de ataques: rayos en un soporte de armadura (vista lateral) y disparos del jugador. */
     private static void attacks(Minecraft mc) {
         var keys = com.hendrilillo.fiskcompat.client.ClientKeys.ABILITIES;
@@ -155,8 +163,35 @@ public final class AutoTestClient {
         if (ticks == 345) { log(mc, "laser"); shot(mc, "fiskcompat_laser_back.png"); }
         if (ticks == 346) mc.options.setCameraType(CameraType.FIRST_PERSON);
         if (ticks == 350) shot(mc, "fiskcompat_laser_fp.png");
-        if (ticks == 380) { keys[4].setDown(false); log(mc, "end"); }
-        if (ticks == 390) mc.stop();
+        if (ticks == 380) { keys[4].setDown(false); log(mc, "end laser"); }
+        // Primera persona apuntando, con la mano visible
+        if (ticks == 385) { mc.options.hideGui = false; mc.options.setCameraType(CameraType.FIRST_PERSON); keys[0].setDown(true); }
+        if (ticks == 400) shot(mc, "fiskcompat_aim_fp.png");
+        if (ticks == 401) keys[0].setDown(false);
+        if (ticks == 410) shot(mc, "fiskcompat_noaim_fp.png");
+        // Cohete del brazo: guardar TNT en el traje, recargar, sacar el brazo y disparar
+        if (ticks == 415) {
+            mc.player.getInventory().selected = 0;
+            var server = mc.getSingleplayerServer();
+            var uuid = mc.player.getUUID();
+            server.execute(() -> {
+                var sp = server.getPlayerList().getPlayer(uuid);
+                sp.getInventory().selected = 0;
+                sp.getInventory().setItem(0, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.TNT, 8));
+            });
+        }
+        if (ticks == 418) net.minecraft.client.KeyMapping.click(com.hendrilillo.fiskcompat.client.ClientKeys.EQUIP.getKey());
+        if (ticks == 425) { logNbt(mc, "stored"); net.minecraft.client.KeyMapping.click(keys[3].getKey()); }
+        if (ticks == 435) { logNbt(mc, "reloaded"); keys[3].setDown(true); }
+        if (ticks == 470) { logNbt(mc, "deployed"); mc.options.keyUse.setDown(true); }
+        if (ticks == 472) mc.options.keyUse.setDown(false);
+        if (ticks == 474) shot(mc, "fiskcompat_armrocket_fp.png");
+        if (ticks == 480) { mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT); }
+        if (ticks == 500) { mc.options.keyUse.setDown(true); }
+        if (ticks == 502) mc.options.keyUse.setDown(false);
+        if (ticks == 504) shot(mc, "fiskcompat_armrocket_front.png");
+        if (ticks == 520) { keys[3].setDown(false); logNbt(mc, "after rockets"); log(mc, "end"); }
+        if (ticks == 530) mc.stop();
     }
 
     private static void shot(Minecraft mc, String name) {

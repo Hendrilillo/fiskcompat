@@ -46,7 +46,7 @@ import java.util.WeakHashMap;
 @EventBusSubscriber(modid = FiskCompat.MODID, value = Dist.CLIENT)
 public final class BeamRender {
     public static final String CHARGED_BEAM = "fiskheroes:charged_beam", ENERGY_PROJECTION = "fiskheroes:energy_projection",
-            HEAT_VISION = "fiskheroes:heat_vision", REPULSOR = "fiskheroes:repulsor_blast";
+            HEAT_VISION = "fiskheroes:heat_vision", REPULSOR = "fiskheroes:repulsor_blast", LIGHTNING = "fiskheroes:lightning_cast";
 
     /** Punto de salida de un rayo, relativo a la cámara. */
     record Start(PropertyBinding prop, BeamConstellation.Entry entry, Vector3f pos) {}
@@ -60,6 +60,7 @@ public final class BeamRender {
 
     static {
         Net.onRepulsorShot = BeamRender::onRepulsorShot;
+        Net.onLightningCast = BeamRender::onLightning;
     }
 
     public static void init() {
@@ -91,11 +92,13 @@ public final class BeamRender {
             case ENERGY_PROJECTION -> "fiskheroes:energy_projection_timer";
             case HEAT_VISION -> "fiskheroes:heat_vision_timer";
             case REPULSOR -> "fiskheroes:aiming_timer";
+            case LIGHTNING -> "";
             default -> null;
         };
     }
 
     static float timer(Entity e, String type, float pt) {
+        if (type.equals(LIGHTNING)) return flashAlpha(e, pt);
         String var = timerVar(type);
         if (var == null) return 0;
         Object v = DataStore.getInterpolated(e, var, pt);
@@ -194,6 +197,10 @@ public final class BeamRender {
                     REPULSOR_HAND.put(e, new Vec3(s.pos.x + camPos.x, s.pos.y + camPos.y, s.pos.z + camPos.z));
                     continue;
                 }
+                if (type.equals(LIGHTNING)) {
+                    drew |= drawFlashes(vc, e, s, camPos, pt, ticks);
+                    continue;
+                }
                 if (!hero.hasModifier(type)) continue;
                 float t = timer(e, type, pt);
                 Vector3f end = ends.computeIfAbsent(type, k -> {
@@ -274,6 +281,59 @@ public final class BeamRender {
         if (s.lengthSquared() < 1e-8f) s = new Vector3f(axis).cross(0, 1, 0);
         if (s.lengthSquared() < 1e-8f) s.set(1, 0, 0);
         return s.normalize();
+    }
+
+    // ------------------------------------------------------------------ lightning_cast (cohetes del brazo...)
+
+    private static final int FLASH_TICKS = 6;
+
+    private static final class Flash {
+        final LivingEntity shooter;
+        final Vec3 end;
+        final List<Vec3> chain;
+        int age, slow;
+
+        Flash(LivingEntity shooter, Vec3 end, List<Vec3> chain) {
+            this.shooter = shooter;
+            this.end = end;
+            this.chain = chain;
+        }
+    }
+
+    private static final List<Flash> FLASHES = new ArrayList<>();
+
+    static float flashAlpha(Entity e, float pt) {
+        float best = 0;
+        for (Flash f : FLASHES) if (f.shooter == e) best = Math.max(best, 1 - (f.age + pt) / FLASH_TICKS);
+        return best;
+    }
+
+    private static void onLightning(Net.LightningCast m) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null || !(mc.level.getEntity(m.shooter()) instanceof LivingEntity le)) return;
+        List<Vec3> chain = new ArrayList<>();
+        for (int i = 0; i + 2 < m.chain().length; i += 3) chain.add(new Vec3(m.chain()[i], m.chain()[i + 1], m.chain()[i + 2]));
+        FLASHES.add(new Flash(le, new Vec3(m.x(), m.y(), m.z()), chain));
+        if (le == mc.player) mc.player.swing(net.minecraft.world.InteractionHand.MAIN_HAND);
+    }
+
+    private static boolean drawFlashes(VertexConsumer vc, LivingEntity e, Start s, Vec3 camPos, float pt, double ticks) {
+        boolean drew = false;
+        float[] size = s.entry.size() != null ? s.entry.size() : new float[]{1, 1};
+        for (Flash f : FLASHES) {
+            if (f.shooter != e) continue;
+            float alpha = Math.max(0, 1 - (f.age + pt) / FLASH_TICKS);
+            if (alpha <= 0) continue;
+            Vector3f end = rel(f.end, camPos);
+            drawBeam(vc, s.pos, end, size[0] / 16f, size[1] / 16f, s.prop.beam, s.prop.color.rgb, alpha, ticks);
+            for (Vec3 c : f.chain) drawBeam(vc, end, rel(c, camPos), size[0] / 16f, size[1] / 16f, s.prop.beam, s.prop.color.rgb, alpha, ticks);
+            drew = true;
+        }
+        return drew;
+    }
+
+    private static Vector3f rel(Vec3 v, Vec3 camPos) {
+        return new Vector3f((float) (v.x - camPos.x), (float) (v.y - camPos.y), (float) (v.z - camPos.z));
     }
 
     // ------------------------------------------------------------------ disparos de repulsor
@@ -385,6 +445,14 @@ public final class BeamRender {
             s.age++;
             if ((s.age - TRAIL) * s.speed >= s.dist || s.age > 200) it.remove();
         }
-        if (Minecraft.getInstance().level == null) SHOTS.clear();
+        for (Iterator<Flash> it = FLASHES.iterator(); it.hasNext(); ) {
+            Flash f = it.next();
+            if (com.hendrilillo.fiskcompat.dev.AutoTest.ENABLED && ++f.slow % 8 != 0) continue;
+            if (++f.age >= FLASH_TICKS || f.shooter.isRemoved()) it.remove();
+        }
+        if (Minecraft.getInstance().level == null) {
+            SHOTS.clear();
+            FLASHES.clear();
+        }
     }
 }

@@ -123,6 +123,28 @@ public final class Net {
         public Type<? extends CustomPacketPayload> type() { return TYPE; }
     }
 
+    /** Servidor -> cliente: rayo instantáneo de lightning_cast (fin y, si encadena, puntos de los demás objetivos). */
+    public record LightningCast(int shooter, double x, double y, double z, double[] chain) implements CustomPacketPayload {
+        public static final Type<LightningCast> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(FiskCompat.MODID, "lightning_cast"));
+        public static final StreamCodec<RegistryFriendlyByteBuf, LightningCast> CODEC = StreamCodec.of((buf, m) -> {
+            buf.writeVarInt(m.shooter);
+            buf.writeDouble(m.x); buf.writeDouble(m.y); buf.writeDouble(m.z);
+            buf.writeVarInt(m.chain.length);
+            for (double d : m.chain) buf.writeDouble(d);
+        }, buf -> {
+            int id = buf.readVarInt();
+            double x = buf.readDouble(), y = buf.readDouble(), z = buf.readDouble();
+            double[] c = new double[Math.min(buf.readVarInt(), 300)];
+            for (int i = 0; i < c.length; i++) c[i] = buf.readDouble();
+            return new LightningCast(id, x, y, z, c);
+        });
+
+        @Override
+        public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
+
+    public static java.util.function.Consumer<LightningCast> onLightningCast = m -> {};
+
     /** Lo pone el cliente: qué hacer al recibir un RepulsorShot. */
     public static java.util.function.Consumer<RepulsorShot> onRepulsorShot = m -> {};
 
@@ -136,9 +158,13 @@ public final class Net {
         r.playToServer(ClientData.TYPE, ClientData.CODEC, Net::handleClientData);
         r.playToServer(Keys.TYPE, Keys.CODEC, Net::handleKeys);
         r.playToServer(Fire.TYPE, Fire.CODEC, (msg, ctx) -> ctx.enqueueWork(() -> {
-            if (ctx.player() instanceof ServerPlayer p && msg.kind() == 0) com.hendrilillo.fiskcompat.power.modifier.Repulsor.shoot(p);
+            if (!(ctx.player() instanceof ServerPlayer p)) return;
+            if (msg.kind() == 0) com.hendrilillo.fiskcompat.power.modifier.Repulsor.shoot(p);
+            else if (msg.kind() == 1) com.hendrilillo.fiskcompat.power.modifier.LightningCast.cast(p);
+            else if (msg.kind() == 2) com.hendrilillo.fiskcompat.hero.SuitEquipment.toggle(p);
         }));
         r.playToClient(RepulsorShot.TYPE, RepulsorShot.CODEC, (msg, ctx) -> ctx.enqueueWork(() -> onRepulsorShot.accept(msg)));
+        r.playToClient(LightningCast.TYPE, LightningCast.CODEC, (msg, ctx) -> ctx.enqueueWork(() -> onLightningCast.accept(msg)));
     }
 
     private static void handleDataSync(DataSync msg, IPayloadContext ctx) {

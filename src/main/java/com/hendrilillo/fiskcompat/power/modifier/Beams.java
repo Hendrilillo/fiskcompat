@@ -76,7 +76,14 @@ public final class Beams {
         double scale = scale(c);
         BeamCast.Hit hit = BeamCast.fromEyes(e, m.num("range", 16) * scale, m.num("radius", 0.1) * scale, 1);
         if (m.type.equals("fiskheroes:heat_vision")) c.set(HEAT_LENGTH, (float) hit.distance(e.getEyePosition()));
-        if (e.level().isClientSide || hit.entity() == null) return;
+        if (e.level().isClientSide) return;
+        if (hit.block() != null && m.bool("canDoGriefing", false)) {
+            boolean heat = m.type.equals("fiskheroes:heat_vision");
+            if (heat || m.type.equals("fiskheroes:energy_projection")) {
+                com.hendrilillo.fiskcompat.power.Griefing.melt(e.level(), hit.block().getBlockPos(), heat ? 15 : 7);
+            }
+        }
+        if (hit.entity() == null) return;
         Entity target = hit.entity();
         if (resetEvery > 0 && e.tickCount % resetEvery == 0) target.invulnerableTime = 0;
         DamageProfile.of(m).apply(target, e, 1);

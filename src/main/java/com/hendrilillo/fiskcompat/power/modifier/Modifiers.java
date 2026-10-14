@@ -19,7 +19,7 @@ public final class Modifiers {
     private static final java.util.Set<String> PASSIVE = java.util.Set.of(
             "fiskheroes:fire_immunity", "fiskheroes:projectile_immunity", "fiskheroes:damage_immunity",
             "fiskheroes:water_breathing", "fiskheroes:fire_resistance", "fiskheroes:damage_resistance",
-            "fiskheroes:metal_skin", "fiskheroes:potion_immunity", Repulsor.TYPE);
+            "fiskheroes:metal_skin", "fiskheroes:potion_immunity", Repulsor.TYPE, LightningCast.TYPE);
 
     static {
         TICKING.put("fiskheroes:transformation", Modifiers::transformation);

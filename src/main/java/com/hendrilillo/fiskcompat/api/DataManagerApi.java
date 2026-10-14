@@ -73,16 +73,16 @@ public final class DataManagerApi {
     public void setByteArray(JSNbt n, String k, Object v) { if (v instanceof byte[] b) { n.tag.put(k, new ByteArrayTag(b)); n.changed(); } }
     public void setIntArray(JSNbt n, String k, Object v) { if (v instanceof int[] b) { n.tag.put(k, new IntArrayTag(b)); n.changed(); } }
     public void removeTag(JSNbt n, String k) { n.tag.remove(k); n.changed(); }
-    public void removeTag(JSNbtList l, int i) { if (i >= 0 && i < l.list.size()) l.list.remove(i); }
+    public void removeTag(JSNbtList l, int i) { if (i >= 0 && i < l.list.size()) { l.list.remove(i); l.changed(); } }
     public JSNbt newCompoundTag() { return new JSNbt(new CompoundTag()); }
     public JSNbt newCompoundTag(String snbt) {
         try { return new JSNbt(net.minecraft.nbt.TagParser.parseTag(snbt)); } catch (Exception e) { return new JSNbt(new CompoundTag()); }
     }
     public JSNbtList newTagList() { return new JSNbtList(new ListTag()); }
     public JSNbtList newTagList(String snbt) { return new JSNbtList(new ListTag()); }
-    public void appendTag(JSNbtList l, JSNbt t) { l.list.add(t.tag.copy()); }
-    public void appendString(JSNbtList l, String s) { l.list.add(StringTag.valueOf(s)); }
-    public void appendFloat(JSNbtList l, Number v) { l.list.add(FloatTag.valueOf(v.floatValue())); }
-    public void appendDouble(JSNbtList l, Number v) { l.list.add(DoubleTag.valueOf(v.doubleValue())); }
+    public void appendTag(JSNbtList l, JSNbt t) { l.list.add(t.tag.copy()); l.changed(); }
+    public void appendString(JSNbtList l, String s) { l.list.add(StringTag.valueOf(s)); l.changed(); }
+    public void appendFloat(JSNbtList l, Number v) { l.list.add(FloatTag.valueOf(v.floatValue())); l.changed(); }
+    public void appendDouble(JSNbtList l, Number v) { l.list.add(DoubleTag.valueOf(v.doubleValue())); l.changed(); }
     public void appendIntArray(JSNbtList l, Object v) { if (v instanceof int[] a) l.list.add(new IntArrayTag(a)); }
 }

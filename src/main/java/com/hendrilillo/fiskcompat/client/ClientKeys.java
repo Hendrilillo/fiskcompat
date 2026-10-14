@@ -37,10 +37,11 @@ public final class ClientKeys {
             new KeyMapping("key.fiskcompat.ability5", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_G, CATEGORY),
     };
     public static final KeyMapping MASK = new KeyMapping("key.fiskcompat.mask", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_M, CATEGORY);
+    public static final KeyMapping EQUIP = new KeyMapping("key.fiskcompat.equip", InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_ALT, CATEGORY);
 
     private static int held, lastSent = -1;
     private static boolean prevJump, prevAttack;
-    private static long lastRepulsor = -1000;
+    private static long lastRepulsor = -1000, lastLightning = -1000;
 
     private ClientKeys() {}
 
@@ -55,6 +56,7 @@ public final class ClientKeys {
         public static void register(RegisterKeyMappingsEvent event) {
             for (KeyMapping k : ABILITIES) event.register(k);
             event.register(MASK);
+            event.register(EQUIP);
             init();
         }
     }
@@ -84,6 +86,7 @@ public final class ClientKeys {
             if (jump) now |= KeyState.JUMP;
             if (!gui && MASK.isDown()) now |= KeyState.MASK;
             while (MASK.consumeClick()) if (!gui) pressed |= KeyState.MASK;
+            while (EQUIP.consumeClick()) if (!gui && com.hendrilillo.fiskcompat.hero.ActiveHero.of(p) != null) PacketDistributor.sendToServer(new Net.Fire(2));
             held = now;
 
             ControlledFlight.setInput(p, new ControlledFlight.Input(p.input.forwardImpulse, p.input.leftImpulse,
@@ -91,7 +94,7 @@ public final class ClientKeys {
             prevJump = jump;
 
             if (pressed != 0) HeroTicker.onLocalKeysPressed(p, pressed);
-            if ((now & KeyState.USE) != 0) tryRepulsor(p);
+            if ((now & KeyState.USE) != 0 && !tryRepulsor(p)) tryLightning(p);
             if (now != lastSent || pressed != 0) {
                 PacketDistributor.sendToServer(new Net.Keys(now, pressed));
                 lastSent = now;
@@ -99,16 +102,27 @@ public final class ClientKeys {
         }
 
         /** Clic derecho apuntando: disparo de repulsor (con su tiempo de espera). */
-        private static void tryRepulsor(LocalPlayer p) {
-            if (!(DataStore.get(p, Repulsor.AIMING) instanceof Boolean b && b)) return;
+        private static boolean tryRepulsor(LocalPlayer p) {
+            if (!(DataStore.get(p, Repulsor.AIMING) instanceof Boolean b && b)) return false;
             ActiveHero hero = ActiveHero.of(p);
-            if (hero == null) return;
+            if (hero == null) return false;
             ModifierEntry m = hero.enabledModifier(JSEntity.of(p), Repulsor.TYPE);
-            if (m == null) return;
+            if (m == null) return false;
             long now = p.level().getGameTime();
-            if (now - lastRepulsor < Repulsor.cooldown(m)) return;
+            if (now - lastRepulsor < Repulsor.cooldown(m)) return true;
             lastRepulsor = now;
             PacketDistributor.sendToServer(new Net.Fire(0));
+            return true;
+        }
+
+        /** Clic derecho sin apuntar y con la mano vacía: lightning_cast (cohetes del brazo en Sind). */
+        private static void tryLightning(LocalPlayer p) {
+            ModifierEntry m = com.hendrilillo.fiskcompat.power.modifier.LightningCast.usable(p);
+            if (m == null) return;
+            long now = p.level().getGameTime();
+            if (now - lastLightning < com.hendrilillo.fiskcompat.power.modifier.LightningCast.cooldown(m)) return;
+            lastLightning = now;
+            PacketDistributor.sendToServer(new Net.Fire(1));
         }
 
         /** Mientras se apunta, el clic derecho no usa objetos; con teclas en el clic izquierdo, no se golpea. */
@@ -118,7 +132,8 @@ public final class ClientKeys {
             if (p == null) return;
             ActiveHero hero = ActiveHero.of(p);
             if (hero == null) return;
-            if (event.isUseItem() && DataStore.get(p, Repulsor.AIMING) instanceof Boolean b && b) {
+            if (event.isUseItem() && (DataStore.get(p, Repulsor.AIMING) instanceof Boolean b && b
+                    || com.hendrilillo.fiskcompat.power.modifier.LightningCast.usable(p) != null)) {
                 event.setCanceled(true);
                 event.setSwingHand(false);
             } else if (event.isAttack() && hero.usesAttackKey(JSEntity.of(p))) {

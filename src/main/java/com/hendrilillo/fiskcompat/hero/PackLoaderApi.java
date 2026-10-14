@@ -23,7 +23,7 @@ public final class PackLoaderApi {
 
     public JSVector.Vec2 asVec2(double x, double y) { return new JSVector.Vec2(x, y); }
 
-    public int getNumericalItemId(String item) { return 0; }
+    public int getNumericalItemId(String item) { return SuitEquipment.legacyId(item); }
 
     /** Lado lógico actual; se actualiza desde el código de Minecraft. */
     public static final class Side {
