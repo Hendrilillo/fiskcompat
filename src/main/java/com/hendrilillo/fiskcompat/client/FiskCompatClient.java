@@ -32,6 +32,14 @@ import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 
 @EventBusSubscriber(modid = FiskCompat.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class FiskCompatClient {
+    static {
+        com.hendrilillo.fiskcompat.render.HeroRendererScript.effectFactory = (type, renderer) -> switch (type) {
+            case "fiskheroes:overlay" -> new com.hendrilillo.fiskcompat.client.effect.OverlayEffect(type, renderer);
+            case "fiskheroes:opening_mask" -> new com.hendrilillo.fiskcompat.client.effect.OpeningMaskEffect(type, renderer);
+            default -> new com.hendrilillo.fiskcompat.client.effect.EffectObject(type, renderer);
+        };
+    }
+
     private FiskCompatClient() {}
 
     /** Añade el resource pack virtual con los assets de los heropacks (siempre activo). */

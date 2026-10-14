@@ -121,6 +121,19 @@ public final class HeroPackResources extends AbstractPackResources {
                 if (rl != null) output.accept(rl, () -> new ByteArrayInputStream(v));
             }
         });
+        if (namespace.equals(FiskCompat.MODID) && ("models/" + ICON_PREFIX).startsWith(path.endsWith("/") ? path : path + "/")
+                || namespace.equals(FiskCompat.MODID) && path.startsWith("models/" + ICON_PREFIX)) {
+            // Modelos de iconos: uno por cada textura en textures/items/heroes de los heropacks.
+            for (String icon : HeroPackManager.listAssets("textures/items/heroes/")) {
+                if (!icon.endsWith(".png")) continue;
+                int c = icon.indexOf(':');
+                String modelPath = "models/" + ICON_PREFIX + icon.substring(0, c) + "/" + icon.substring(c + 1, icon.length() - 4) + ".json";
+                ResourceLocation rl = ResourceLocation.tryBuild(namespace, modelPath);
+                if (rl == null || !modelPath.startsWith(path)) continue;
+                byte[] data = iconModel(rl);
+                if (data != null) output.accept(rl, () -> new ByteArrayInputStream(data));
+            }
+        }
         if (!allowedNamespace(namespace)) return;
         for (HeroPack pack : HeroPackManager.packs()) {
             if (!pack.namespaces().contains(namespace)) continue;
@@ -140,6 +153,7 @@ public final class HeroPackResources extends AbstractPackResources {
             for (String ns : pack.namespaces()) if (allowedNamespace(ns) && ResourceLocation.isValidNamespace(ns)) out.add(ns);
         }
         for (String k : GENERATED.keySet()) out.add(k.split("/")[1]);
+        out.add(FiskCompat.MODID); // modelos de iconos generados al vuelo
         return out;
     }
 

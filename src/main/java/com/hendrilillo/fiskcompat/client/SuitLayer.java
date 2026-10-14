@@ -2,6 +2,7 @@ package com.hendrilillo.fiskcompat.client;
 
 import com.hendrilillo.fiskcompat.FiskCompat;
 import com.hendrilillo.fiskcompat.api.JSEntity;
+import com.hendrilillo.fiskcompat.client.effect.RenderContext;
 import com.hendrilillo.fiskcompat.item.SuitItem;
 import com.hendrilillo.fiskcompat.render.HeroRendererScript;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -50,13 +51,22 @@ public class SuitLayer<T extends LivingEntity, M extends HumanoidModel<T>> exten
                 List<String> parts = r.shownParts(slot);
                 model.showParts(parts != null ? parts : SuitModel.defaultParts(slot));
 
-                ResourceLocation tex = ClientHeroes.heroTexture(r.texturePath(r.textureKey(js, slot)));
+                ResourceLocation tex = ClientHeroes.heroTexture(r.texturePath(r.textureKey(js, slot)), js);
                 if (tex != null) {
                     model.renderToBuffer(poseStack, buffer.getBuffer(RenderType.armorCutoutNoCull(tex)), packedLight, OverlayTexture.NO_OVERLAY);
                 }
-                ResourceLocation lights = ClientHeroes.heroTexture(r.texturePath(r.lightsKey(js, slot)));
+                ResourceLocation lights = ClientHeroes.heroTexture(r.texturePath(r.lightsKey(js, slot)), js);
                 if (lights != null) {
                     model.renderToBuffer(poseStack, buffer.getBuffer(RenderType.eyes(lights)), packedLight, OverlayTexture.NO_OVERLAY);
+                }
+                if (r.hasFunction("render")) {
+                    RenderContext.current = new RenderContext(poseStack, buffer, packedLight, model, entity, js, slot, r,
+                            parts != null ? parts : SuitModel.defaultParts(slot));
+                    try {
+                        r.call("render", js, slot.name(), false);
+                    } finally {
+                        RenderContext.current = null;
+                    }
                 }
             } catch (Throwable e) {
                 if (REPORTED.add(suitId + ":" + slot)) {

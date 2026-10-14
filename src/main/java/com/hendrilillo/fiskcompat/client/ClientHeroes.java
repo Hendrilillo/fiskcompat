@@ -18,6 +18,7 @@ public final class ClientHeroes {
 
     public static void clearTextures() {
         TEXTURES.clear();
+        TxTextures.clear();
     }
 
     public static void clear() {
@@ -44,6 +45,12 @@ public final class ClientHeroes {
      * Convierte una ruta de textura de Fisk ("sind:mark2/mark2_layer1") en la textura de Minecraft
      * ("sind:textures/heroes/mark2/mark2_layer1.png"). Devuelve null si no existe.
      */
+    public static ResourceLocation heroTexture(String fiskPath, Object entity) {
+        if (fiskPath == null) return null;
+        if (fiskPath.endsWith(".tx.json")) return TxTextures.resolve(fiskPath, entity);
+        return heroTexture(fiskPath);
+    }
+
     public static ResourceLocation heroTexture(String fiskPath) {
         if (fiskPath == null) return null;
         return TEXTURES.computeIfAbsent(fiskPath, p -> {

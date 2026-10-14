@@ -89,11 +89,20 @@ public final class HeroRendererScript {
         for (String s : slots) fixHatLayer.add(Slot.valueOf(s));
     }
 
-    public Object createEffect(String type) {
+    /** Crea los objetos de efecto; el cliente la sustituye por la implementación real. */
+    public interface EffectFactory {
+        Object create(String type, HeroRendererScript renderer);
+    }
+
+    public static EffectFactory effectFactory = (type, renderer) -> {
         Unimplemented.report("renderer.createEffect(" + type + ")");
-        Dummy d = new Dummy("effect[" + type + "]");
-        effects.add(d);
-        return d;
+        return new Dummy("effect[" + type + "]");
+    };
+
+    public Object createEffect(String type) {
+        Object effect = effectFactory.create(type, this);
+        effects.add(effect);
+        return effect;
     }
 
     public Object bindProperty(String type) {

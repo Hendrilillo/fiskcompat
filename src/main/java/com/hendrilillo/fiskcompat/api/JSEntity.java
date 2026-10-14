@@ -103,6 +103,10 @@ public class JSEntity {
     public boolean isLivingEntity() { return entity instanceof LivingEntity; }
     public boolean isDisplayStand() { return entity instanceof ArmorStand; }
     public boolean isBookPlayer() { return false; }
+    public boolean isStatic() { return entity instanceof ArmorStand; }
+    public String getDisplayType() { return entity instanceof ArmorStand ? "DISPLAY_STAND" : ""; }
+    public boolean isInGui() { return false; }
+    public boolean isSkinShown() { return false; }
     public boolean isPlayer() { return entity instanceof Player; }
     public JSEntity asPlayer() { return this; }
     public boolean isArthropod() { return false; }
