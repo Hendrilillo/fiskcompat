@@ -25,7 +25,9 @@ Mod para **Minecraft 1.21.1 (NeoForge)** que carga **heropacks de Fisk's Superhe
 | Casco que se abre (`opening_mask`), `overlay` | ✅ |
 | Iconos de inventario | ✅ |
 | Brazo en primera persona | ✅ |
-| Modelos Tabula (`.tbl`) y animaciones (`.fsk`) | ⏳ |
+| Modelos Tabula (`.tbl`, formatos nuevo y antiguo) | ✅ |
+| Animaciones de modelos (`.fsk`) | ✅ 162/162 compilan |
+| Animaciones del cuerpo (`out "rotate"`...) | ⏳ |
 | Poderes (vuelo, repulsores, beams...) y teclas | ⏳ |
 | Variables de datos sincronizadas | ⏳ |
 | Sonidos, HUD, partículas | ⏳ |

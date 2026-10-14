@@ -26,6 +26,9 @@ public final class AutoTestClient {
             mc.options.hideGui = true;
             mc.options.setCameraType(CameraType.FIRST_PERSON);
         }
+        if (ticks == 110) mc.options.fov().set(30);
+        if (ticks == 115) shot(mc, "fiskcompat_zoom.png");
+        if (ticks == 118) mc.options.fov().set(70);
         if (ticks == 120) shot(mc, "fiskcompat_stands.png");
         if (ticks == 125) {
             mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT);

@@ -110,7 +110,13 @@ public final class HeroRendererScript {
         return new Dummy("property[" + type + "]");
     }
 
+    public static EffectFactory resourceFactory = null;
+
     public Object createResource(String type, String path) {
+        if (resourceFactory != null) {
+            Object r = resourceFactory.create(type + "|" + path, this);
+            if (r != null) return r;
+        }
         Unimplemented.report("renderer.createResource(" + type + ")");
         return new Dummy("resource[" + type + ":" + path + "]");
     }

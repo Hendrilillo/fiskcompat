@@ -36,7 +36,13 @@ public final class FiskCompatClient {
         com.hendrilillo.fiskcompat.render.HeroRendererScript.effectFactory = (type, renderer) -> switch (type) {
             case "fiskheroes:overlay" -> new com.hendrilillo.fiskcompat.client.effect.OverlayEffect(type, renderer);
             case "fiskheroes:opening_mask" -> new com.hendrilillo.fiskcompat.client.effect.OpeningMaskEffect(type, renderer);
+            case "fiskheroes:model" -> new com.hendrilillo.fiskcompat.client.effect.ModelEffect(type, renderer);
             default -> new com.hendrilillo.fiskcompat.client.effect.EffectObject(type, renderer);
+        };
+        com.hendrilillo.fiskcompat.render.HeroRendererScript.resourceFactory = (spec, renderer) -> {
+            int bar = spec.indexOf('|');
+            String type = spec.substring(0, bar), path = spec.substring(bar + 1);
+            return type.equals("MODEL") ? new com.hendrilillo.fiskcompat.client.model.ModelResource(path) : null;
         };
     }
 
@@ -106,6 +112,10 @@ public final class FiskCompatClient {
 
     @SubscribeEvent
     public static void reloadListeners(RegisterClientReloadListenersEvent event) {
-        event.registerReloadListener((ResourceManagerReloadListener) manager -> ClientHeroes.clearTextures());
+        event.registerReloadListener((ResourceManagerReloadListener) manager -> {
+            ClientHeroes.clearTextures();
+            com.hendrilillo.fiskcompat.client.model.TabulaModel.clearCache();
+            com.hendrilillo.fiskcompat.client.model.ModelResource.clearCache();
+        });
     }
 }

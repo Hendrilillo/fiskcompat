@@ -38,7 +38,7 @@ public class EffectObject extends AbstractJSObject {
         this.renderer = renderer;
     }
 
-    static double num(Object o) {
+    public static double num(Object o) {
         return o instanceof Number n ? n.doubleValue() : 0;
     }
 
@@ -124,9 +124,10 @@ public class EffectObject extends AbstractJSObject {
         ModelPart part = anchor.ignore ? null : anchorPart(model, anchor.part);
         if (part != null) part.translateAndRotate(pose);
         pose.translate(offset[0] / 16f, offset[1] / 16f, offset[2] / 16f);
-        if (rotation[2] != 0) pose.mulPose(Axis.ZP.rotationDegrees(rotation[2] * amount));
-        if (rotation[1] != 0) pose.mulPose(Axis.YP.rotationDegrees(rotation[1] * amount));
+        // Como en Fisk: orden X, Y, Z y con Y y Z invertidos.
         if (rotation[0] != 0) pose.mulPose(Axis.XP.rotationDegrees(rotation[0] * amount));
+        if (rotation[1] != 0) pose.mulPose(Axis.YP.rotationDegrees(-rotation[1] * amount));
+        if (rotation[2] != 0) pose.mulPose(Axis.ZP.rotationDegrees(-rotation[2] * amount));
         pose.scale(scale[0], scale[1], scale[2]);
     }
 
