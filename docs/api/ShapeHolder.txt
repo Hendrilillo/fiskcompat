@@ -1,0 +1,4 @@
+public class ShapeHolder extends ResourceHolder<JsonShape> {
+  public ShapeHolder(String);
+  public ShapeHolder(ShapeHolder);
+  public ShapeHolder$Line bindLine(Object);

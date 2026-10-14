@@ -1,0 +1,6 @@
+public class BeamRendererLaser implements IBeamRenderer {
+  public BeamRendererLaser();
+  public void render(Entity, float, float, float, Long, Vec3, Vec3, Vec3, float, float, float, float, float, float, boolean, boolean, float);
+  public void preRender(boolean);
+  public void postRender(boolean);
+  public void read(com.google.gson.stream.JsonReader, String, com.google.gson.stream.JsonToken) throws java.io.IOException;

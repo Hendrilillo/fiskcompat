@@ -1,0 +1,8 @@
+public class ShapeEntry {
+  public final float[] data;
+  public final float[] rotation;
+  public final Long seed;
+  public final Float spin;
+  public final javax.vecmath.Point2f size;
+  public ShapeEntry(float[], float[], Long, Float, javax.vecmath.Point2f);
+  public static ShapeEntry read(com.google.gson.stream.JsonReader, IShapeFormat) throws java.io.IOException;

@@ -1,0 +1,7 @@
+public interface IBeamRenderer {
+  public static final Minecraft MC;
+  public default void render(Entity, javax.vecmath.Point2f, float, Long, Vec3, Vec3, Vec3, float, float, float, float, float, float, boolean, boolean, float);
+  public abstract void render(Entity, float, float, float, Long, Vec3, Vec3, Vec3, float, float, float, float, float, float, boolean, boolean, float);
+  public abstract void preRender(boolean);
+  public abstract void postRender(boolean);
+  public abstract void read(com.google.gson.stream.JsonReader, String, com.google.gson.stream.JsonToken) throws java.io.IOException;

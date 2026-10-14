@@ -1,0 +1,2 @@
+public class Tbl5ModelRenderer extends AbstractTblModelRenderer {
+  public Tbl5ModelRenderer(TblModelBase, Tbl5Part);

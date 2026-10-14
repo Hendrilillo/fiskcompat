@@ -1,0 +1,13 @@
+public class JsonShape implements IJsonObject<JsonShape> {
+  public static final String MODEL_DIR;
+  public static final com.google.gson.GsonBuilder GSON_FACTORY;
+  public static final JsonObjectReader<JsonShape> READER;
+  public String parent;
+  public Float maxAngle;
+  public ShapeDataFormat dataFormat;
+  public List<ShapeEntry> shapes;
+  public JsonShape();
+  public String getParent();
+  public void inherit(JsonShape) throws java.io.IOException;
+  public void init(IResourceManager) throws java.io.IOException;
+  public void inherit(IJsonObject) throws java.io.IOException;

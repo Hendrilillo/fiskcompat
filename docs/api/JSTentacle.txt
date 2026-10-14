@@ -1,0 +1,11 @@
+public class JSTentacle extends JSEntityGeneric {
+  public static final JSTentacle NULL;
+  public static JSTentacle wrap(Entity);
+  public String type();
+  public boolean is(String);
+  public JSEntity as(String);
+  public JSEntity getCaster();
+  public int getIndex();
+  public float getAnchorTimer();
+  public float getGrabTimer();
+  public float getStrikeTimer();

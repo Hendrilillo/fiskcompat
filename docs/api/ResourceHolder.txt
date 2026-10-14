@@ -1,0 +1,3 @@
+public abstract class ResourceHolder<T> extends InitializableResource {
+  public final String key;
+  public ResourceHolder(String);

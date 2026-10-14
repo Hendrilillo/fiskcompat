@@ -1,0 +1,7 @@
+public abstract class AbstractRenderPropBeam extends AbstractRenderPropColor {
+  public AbstractRenderPropBeam();
+  public HeroRenderProp setConstellation(BeamConstlnHolder);
+  public HeroRenderProp setRenderer(BeamRendererHolder);
+  public HeroRenderProp setParticles(ParticleHolder);
+  public HeroRenderProp setAnchor(String);
+  public static List<BeamRenderData> getAll(HeroIteration, Entity, Class<? extends AbstractRenderPropBeam>, BeamRenderData);

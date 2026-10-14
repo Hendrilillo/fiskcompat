@@ -1,0 +1,12 @@
+public class JSNBTList {
+  public static final JSNBTList EMPTY;
+  public static JSNBTList wrap(NBTTagList);
+  public String type();
+  public int tagCount();
+  public JSNBT getCompoundTag(int);
+  public String getString(int);
+  public int[] getIntArray(int);
+  public double getDouble(int);
+  public float getFloat(int);
+  public String toString();
+  public boolean equals(Object);

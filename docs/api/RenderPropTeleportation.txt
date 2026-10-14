@@ -1,0 +1,2 @@
+public class RenderPropTeleportation extends AbstractRenderPropCloud {
+  public RenderPropTeleportation();

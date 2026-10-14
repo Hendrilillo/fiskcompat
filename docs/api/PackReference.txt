@@ -1,0 +1,15 @@
+public class PackReference {
+  public static final Comparator<PackReference> COMPARE_MARKETPLACE;
+  public static final Comparator<PackReference> COMPARE_DOMAIN;
+  public final String fileName;
+  public final String domain;
+  public final String name;
+  public final String watermark;
+  public final boolean marketplace;
+  public final boolean hidden;
+  public PackReference(String, String, String, String, boolean, boolean);
+  public PackReference(HeroPack);
+  public int getPageNumber();
+  public int hashCode();
+  public boolean equals(Object);
+  public String toString();

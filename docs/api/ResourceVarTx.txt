@@ -1,0 +1,14 @@
+public class ResourceVarTx implements IResourceVar, IJsonObject<ResourceVarTx> {
+  public final Set<ResourceLocation> resources;
+  public final String textureDir;
+  public static JsonObjectReader<ResourceVarTx> getReader(String);
+  public ResourceVarTx(function.Function<ResourceVarTx, TexturePath>, Map<String, ResourceVarTx$Getter>, boolean, String);
+  public String getParent();
+  public void inherit(ResourceVarTx) throws java.io.IOException;
+  public void load(TextureManager);
+  public ResourceLocation get(Entity, ItemStack);
+  public com.google.common.collect.ImmutableSet<ResourceLocation> getResources();
+  public ResourceLocation compute(Entity, ItemStack);
+  public List<Map<String, String>> generatePermutations();
+  public int indexOf(String);
+  public void inherit(IJsonObject) throws java.io.IOException;

@@ -1,0 +1,11 @@
+public class JsonConstant<T> {
+  public final Class<T> type;
+  public final String name;
+  public final T defVal;
+  public JsonConstant(String, Class<T>, T);
+  public T get();
+  public JsonConstant<T> set(Object);
+  public void load(String);
+  public void inherit(JsonConstant<T>);
+  public void postInit(JsonTrail) throws java.io.IOException;
+  public void read(com.google.gson.stream.JsonReader) throws java.io.IOException;

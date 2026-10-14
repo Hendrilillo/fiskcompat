@@ -1,0 +1,5 @@
+public class JsonTrailRGB extends JsonTrail {
+  public final float hueShift;
+  public JsonTrailRGB(IResourceManager, int) throws java.io.IOException;
+  public void inherit(JsonTrail) throws java.io.IOException;
+  public void inherit(IJsonObject) throws java.io.IOException;

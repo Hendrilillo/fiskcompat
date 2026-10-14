@@ -1,0 +1,8 @@
+public class Tbl5Model implements ITblModel {
+  public Tbl5Model();
+  public TblModelBase create();
+  public Tbl5Model copy();
+  public Tbl5Model inverted();
+  public ITblModel inflated(float);
+  public ITblModel inverted();
+  public ITblModel copy();

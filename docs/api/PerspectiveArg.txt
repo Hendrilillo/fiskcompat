@@ -1,0 +1,4 @@
+public class PerspectiveArg<T> {
+  public PerspectiveArg(T, JsonReaderFunc<T>);
+  public T get(boolean);
+  public void read(com.google.gson.stream.JsonReader, com.google.gson.stream.JsonToken) throws java.io.IOException;

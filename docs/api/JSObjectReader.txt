@@ -1,0 +1,2 @@
+public class JSObjectReader<T extends JSObject<T, ?>> extends HPObjectReader<T> {
+  public JSObjectReader(HandledFunction<String, T, Exception>, String, String);

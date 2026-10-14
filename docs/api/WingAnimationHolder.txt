@@ -1,0 +1,3 @@
+public class WingAnimationHolder extends ResourceHolder<WingAnimation> {
+  public WingAnimationHolder(String);
+  public WingAnimationHolder setData(function.BiConsumer<JSEntity, DataLoader>);

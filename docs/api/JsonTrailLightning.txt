@@ -1,0 +1,10 @@
+public class JsonTrailLightning extends JsonConstantContainer implements ITrailAspect {
+  public JsonTrailLightning();
+  public Integer getColor();
+  public Integer getColor(EntityLivingBase);
+  public Vec3 getVecColor();
+  public Vec3 getVecColor(EntityLivingBase);
+  public boolean isLightning();
+  public Integer getDensity();
+  public Float getDiffer();
+  public Float getOpacity();

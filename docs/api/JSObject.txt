@@ -1,0 +1,2 @@
+public abstract class JSObject<T extends JSObject<T, I>, I> implements IHPObject<T> {
+  public final I object;

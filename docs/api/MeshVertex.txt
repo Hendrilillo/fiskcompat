@@ -1,0 +1,5 @@
+public class MeshVertex {
+  public float vertX;
+  public float vertY;
+  public float vertZ;
+  public MeshVertex();

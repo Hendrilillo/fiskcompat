@@ -1,0 +1,9 @@
+public interface IHeroPackObjectLoader {
+  public abstract regex.Pattern getPattern();
+  public default regex.Pattern createPattern();
+  public abstract String fileExtension();
+  public abstract String directory();
+  public abstract String name();
+  public abstract byte index();
+  public abstract void load(IHeroPack, ReloadContainer, ResourceLocation, String) throws Exception;
+  public abstract void load(IHeroPack, ReloadContainer, ResourceLocation, concurrent.Callable<java.io.InputStream>, AbstractHeroPackSerializer) throws Exception;

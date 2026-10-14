@@ -1,0 +1,10 @@
+public class JSLocation {
+  public static final JSLocation NULL;
+  public static JSLocation wrap(World, int, int, int);
+  public String biome();
+  public boolean canSnow();
+  public boolean canRain();
+  public boolean isHighHumidity();
+  public float getTemperature();
+  public float getRainfall();
+  public String getStructure();

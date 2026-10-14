@@ -1,0 +1,6 @@
+public class HeroEffectMetalHeat extends AbstractHeroEffectOverlay {
+  public final MultiTexture texture;
+  public final CachedColor color;
+  public float opacity;
+  public HeroEffectMetalHeat();
+  public void render();

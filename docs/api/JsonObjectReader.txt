@@ -1,0 +1,6 @@
+public class JsonObjectReader<T extends IJsonObject<T>> extends HPObjectReader<T> {
+  public JsonObjectReader(Class<T>, String, String, com.google.gson.GsonBuilder);
+  public T read(IResourceManager, ResourceLocation) throws java.io.IOException;
+  public T read(IResourceManager, java.io.Reader, ResourceLocation) throws java.io.IOException;
+  public IHPObject read(IResourceManager, java.io.Reader, ResourceLocation) throws java.io.IOException;
+  public IHPObject read(IResourceManager, ResourceLocation) throws java.io.IOException;

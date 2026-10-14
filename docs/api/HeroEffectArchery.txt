@@ -1,0 +1,6 @@
+public class HeroEffectArchery extends HeroEffectJson {
+  public final MultiTexture textureArrow;
+  public final MultiTexture textureQuiver;
+  public HeroEffectArchery();
+  public boolean shouldRenderPass(ModelBipedMultiLayer, Entity, int);
+  public void read(com.google.gson.stream.JsonReader, String, com.google.gson.stream.JsonToken) throws java.io.IOException;

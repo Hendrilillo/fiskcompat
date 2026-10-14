@@ -1,0 +1,8 @@
+public class Bloom {
+  public Bloom();
+  public float getStrength();
+  public double getSpread();
+  public double getDropoff();
+  public double getQuality();
+  public boolean scaleToSize();
+  public static Bloom read(com.google.gson.stream.JsonReader) throws java.io.IOException;

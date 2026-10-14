@@ -1,0 +1,4 @@
+public class TblModelRenderer extends AbstractTblModelRenderer {
+  public final float[] renderScale;
+  public TblModelRenderer(TblModelBase, TblCube);
+  public void func_78785_a(float);

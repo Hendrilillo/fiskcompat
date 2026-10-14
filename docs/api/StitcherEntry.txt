@@ -1,0 +1,7 @@
+public class StitcherEntry {
+  public final int[] size;
+  public final int[] from;
+  public final int[] to;
+  public final function.BiConsumer<int[], int[]> transform;
+  public StitcherEntry(int[], int[], int[], function.BiConsumer<int[], int[]>);
+  public static StitcherEntry read(com.google.gson.stream.JsonReader) throws java.io.IOException;

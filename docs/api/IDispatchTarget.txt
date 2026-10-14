@@ -1,0 +1,9 @@
+public interface IDispatchTarget<T extends IDispatchTarget<T>> {
+  public abstract SoundDispatcher getDispatcher();
+  public abstract DispatchTargetFormat getFormat();
+  public abstract void dispatchToBytes(io.netty.buffer.ByteBuf);
+  public default SoundDispatchData dispatchData(SoundTrigger);
+  public default SoundDispatcher getDispatcherSafe(SoundTrigger);
+  public default void dispatchSoundAtEntity(Entity, SoundTrigger);
+  public default void dispatchSoundAt(World, double, double, double, SoundTrigger);
+  public default void broadcastSoundAtEntity(Entity, SoundTrigger);

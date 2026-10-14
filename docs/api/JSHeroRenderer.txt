@@ -1,0 +1,15 @@
+public class JSHeroRenderer extends JSRendererClass<JSHeroRenderer> {
+  public static final String RENDERER_DIR;
+  public static final JSClassReader<JSHeroRenderer> READER;
+  public void setTexture(function.BiFunction<JSEntity, String, String>);
+  public void setLights(function.BiFunction<JSEntity, String, String>);
+  public void setItemIcons(String...);
+  public void setItemIcon(String, String);
+  public void showModel(String, String...);
+  public void fixHatLayer(String...);
+  public HeroEffectJS createEffect(String);
+  public HeroRenderProp bindProperty(String);
+  public void addAnimationEvent(String, AnimationEventHolder);
+  public void addCustomAnimation(String, AnimationHolder);
+  public void removeCustomAnimation(String);
+  public void reprioritizeDefaultAnimation(String, float);

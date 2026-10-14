@@ -1,0 +1,4 @@
+public interface IResourceVar {
+  public abstract void load(TextureManager);
+  public abstract ResourceLocation get(Entity, ItemStack);
+  public abstract com.google.common.collect.ImmutableSet<ResourceLocation> getResources();

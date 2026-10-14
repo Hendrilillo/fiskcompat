@@ -1,0 +1,7 @@
+public final class ShapeDataFormat extends Enum<ShapeDataFormat> {
+  public static final ShapeDataFormat CIRCLES;
+  public static final ShapeDataFormat LINES;
+  public static final ShapeDataFormat WIREFRAME;
+  public final IShapeFormat format;
+  public static ShapeDataFormat[] values();
+  public static ShapeDataFormat valueOf(String);

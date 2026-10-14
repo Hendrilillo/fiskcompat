@@ -1,0 +1,13 @@
+public abstract class TextureGetter {
+  public static final Map<String, function.BiFunction<EntityLivingBase, Integer, String>> FUNCTIONS;
+  public static final String RENDER_LAYER;
+  public static final String HELD_ITEM;
+  public static final String WORN_HELMET;
+  public static final String WORN_CHESTPLATE;
+  public static final String WORN_LEGGINGS;
+  public static final String WORN_BOOTS;
+  public TextureGetter();
+  public static void registerFunctions();
+  public abstract String getResult(Map<String, String>);
+  public abstract Set<String> getFunctions(Set<String>);
+  public static TextureGetter$Wrapper read(com.google.gson.stream.JsonReader) throws java.io.IOException;

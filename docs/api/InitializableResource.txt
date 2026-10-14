@@ -1,0 +1,2 @@
+public abstract class InitializableResource extends LoadableResource {
+  public InitializableResource();

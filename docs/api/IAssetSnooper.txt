@@ -1,0 +1,7 @@
+public interface IAssetSnooper {
+  public static final regex.Pattern PATTERN;
+  public abstract Map<ResourceLocation, HandledSupplier<java.io.InputStream, java.io.IOException>> getAssets();
+  public abstract Set<String> getResourceDomains();
+  public default void storeData(ResourceLocation, java.io.InputStream) throws java.io.IOException;
+  public default void storeData(ResourceLocation, byte[]) throws java.io.IOException;
+  public default ResourceLocation toLocation(String, zip.ZipEntry);

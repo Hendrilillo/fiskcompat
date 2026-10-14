@@ -1,0 +1,3 @@
+public class JSArrowFuncConverter {
+  public JSArrowFuncConverter();
+  public static String convert(String);

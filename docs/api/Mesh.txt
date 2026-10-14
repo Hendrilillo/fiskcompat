@@ -1,0 +1,7 @@
+public class Mesh extends JSObject<Mesh, IMesh> {
+  public static final String MODEL_DIR;
+  public static final JSObjectReader<Mesh> READER;
+  public Mesh(String) throws javax.script.ScriptException;
+  public static float getWidth(MeshResolution);
+  public static float getLength(MeshResolution);
+  public static IMesh read(IResourceManager, ResourceLocation) throws java.io.IOException;

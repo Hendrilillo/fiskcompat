@@ -1,0 +1,7 @@
+public abstract class HPObjectReader<T extends IHPObject<T>> {
+  public HPObjectReader(String, String);
+  public HPObjectReader<T> disableCaching();
+  public void clearCache();
+  public static void clearAllCaches();
+  public T read(IResourceManager, ResourceLocation) throws java.io.IOException;
+  public T read(IResourceManager, java.io.Reader, ResourceLocation) throws java.io.IOException;

@@ -1,0 +1,3 @@
+public class RenderProps {
+  public RenderProps();
+  public static void register();

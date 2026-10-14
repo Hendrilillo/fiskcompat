@@ -1,0 +1,3 @@
+public class HeroEffects {
+  public HeroEffects();
+  public static void register();

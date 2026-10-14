@@ -1,0 +1,2 @@
+public class RenderPropEnergyProj extends AbstractRenderPropBeam {
+  public RenderPropEnergyProj();

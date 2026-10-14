@@ -1,0 +1,4 @@
+public class HeroRendererMartianManhunterJson extends HeroRendererJson {
+  public HeroRendererMartianManhunterJson(String, JsonHeroRenderer);
+  public boolean shouldRenderDefaultModel(EntityPlayer, HeroIteration, boolean);
+  public boolean preRenderArm(EntityPlayer, ItemStack, HeroIteration, int, int);

@@ -1,0 +1,6 @@
+public class HeroPackVersionException extends HeroPackException {
+  public final String packName;
+  public final String version;
+  public final int format;
+  public HeroPackVersionException(String, String, String, int);
+  public void logError(function.Consumer<IChatComponent>);

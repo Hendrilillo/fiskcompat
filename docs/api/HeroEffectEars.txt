@@ -1,0 +1,7 @@
+public class HeroEffectEars extends HeroEffectJS {
+  public final AnchorHolder anchor;
+  public float angle;
+  public float inset;
+  public float opacity;
+  public HeroEffectEars();
+  public void render();

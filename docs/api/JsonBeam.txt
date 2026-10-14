@@ -1,0 +1,11 @@
+public class JsonBeam implements IJsonObject<JsonBeam> {
+  public static final String MODEL_DIR;
+  public static final com.google.gson.GsonBuilder GSON_FACTORY;
+  public static final JsonObjectReader<JsonBeam> READER;
+  public String parent;
+  public List<BeamAspect> aspects;
+  public JsonBeam();
+  public String getParent();
+  public void inherit(JsonBeam) throws java.io.IOException;
+  public void init(IResourceManager) throws java.io.IOException;
+  public void inherit(IJsonObject) throws java.io.IOException;

@@ -1,0 +1,11 @@
+public class JsonParticles implements IJsonObject<JsonParticles> {
+  public static final String MODEL_DIR;
+  public static final com.google.gson.GsonBuilder GSON_FACTORY;
+  public static final JsonObjectReader<JsonParticles> READER;
+  public String parent;
+  public List<ParticleEmitter> emitters;
+  public JsonParticles();
+  public String getParent();
+  public void inherit(JsonParticles) throws java.io.IOException;
+  public void init(IResourceManager) throws java.io.IOException;
+  public void inherit(IJsonObject) throws java.io.IOException;

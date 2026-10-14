@@ -1,0 +1,9 @@
+public class RenderPropParticles extends HeroRenderProp {
+  public RenderPropParticles();
+  public HeroRenderProp setParticles(ParticleHolder);
+  public static void tick(EntityLivingBase, HeroIteration);
+  public static void setup(EntityLivingBase, Matrix, Vec3, float);
+  public static Vec3 orient(Vec3, double);
+  public static Vec3 orient(EntityLivingBase, ModelBiped, BodyPart, Vec3, Matrix, float, float, boolean);
+  public static Vec3 orient(EntityLivingBase, ModelBiped, AnchorHolder, Vec3, Matrix, boolean, float, float, boolean);
+  public static void scale(EntityFX, float);

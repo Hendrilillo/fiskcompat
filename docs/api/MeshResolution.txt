@@ -1,0 +1,3 @@
+public class MeshResolution {
+  public MeshResolution();
+  public void requestResolution(float, float);

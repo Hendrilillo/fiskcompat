@@ -1,0 +1,11 @@
+public class SoundRange {
+  public static final SoundRange DEFAULT;
+  public static final SoundRange ZERO;
+  public final float distance;
+  public SoundRange(float, boolean, boolean, boolean);
+  public SoundRange(float, SoundRange$Target);
+  public boolean shouldIgnoreRange();
+  public boolean shouldSendToClient();
+  public boolean shouldSendToOthers();
+  public SoundRange add(SoundRange);
+  public static SoundRange read(Object);

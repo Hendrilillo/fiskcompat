@@ -1,0 +1,9 @@
+public class HeroEffectBooster extends AbstractHeroEffectPositioned {
+  public float progress;
+  public float opacity;
+  public float flutter;
+  public float speedScale;
+  public HeroEffectBooster();
+  public HeroEffectJS setIcon(IconHolder);
+  public HeroEffectJS setSize(float, float);
+  public void render();

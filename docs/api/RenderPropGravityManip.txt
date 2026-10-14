@@ -1,0 +1,2 @@
+public class RenderPropGravityManip extends AbstractRenderPropColor {
+  public RenderPropGravityManip();

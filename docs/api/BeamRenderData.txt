@@ -1,0 +1,18 @@
+public class BeamRenderData {
+  public static final BeamRenderData LIGHTNING_CAST;
+  public static final BeamRenderData ENERGY_DISCHARGE;
+  public static final BeamRenderData COLD_GUN;
+  public static final BeamRenderData ENERGY_BLAST;
+  public static final BeamRenderData REPULSOR;
+  public BeamRenderData(List<BeamConstlnHolder$Beam>, Vec3, BodyPart);
+  public BeamRenderData(BeamConstlnHolder$Beam, Vec3, BodyPart);
+  public BeamRenderData(float, float, Vec3);
+  public BeamRenderData(float, Vec3);
+  public BeamRenderData copy(List<BeamConstlnHolder$Beam>, Vec3, JsonBeam, BodyPart, boolean, boolean, JsonParticles);
+  public List<BeamConstlnHolder$Beam> getBeams();
+  public Vec3 getColor();
+  public JsonBeam getBeamType();
+  public JsonParticles getParticles();
+  public BodyPart getAnchor();
+  public boolean hasAnchor();
+  public boolean isBodyAnchored();

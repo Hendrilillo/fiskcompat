@@ -1,0 +1,7 @@
+public class EntityContext implements IDispatchContext {
+  public final Entity entity;
+  public EntityContext(Entity);
+  public DispatchContextType getContextType();
+  public Object createContext();
+  public void serializeContext(io.netty.buffer.ByteBuf);
+  public static function.Function<World, ?> fromBytes(io.netty.buffer.ByteBuf);

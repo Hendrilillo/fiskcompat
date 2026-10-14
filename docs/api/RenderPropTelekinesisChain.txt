@@ -1,0 +1,5 @@
+public class RenderPropTelekinesisChain extends AbstractRenderPropCloud {
+  public final AnchorHolder anchor;
+  public RenderPropTelekinesisChain();
+  public HeroRenderProp setOffset(float, float, float);
+  public HeroRenderProp setFirstPerson(float, float, float);

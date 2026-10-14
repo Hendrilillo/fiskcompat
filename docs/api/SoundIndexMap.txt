@@ -1,0 +1,13 @@
+public class SoundIndexMap {
+  public static final java.io.File INDEX_FILE;
+  public static final java.io.File OBJECT_DIR;
+  public static final java.io.File DEV_DIR;
+  public Map<String, Integer> versions;
+  public Map<String, UUID> objects;
+  public SoundIndexMap();
+  public java.io.InputStream getInputStream(ResourceLocation) throws java.io.FileNotFoundException;
+  public boolean resourceExists(ResourceLocation);
+  public Set getResourceDomains();
+  public String toString();
+  public static SoundIndexMap downloadAndIndex(Map<String, SoundRepository>, boolean) throws java.io.IOException;
+  public static void collectZipEntryData(String, java.io.InputStream, Map<String, byte[]>) throws java.io.IOException;

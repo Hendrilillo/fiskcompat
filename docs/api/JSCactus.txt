@@ -1,0 +1,7 @@
+public class JSCactus extends JSEntityLiving {
+  public static final JSCactus NULL;
+  public static JSCactus wrap(Entity);
+  public String type();
+  public boolean is(String);
+  public JSEntity as(String);
+  public int getCactusSize();

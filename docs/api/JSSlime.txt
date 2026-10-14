@@ -1,0 +1,7 @@
+public class JSSlime extends JSEntityLiving {
+  public static final JSSlime NULL;
+  public static JSSlime wrap(Entity);
+  public String type();
+  public boolean is(String);
+  public JSEntity as(String);
+  public int getSlimeSize();

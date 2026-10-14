@@ -1,0 +1,4 @@
+public class RenderPropShadowDome extends HeroRenderProp {
+  public final MultiTexture texture;
+  public RenderPropShadowDome();
+  public HeroRenderProp setShape(int, int);

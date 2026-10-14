@@ -1,0 +1,11 @@
+public abstract class HeroRenderProp extends InitializableResource implements HeroRenderer$Pass {
+  public HeroRenderProp();
+  public static void register(String, Class<? extends HeroRenderProp>);
+  public static Class<? extends HeroRenderProp> get(String);
+  public static String getKey(Class<? extends HeroRenderProp>);
+  public static HeroRenderProp create(String);
+  public static com.google.common.collect.HashBiMap<String, Class<? extends HeroRenderProp>> getRegistry();
+  public HeroRenderProp setCondition(function.Function<JSEntity, Boolean>);
+  public static <T extends HeroRenderProp, V> V get(HeroIteration, Entity, Class<T>, function.Function<T, V>, V);
+  public static <T extends HeroRenderProp, V> V get(HeroIteration, Entity, Class<T>, function.BiFunction<HeroRenderer, T, V>, V);
+  public static <T extends HeroRenderProp> Integer getHex(HeroIteration, Entity, Class<T>, function.Function<T, CachedColor>, Integer);

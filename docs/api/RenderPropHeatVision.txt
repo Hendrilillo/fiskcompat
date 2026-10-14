@@ -1,0 +1,2 @@
+public class RenderPropHeatVision extends AbstractRenderPropBeam {
+  public RenderPropHeatVision();

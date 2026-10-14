@@ -1,0 +1,3 @@
+public interface IJsonObject<T extends IJsonObject<T>> extends IHPObject<T> {
+  public abstract String getParent();
+  public abstract void inherit(T) throws java.io.IOException;

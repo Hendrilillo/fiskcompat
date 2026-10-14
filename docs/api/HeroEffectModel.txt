@@ -1,0 +1,5 @@
+public class HeroEffectModel extends AbstractHeroEffectPositioned {
+  public float opacity;
+  public HeroEffectModel();
+  public HeroEffectJS setModel(ModelHolder);
+  public void render();

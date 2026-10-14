@@ -1,0 +1,5 @@
+public abstract class JsonConstantContainer {
+  public JsonConstantContainer();
+  public void inherit(JsonConstantContainer) throws java.io.IOException;
+  public void postInit(JsonTrail) throws java.io.IOException;
+  public JsonConstantContainer read(com.google.gson.stream.JsonReader) throws java.io.IOException;

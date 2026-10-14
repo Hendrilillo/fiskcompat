@@ -1,0 +1,6 @@
+public class HeroEffectWingsuit extends HeroEffectJS {
+  public final MultiTexture texture;
+  public float unfold;
+  public float opacity;
+  public HeroEffectWingsuit();
+  public void render();

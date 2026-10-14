@@ -1,0 +1,13 @@
+public class JsonTextureStitcher implements IJsonObject<JsonTextureStitcher> {
+  public static final String MODEL_DIR;
+  public static final com.google.gson.GsonBuilder GSON_FACTORY;
+  public static final JsonObjectReader<JsonTextureStitcher> READER;
+  public String parent;
+  public int[] dimensions;
+  public List<StitcherEntry> entries;
+  public JsonTextureStitcher();
+  public String getParent();
+  public void inherit(JsonTextureStitcher) throws java.io.IOException;
+  public void init(IResourceManager) throws java.io.IOException;
+  public java.awt.image.BufferedImage restitch(java.awt.image.BufferedImage);
+  public void inherit(IJsonObject) throws java.io.IOException;

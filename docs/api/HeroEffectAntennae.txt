@@ -1,0 +1,8 @@
+public class HeroEffectAntennae extends HeroEffectJS {
+  public final AnchorHolder anchor;
+  public float angle;
+  public float offset;
+  public float opacity;
+  public HeroEffectAntennae();
+  public HeroEffectJS setSegments(int);
+  public void render();

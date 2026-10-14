@@ -1,0 +1,7 @@
+public interface ITrailAspect {
+  public static final ITrailAspect DEFAULT;
+  public abstract Integer getColor();
+  public abstract Integer getColor(EntityLivingBase);
+  public abstract Vec3 getVecColor();
+  public abstract Vec3 getVecColor(EntityLivingBase);
+  public abstract boolean isLightning();

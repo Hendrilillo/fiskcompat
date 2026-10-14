@@ -1,0 +1,6 @@
+public class HeroPackDuplicateException extends HeroPackException {
+  public final String domain;
+  public final String location1;
+  public final String location2;
+  public HeroPackDuplicateException(String, String, String, String);
+  public void logError(function.Consumer<IChatComponent>);

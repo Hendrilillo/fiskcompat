@@ -1,0 +1,3 @@
+public abstract class AbstractRenderPropCloud extends HeroRenderProp {
+  public AbstractRenderPropCloud();
+  public HeroRenderProp setCloud(CloudHolder);

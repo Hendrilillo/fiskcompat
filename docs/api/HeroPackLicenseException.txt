@@ -1,0 +1,5 @@
+public class HeroPackLicenseException extends HeroPackException {
+  public final String domain;
+  public final String location;
+  public HeroPackLicenseException(String, String, String);
+  public void logError(function.Consumer<IChatComponent>);

@@ -1,0 +1,11 @@
+public class ResourceMap {
+  public ResourceMap(JsonObjectReader<ResourceVarTx>);
+  public ResourceMap(String);
+  public ResourceMap copy();
+  public ResourceLocation getResource(Entity, ItemStack, String);
+  public ResourceLocation getResource(Entity, int, String);
+  public Set<String> getResourceKeys();
+  public void put(String, IResourceVar);
+  public void inherit(ResourceMap);
+  public void load(IResourceManager, TextureManager) throws java.io.IOException;
+  public static ResourceMap read(com.google.gson.stream.JsonReader, String) throws java.io.IOException;

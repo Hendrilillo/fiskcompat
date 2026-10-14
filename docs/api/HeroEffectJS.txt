@@ -1,0 +1,8 @@
+public abstract class HeroEffectJS extends InitializableResource {
+  public HeroEffectJS();
+  public static void register(String, Class<? extends HeroEffectJS>);
+  public static Class<? extends HeroEffectJS> get(String);
+  public static String getKey(Class<? extends HeroEffectJS>);
+  public static com.google.common.collect.HashBiMap<String, Class<? extends HeroEffectJS>> getRegistry();
+  public static HeroEffectJS create(String);
+  public void render();

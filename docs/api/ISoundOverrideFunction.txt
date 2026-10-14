@@ -1,0 +1,2 @@
+public interface ISoundOverrideFunction {
+  public abstract boolean continuePlaying(JSEntity, JSSound);

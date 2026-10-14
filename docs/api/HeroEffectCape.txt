@@ -1,0 +1,11 @@
+public class HeroEffectCape extends HeroEffectJS {
+  public final MultiTexture texture;
+  public float rigid;
+  public float length;
+  public float width;
+  public float opacity;
+  public HeroEffectCape();
+  public HeroEffectJS setMesh(MeshHolder);
+  public HeroEffectJS setAnchor(String);
+  public HeroEffectJS setOffset(float, float, float);
+  public void render();

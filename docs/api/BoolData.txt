@@ -1,0 +1,8 @@
+public class BoolData {
+  public static final BoolData NULL;
+  public boolean get(Entity, Object, boolean);
+  public boolean get(Entity, boolean);
+  public static BoolData create(function.Function<Entity, Boolean>);
+  public static BoolData create(boolean);
+  public static BoolData read(String);
+  public static BoolData read(com.google.gson.stream.JsonReader) throws java.io.IOException;

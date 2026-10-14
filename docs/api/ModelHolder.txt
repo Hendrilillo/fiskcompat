@@ -1,0 +1,8 @@
+public class ModelHolder extends ResourceHolder<ITblModel> {
+  public final MultiTexture texture;
+  public ModelHolder(String);
+  public ModelHolder(ModelHolder);
+  public ModelAnimationHolder bindAnimation(String);
+  public CubeOffset getCubeOffset(String);
+  public CubeOffset getCubeOffset(String, String);
+  public void generateMirror();

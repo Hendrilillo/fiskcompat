@@ -1,0 +1,4 @@
+public class DataLoader {
+  public DataLoader();
+  public void load(int, double);
+  public void load(double);

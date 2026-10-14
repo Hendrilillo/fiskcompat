@@ -1,0 +1,9 @@
+public final class NBTType extends Enum<NBTType> {
+  public static final NBTType FLOAT;
+  public static final NBTType INTEGER;
+  public static final NBTType BOOLEAN;
+  public static final NBTType EFFECT_LIST;
+  public static NBTType[] values();
+  public static NBTType valueOf(String);
+  public Object read(NBTBase);
+  public NBTBase write(Object);

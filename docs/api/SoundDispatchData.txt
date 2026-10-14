@@ -1,0 +1,15 @@
+public class SoundDispatchData {
+  public final SoundTrigger trigger;
+  public final IDispatchTarget target;
+  public SoundDispatchData(boolean, SoundTrigger, IDispatchTarget);
+  public SoundDispatchData(SoundTrigger, IDispatchTarget);
+  public SoundDispatchData(io.netty.buffer.ByteBuf);
+  public void toBytes(io.netty.buffer.ByteBuf);
+  public SoundDispatchData contextualize(IDispatchContext);
+  public SoundDispatchData excludeSender();
+  public boolean shouldIncludeSender();
+  public boolean isApplicable(Entity, cpw.mods.fml.relauncher.Side);
+  public Object getContext(World);
+  public void dispatch(Entity);
+  public void dispatch(World, double, double, double);
+  public void broadcastSoundAtEntity(Entity);

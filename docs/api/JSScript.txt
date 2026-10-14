@@ -1,0 +1,15 @@
+public class JSScript {
+  public final javax.script.Bindings bindings;
+  public JSScript requireBindings();
+  public JSScript bind(String, Object);
+  public Object eval() throws javax.script.ScriptException;
+  public Object evalSilently();
+  public Object invoke(String, Object...) throws NoSuchMethodException, javax.script.ScriptException;
+  public Object invokeSilently(String, Object...);
+  public <T> T getInterface(Class<T>);
+  public static JSScript compile(String, javax.script.Bindings) throws javax.script.ScriptException;
+  public static JSScript compile(String) throws javax.script.ScriptException;
+  public static JSScript compileSilently(String);
+  public static JSScript compile(java.io.Reader, javax.script.Bindings) throws javax.script.ScriptException, java.io.IOException;
+  public static JSScript compile(java.io.Reader) throws javax.script.ScriptException, java.io.IOException;
+  public static JSScript compileSilently(java.io.Reader);

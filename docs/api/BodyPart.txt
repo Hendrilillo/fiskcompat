@@ -1,0 +1,17 @@
+public final class BodyPart extends Enum<BodyPart> {
+  public static final BodyPart HEAD;
+  public static final BodyPart HEADWEAR;
+  public static final BodyPart BODY;
+  public static final BodyPart RIGHT_ARM;
+  public static final BodyPart LEFT_ARM;
+  public static final BodyPart RIGHT_LEG;
+  public static final BodyPart LEFT_LEG;
+  public final String name;
+  public static BodyPart[] values();
+  public static BodyPart valueOf(String);
+  public ModelRenderer getPart(ModelBiped);
+  public ModelRenderer[] getPartL2(ModelBipedMultiLayer);
+  public ModelRenderer getPartL2(ModelBipedMultiLayer, int);
+  public BodyPart opposite();
+  public static BodyPart get(String);
+  public static BodyPart getOrDefault(String, BodyPart);

@@ -1,0 +1,7 @@
+public class FloatDataArray {
+  public static final FloatDataArray EMPTY;
+  public FloatDataArray(FloatData...);
+  public float[] get(Entity, float);
+  public FloatData get(int);
+  public int length();
+  public static FloatDataArray read(com.google.gson.stream.JsonReader) throws java.io.IOException;

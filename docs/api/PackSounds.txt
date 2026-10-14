@@ -1,0 +1,6 @@
+public class PackSounds {
+  public final String domain;
+  public final SoundRepository repository;
+  public final Map<ResourceLocation, SoundRange> range;
+  public PackSounds(String, SoundRepository, Map<ResourceLocation, SoundRange>);
+  public PackSounds(String, Map);

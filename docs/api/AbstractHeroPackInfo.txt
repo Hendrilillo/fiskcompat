@@ -1,0 +1,9 @@
+public abstract class AbstractHeroPackInfo {
+  public final java.io.File fileLocation;
+  public AbstractHeroPackInfo(java.io.File);
+  public abstract String getDomain();
+  public abstract String getName();
+  public abstract String getDescription();
+  public abstract int getVersion();
+  public String getMinVersion();
+  public HashedBufferedImage getPackIcon();

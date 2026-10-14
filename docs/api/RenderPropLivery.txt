@@ -1,0 +1,4 @@
+public class RenderPropLivery extends HeroRenderProp {
+  public final MultiTexture texture;
+  public String weaponType;
+  public RenderPropLivery();

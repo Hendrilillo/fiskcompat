@@ -1,0 +1,6 @@
+public abstract class AbstractRenderPropColor extends HeroRenderProp {
+  public CachedColor color;
+  public AbstractRenderPropColor();
+  public static Vec3 get(HeroIteration, Entity, Class<? extends AbstractRenderPropColor>, Vec3);
+  public static int get(HeroIteration, Entity, Class<? extends AbstractRenderPropColor>, int);
+  public static float[] get(HeroIteration, Entity, Class<? extends AbstractRenderPropColor>, float[]);

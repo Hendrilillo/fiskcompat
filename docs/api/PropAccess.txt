@@ -1,0 +1,13 @@
+public class PropAccess {
+  public PropAccess();
+  public static HeroRenderProp getProp(AbstractHeroEffectProp);
+  public static boolean isActive(HeroRenderProp, Entity);
+  public static void onClientTick(HeroRenderProp, EntityLivingBase, HeroIteration, int, cpw.mods.fml.common.gameevent.TickEvent$Phase);
+  public static JsonTrail getTrail(RenderPropTrail);
+  public static JsonCloud getCloud(AbstractRenderPropCloud);
+  public static List<RenderPropTentacles$Tentacle> getTentacles(RenderPropTentacles);
+  public static List<RenderPropEquippedItem$EquippedItem> getItems(RenderPropEquippedItem);
+  public static Map<EquipmentRenderer, javax.vecmath.Point3f> getOffsets(RenderPropEquippedItem);
+  public static float getOpacity(RenderPropOpacity, Entity, String);
+  public static float[] getOffset(RenderPropTelekinesisChain, boolean);
+  public static int[] getShape(RenderPropShadowDome);

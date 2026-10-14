@@ -1,0 +1,6 @@
+public class ExternalFileMap {
+  public ExternalFileMap();
+  public BackupMap<ResourceLocation, ExternalFile> heroes();
+  public void backup();
+  public void reset();
+  public boolean restore();

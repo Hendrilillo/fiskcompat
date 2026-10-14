@@ -1,0 +1,4 @@
+public class RenderPropCameraShake extends HeroRenderProp {
+  public float factor;
+  public float intensity;
+  public RenderPropCameraShake();

@@ -1,0 +1,2 @@
+public class Tbl5Part extends AbstractTblCube {
+  public Tbl5Part();

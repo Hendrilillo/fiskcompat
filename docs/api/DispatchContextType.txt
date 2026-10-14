@@ -1,0 +1,7 @@
+public final class DispatchContextType extends Enum<DispatchContextType> {
+  public static final DispatchContextType NONE;
+  public static final DispatchContextType ENTITY;
+  public static final DispatchContextType CONTROL_POINT;
+  public static DispatchContextType[] values();
+  public static DispatchContextType valueOf(String);
+  public function.Function<World, ?> fromBytes(io.netty.buffer.ByteBuf);

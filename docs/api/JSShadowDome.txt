@@ -1,0 +1,11 @@
+public class JSShadowDome extends JSEntityGeneric {
+  public static final JSShadowDome NULL;
+  public static JSShadowDome wrap(Entity);
+  public String type();
+  public boolean is(String);
+  public JSEntity as(String);
+  public JSEntity getCaster();
+  public float getRadius();
+  public int getMaxDuration();
+  public boolean isDissolving();
+  public List<JSEntity> getContainedEntities();

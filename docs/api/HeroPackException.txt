@@ -1,0 +1,4 @@
+public class HeroPackException extends Exception {
+  public HeroPackException(String, Exception);
+  public HeroPackException(String);
+  public void logError(function.Consumer<IChatComponent>);

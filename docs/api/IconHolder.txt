@@ -1,0 +1,2 @@
+public class IconHolder extends ResourceHolder<IIcon[]> {
+  public IconHolder(String);

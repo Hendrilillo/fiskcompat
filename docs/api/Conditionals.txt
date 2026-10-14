@@ -1,0 +1,5 @@
+public class Conditionals {
+  public Conditionals();
+  public boolean evaluate(Entity);
+  public void read(com.google.gson.stream.JsonReader) throws java.io.IOException;
+  public void init(JsonHeroRenderer);

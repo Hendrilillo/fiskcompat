@@ -1,0 +1,6 @@
+public abstract class AbstractHeroEffectProp<T extends HeroRenderProp> extends HeroEffectJson {
+  public AbstractHeroEffectProp();
+  public abstract HeroRenderProp create();
+  public boolean shouldRenderPass(ModelBipedMultiLayer, Entity, int);
+  public void onClientTick(EntityLivingBase, HeroIteration, int, cpw.mods.fml.common.gameevent.TickEvent$Phase);
+  public void load(JsonHeroRenderer, IResourceManager, TextureManager) throws java.io.IOException;

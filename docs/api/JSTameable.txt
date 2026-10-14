@@ -1,0 +1,8 @@
+public class JSTameable extends JSOwnable {
+  public static final JSTameable NULL;
+  public static JSTameable wrap(Entity);
+  public String type();
+  public boolean is(String);
+  public JSEntity as(String);
+  public boolean isTamed();
+  public boolean isSitting();

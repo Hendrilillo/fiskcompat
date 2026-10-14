@@ -1,0 +1,16 @@
+public final class ResourceType extends Enum<ResourceType> {
+  public static final ResourceType ANIMATION;
+  public static final ResourceType ANIMATION_EVENT;
+  public static final ResourceType MODEL;
+  public static final ResourceType TRAIL;
+  public static final ResourceType PARTICLE_EMITTER;
+  public static final ResourceType BEAM_RENDERER;
+  public static final ResourceType BEAM_CONSTELLATION;
+  public static final ResourceType ICON;
+  public static final ResourceType PARTICLE_CLOUD;
+  public static final ResourceType SHAPE;
+  public static final ResourceType MESH;
+  public static final ResourceType CAPE_PHYSICS;
+  public final function.Function<String, InitializableResource> factory;
+  public static ResourceType[] values();
+  public static ResourceType valueOf(String);

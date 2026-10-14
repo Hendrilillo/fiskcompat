@@ -1,0 +1,8 @@
+public class HeroEffectLines extends AbstractHeroEffectPositioned {
+  public final CachedColor color;
+  public float progress;
+  public float opacity;
+  public HeroEffectLines();
+  public HeroEffectJS setShape(ShapeHolder);
+  public HeroEffectJS setRenderer(BeamRendererHolder);
+  public void render();

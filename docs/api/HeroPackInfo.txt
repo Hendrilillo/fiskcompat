@@ -1,0 +1,11 @@
+public class HeroPackInfo extends AbstractHeroPackInfo {
+  public static final java.io.FilenameFilter PACK_FILTER;
+  public HeroPackInfo(java.io.File, boolean);
+  public String getDomain();
+  public String getName();
+  public String getDescription();
+  public int getVersion();
+  public String getMinVersion();
+  public HashedBufferedImage getPackIcon();
+  public boolean isValid();
+  public boolean discover(ReloadContainer) throws Exception;

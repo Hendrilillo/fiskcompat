@@ -1,0 +1,2 @@
+public class Tbl5TexturedQuad extends TexturedQuad {
+  public Tbl5TexturedQuad(PositionTextureVertex[], float, float, float, float, float, float);

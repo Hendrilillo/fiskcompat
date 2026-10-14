@@ -1,0 +1,3 @@
+public abstract class JSRendererClass<T extends JSRendererClass<T>> extends JSClass<T> {
+  public InitializableResource createResource(String, String);
+  public void unbindResource(InitializableResource);

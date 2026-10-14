@@ -1,0 +1,13 @@
+public class JSQuiver {
+  public static final JSQuiver EMPTY;
+  public static JSQuiver wrap(Quiver, Entity);
+  public boolean hasQuiver();
+  public String getType(int);
+  public int getAmount(int);
+  public int getFirstSlot();
+  public int getActiveSlot();
+  public boolean isEmpty(int);
+  public boolean isEmpty();
+  public boolean isEnchanted();
+  public String toString();
+  public boolean equals(Object);

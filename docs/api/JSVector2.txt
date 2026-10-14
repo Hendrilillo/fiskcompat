@@ -1,0 +1,19 @@
+public class JSVector2 {
+  public static final JSVector2 ZERO;
+  public static JSVector2 wrap(double, double);
+  public double x();
+  public double y();
+  public boolean equals(double, double);
+  public boolean equals(JSVector2);
+  public JSVector2 add(double, double);
+  public JSVector2 add(JSVector2);
+  public JSVector2 multiply(double, double);
+  public JSVector2 multiply(double);
+  public JSVector2 multiply(JSVector2);
+  public double squareDistanceTo(double, double);
+  public double squareDistanceTo(JSVector2);
+  public double distanceTo(double, double);
+  public double distanceTo(JSVector2);
+  public double angleTo(double, double);
+  public double angleTo(JSVector2);
+  public double length();

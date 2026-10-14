@@ -1,0 +1,7 @@
+public final class ShapeFormatLines extends Enum<ShapeFormatLines> implements IShapeFormat {
+  public static final ShapeFormatLines INSTANCE;
+  public static ShapeFormatLines[] values();
+  public static ShapeFormatLines valueOf(String);
+  public float[] read(com.google.gson.stream.JsonReader) throws java.io.IOException;
+  public void renderLines(JsonShape, Entity, float, float, float, QuadConsumer<Vec3, Vec3, javax.vecmath.Point2f, Long>);
+  public void render(JsonShape, Entity, float, float);

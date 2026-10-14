@@ -1,0 +1,3 @@
+public abstract class AbstractTblCube {
+  public AbstractTblCube();
+  public AbstractTblModelRenderer create(TblModelBase);

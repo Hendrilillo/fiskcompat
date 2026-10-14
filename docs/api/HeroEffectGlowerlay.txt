@@ -1,0 +1,5 @@
+public class HeroEffectGlowerlay extends AbstractHeroEffectOverlay {
+  public CachedColor color;
+  public float opacity;
+  public HeroEffectGlowerlay();
+  public void render();

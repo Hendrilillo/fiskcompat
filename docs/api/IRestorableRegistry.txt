@@ -1,0 +1,4 @@
+public interface IRestorableRegistry {
+  public abstract void inject(ReloadContainer);
+  public abstract void reset();
+  public abstract void restore();

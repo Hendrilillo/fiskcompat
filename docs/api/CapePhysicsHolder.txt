@@ -1,0 +1,18 @@
+public class CapePhysicsHolder extends TickableResource {
+  public float weight;
+  public float maxFlare;
+  public float flareDegree;
+  public float flareFactor;
+  public float flareElasticity;
+  public float headingAngle;
+  public float restAngle;
+  public float restFlare;
+  public float idleFlutter;
+  public float flutterSpeed;
+  public float flutterFactor;
+  public CapePhysicsHolder();
+  public CapePhysicsHolder setSlot(String);
+  public CapePhysicsHolder setTickHandler(function.Function<JSEntity, Void>);
+  public float getCurve(JSEntity);
+  public float getFlare(JSEntity);
+  public float getFlutter(JSEntity);

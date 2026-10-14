@@ -1,0 +1,4 @@
+public class HeroRendererMartianManhunter extends HeroRendererJS {
+  public HeroRendererMartianManhunter(String, JSHeroRenderer);
+  public boolean shouldRenderDefaultModel(EntityPlayer, HeroIteration, boolean);
+  public boolean preRenderArm(EntityPlayer, ItemStack, HeroIteration, int, int);

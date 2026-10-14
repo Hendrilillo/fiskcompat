@@ -1,0 +1,3 @@
+public class Tbl5ModelBox extends ModelBox {
+  public Tbl5ModelBox(ModelRenderer, int, int, float, float, float, float, float, float, float, float, float);
+  public void func_78245_a(Tessellator, float);

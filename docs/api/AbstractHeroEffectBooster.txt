@@ -1,0 +1,5 @@
+public abstract class AbstractHeroEffectBooster extends HeroEffectJson {
+  public AbstractHeroEffectBooster();
+  public void renderBoosters(Entity, float[], float, float, function.BiConsumer<Float, Float>);
+  public void read(com.google.gson.stream.JsonReader, String, com.google.gson.stream.JsonToken) throws java.io.IOException;
+  public void load(JsonHeroRenderer, IResourceManager, TextureManager) throws java.io.IOException;

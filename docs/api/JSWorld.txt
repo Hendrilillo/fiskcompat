@@ -1,0 +1,19 @@
+public class JSWorld {
+  public static final JSWorld NULL;
+  public static JSWorld wrap(World);
+  public int getDimension();
+  public String name();
+  public boolean isDaytime();
+  public boolean isRaining();
+  public boolean isThundering();
+  public JSBlock blockAt(int, int, int);
+  public JSBlock blockAt(JSVector3);
+  public String getBlock(int, int, int);
+  public String getBlock(JSVector3);
+  public int getBlockMetadata(int, int, int);
+  public int getBlockMetadata(JSVector3);
+  public JSEntity getEntityById(int);
+  public JSLocation getLocation(int, int, int);
+  public JSLocation getLocation(JSVector3);
+  public List<JSEntity> getEntitiesInRangeOf(JSVector3, float);
+  public boolean isUnobstructed(JSVector3, JSVector3);

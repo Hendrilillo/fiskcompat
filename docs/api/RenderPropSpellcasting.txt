@@ -1,0 +1,6 @@
+public class RenderPropSpellcasting extends HeroRenderProp {
+  public CachedColor colorGeneric;
+  public CachedColor colorEarthCrack;
+  public CachedColor colorAtmosphere;
+  public CachedColor colorWhip;
+  public RenderPropSpellcasting();

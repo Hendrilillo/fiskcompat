@@ -1,0 +1,5 @@
+public abstract class JsonTypeDeserializer<T> extends com.google.gson.TypeAdapter<T> {
+  public JsonTypeDeserializer();
+  public final void write(com.google.gson.stream.JsonWriter, T) throws java.io.IOException;
+  public T read(com.google.gson.stream.JsonReader) throws java.io.IOException;
+  public abstract T deserialize(com.google.gson.stream.JsonReader) throws java.io.IOException;

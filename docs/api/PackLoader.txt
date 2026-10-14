@@ -1,0 +1,13 @@
+public final class PackLoader extends Enum<PackLoader> {
+  public static final PackLoader INSTANCE;
+  public final javax.script.Bindings globals;
+  public static PackLoader[] values();
+  public static PackLoader valueOf(String);
+  public boolean isPackLoaded(String);
+  public List<String> getLoadedPacks();
+  public void print(Object);
+  public void printChat(Object);
+  public String getSide();
+  public JSVector3 asVec3(double, double, double);
+  public JSVector2 asVec2(double, double);
+  public int getNumericalItemId(String);

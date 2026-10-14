@@ -1,0 +1,9 @@
+public final class JSHeroesResources extends Enum<JSHeroesResources> {
+  public static final JSHeroesResources INSTANCE;
+  public static JSHeroesResources[] values();
+  public static JSHeroesResources valueOf(String);
+  public static boolean doClientSync();
+  public static void syncResources(HeroPackSerializer, HeroPackEngine$ResourceReloadScope);
+  public void onClientTick(cpw.mods.fml.common.gameevent.TickEvent$ClientTickEvent);
+  public static void warn(String, ResourceLocation);
+  public static void onFinishLoading();

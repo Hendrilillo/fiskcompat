@@ -1,0 +1,8 @@
+public final class JSExecutor extends Enum<JSExecutor> {
+  public static final JSExecutor INSTANCE;
+  public static JSExecutor[] values();
+  public static JSExecutor valueOf(String);
+  public static javax.script.Bindings createBindings();
+  public static javax.script.Bindings copyBindings(javax.script.Bindings);
+  public static javax.script.CompiledScript compile(String) throws javax.script.ScriptException;
+  public static javax.script.CompiledScript compile(java.io.Reader) throws javax.script.ScriptException, java.io.IOException;

@@ -1,0 +1,9 @@
+public class HeroEffectArmOverlay extends HeroEffectJS {
+  public final MultiTexture texture;
+  public float progress;
+  public float opacity;
+  public HeroEffectArmOverlay();
+  public HeroEffectJS setSide(String);
+  public HeroEffectJS setOffset(float, float, float);
+  public HeroEffectJS setRotation(float, float, float);
+  public void render();

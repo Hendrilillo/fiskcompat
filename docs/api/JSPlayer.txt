@@ -1,0 +1,19 @@
+public class JSPlayer extends JSEntityLiving {
+  public static final JSPlayer NULL;
+  public static JSPlayer wrapPlayer(Entity);
+  public String type();
+  public boolean is(String);
+  public JSEntity as(String);
+  public boolean isPlayer();
+  public JSPlayer asPlayer();
+  public String getEntityName();
+  public boolean isCreativeMode();
+  public int getFoodLevel();
+  public float getFoodSaturation();
+  public int getExperience();
+  public int getExperienceLevel();
+  public boolean isUsingItem();
+  public boolean isBlocking();
+  public boolean isInControlPoint();
+  public JSControlPoint getControlPointIn();
+  public void addChatMessage(Object);

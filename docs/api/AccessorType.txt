@@ -1,0 +1,22 @@
+public final class AccessorType extends Enum<AccessorType> {
+  public static final AccessorType ENTITY;
+  public static final AccessorType LIVING;
+  public static final AccessorType PLAYER;
+  public static final AccessorType TENTACLE;
+  public static final AccessorType ANIMAL;
+  public static final AccessorType OWNABLE;
+  public static final AccessorType TAMEABLE;
+  public static final AccessorType SHEEP;
+  public static final AccessorType SKELETON;
+  public static final AccessorType SLIME;
+  public static final AccessorType CACTUS;
+  public static final AccessorType SHADOWDOME;
+  public static final AccessorType DISPLAY;
+  public final Class type;
+  public static AccessorType[] values();
+  public static AccessorType valueOf(String);
+  public boolean is(Object);
+  public JSEntity as(Entity);
+  public boolean matches(String);
+  public static AccessorType get(String);
+  public static Entity getEntity(JSEntity);

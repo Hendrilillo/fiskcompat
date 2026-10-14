@@ -1,0 +1,25 @@
+public class JsonHeroRenderer implements IJsonObject<JsonHeroRenderer> {
+  public static final String MODEL_DIR;
+  public static final String TEXTURE_DIR;
+  public static final com.google.gson.GsonBuilder GSON_FACTORY;
+  public static final JsonObjectReader<JsonHeroRenderer> READER;
+  public String parent;
+  public Map<String, JsonHeroVar> variables;
+  public Map<String, HeroEffectJson> effects;
+  public Map<String, AbstractHeroEffectProp> propertyEffects;
+  public Map<String, BodyAnimation[]> animations;
+  public Set<String> functions;
+  public TextureGetter texture;
+  public TextureGetter lights;
+  public boolean[][] showModel;
+  public boolean[] fixHatLayer;
+  public String[] itemIcons;
+  public JsonHeroRenderer();
+  public String getParent();
+  public void inherit(JsonHeroRenderer);
+  public void init(IResourceManager);
+  public void load(IResourceManager, TextureManager) throws java.io.IOException;
+  public ResourceLocation getResource(Entity, ItemStack, String);
+  public ResourceLocation getResource(Entity, int, String);
+  public Set<String> getResourceKeys();
+  public void inherit(IJsonObject) throws java.io.IOException;

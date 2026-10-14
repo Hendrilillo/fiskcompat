@@ -1,0 +1,19 @@
+public class JsonTrail implements IJsonObject<JsonTrail> {
+  public static final String MODEL_DIR;
+  public static final com.google.gson.GsonBuilder GSON_FACTORY;
+  public static final JsonObjectReader<JsonTrail> READER;
+  public String parent;
+  public Integer fade;
+  public Map<String, Object> constants;
+  public ITrailAspect$V9Wrapper<JsonTrailLightning> lightning;
+  public ITrailAspect$V9Wrapper<JsonTrailFlicker> flicker;
+  public JsonTrailParticles particles;
+  public JsonTrailBlur blur;
+  public JsonTrail();
+  public static JsonTrail read(IResourceManager, String) throws java.io.IOException;
+  public String getParent();
+  public void inherit(JsonTrail) throws java.io.IOException;
+  public void init(IResourceManager) throws java.io.IOException;
+  public void postInit(IResourceManager) throws java.io.IOException;
+  public ITrailAspect getTrailLightning();
+  public void inherit(IJsonObject) throws java.io.IOException;

@@ -1,0 +1,4 @@
+public class SoundOverrideFunction extends JSObject<SoundOverrideFunction, ISoundOverrideFunction> {
+  public static final JSObjectReader<SoundOverrideFunction> READER;
+  public SoundOverrideFunction(String) throws javax.script.ScriptException;
+  public boolean continuePlaying(Entity, MovingSoundEvent);

@@ -1,0 +1,4 @@
+public class ByteBufSlicer {
+  public ByteBufSlicer();
+  public static List<io.netty.buffer.ByteBuf> slice(io.netty.buffer.ByteBuf, int);
+  public static io.netty.buffer.ByteBuf merge(List<io.netty.buffer.ByteBuf>);

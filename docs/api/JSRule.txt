@@ -1,0 +1,9 @@
+public class JSRule<T> {
+  public static <T> JSRule wrap(Rule<T>, T);
+  public String name();
+  public T value();
+  public T defaultValue();
+  public boolean isBoolean();
+  public boolean isInteger();
+  public boolean isFloat();
+  public boolean isDouble();

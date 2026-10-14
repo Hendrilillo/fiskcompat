@@ -1,0 +1,21 @@
+public class JsonSound implements IJsonObject<JsonSound> {
+  public static final String EVENT_DIR;
+  public static final com.google.gson.GsonBuilder GSON_FACTORY;
+  public static final JsonObjectReader<JsonSound> READER;
+  public String parent;
+  public String sound;
+  public SoundCondition condition;
+  public FloatData volume;
+  public FloatData pitch;
+  public Boolean loop;
+  public Boolean scale;
+  public Boolean isStatic;
+  public Integer delay;
+  public Integer fadeIn;
+  public Integer fadeOut;
+  public SoundOverrideFunction override;
+  public JsonSound();
+  public String getParent();
+  public void inherit(JsonSound) throws java.io.IOException;
+  public void init(IResourceManager) throws java.io.IOException;
+  public void inherit(IJsonObject) throws java.io.IOException;

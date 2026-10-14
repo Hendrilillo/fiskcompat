@@ -1,0 +1,6 @@
+public class SoundRepository {
+  public final String repository;
+  public final String url;
+  public final int version;
+  public SoundRepository(String, int);
+  public SoundRepository(Map);

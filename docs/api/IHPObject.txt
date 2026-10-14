@@ -1,0 +1,3 @@
+public interface IHPObject<T extends IHPObject<T>> {
+  public default void init(IResourceManager) throws java.io.IOException;
+  public default void postInit(IResourceManager) throws java.io.IOException;

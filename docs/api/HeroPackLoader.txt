@@ -1,0 +1,16 @@
+public final class HeroPackLoader extends Enum<HeroPackLoader> {
+  public static final HeroPackLoader INSTANCE;
+  public static final Object FILE_LOCK;
+  public static HeroPackLoader[] values();
+  public static HeroPackLoader valueOf(String);
+  public static boolean isReloading();
+  public static Conditional loaded();
+  public Collection<PackReference> getPacks();
+  public int getVisiblePacks();
+  public PackReference getPack(String);
+  public PackReference$Filter getPackFilter();
+  public Collection<PackSounds> getSounds();
+  public PackSounds getSounds(String);
+  public void postInit(Runnable);
+  public int reload(java.io.File, boolean, AbstractHeroPackSerializer) throws HeroPackException;
+  public int reloadFrom(AbstractHeroPackSerializer) throws HeroPackException;

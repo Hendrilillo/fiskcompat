@@ -1,0 +1,8 @@
+public final class HeroEffectPipeline extends Enum<HeroEffectPipeline> {
+  public static final HeroEffectPipeline INSTANCE;
+  public static HeroEffectPipeline[] values();
+  public static HeroEffectPipeline valueOf(String);
+  public static HeroEffectPipeline$State push();
+  public static void pop();
+  public static HeroEffectPipeline$State get();
+  public static boolean isEmpty();

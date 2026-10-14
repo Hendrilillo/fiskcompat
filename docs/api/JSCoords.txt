@@ -1,0 +1,10 @@
+public class JSCoords {
+  public static final JSCoords EMPTY;
+  public static JSCoords wrap(DimensionalCoords);
+  public int xCoord();
+  public int yCoord();
+  public int zCoord();
+  public int dimension();
+  public boolean isZero();
+  public String toString();
+  public boolean equals(Object);

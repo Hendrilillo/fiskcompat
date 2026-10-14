@@ -1,0 +1,10 @@
+public class AnchorHolder {
+  public AnchorHolder(BodyPart);
+  public AnchorHolder(AnchorHolder);
+  public boolean is(BodyPart);
+  public boolean shouldIgnoreAnchor();
+  public boolean hasMirror();
+  public AnchorHolder ignoreAnchor(boolean);
+  public AnchorHolder set(String);
+  public AnchorHolder set(String, CubeOffset);
+  public String toString();

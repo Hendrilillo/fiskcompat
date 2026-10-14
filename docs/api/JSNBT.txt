@@ -1,0 +1,24 @@
+public class JSNBT {
+  public static final JSNBT EMPTY;
+  public static JSNBT wrap(NBTTagCompound, ItemStack);
+  public static JSNBT wrap(NBTTagCompound);
+  public boolean isEmpty();
+  public boolean hasKey(String);
+  public byte getByte(String);
+  public short getShort(String);
+  public int getInteger(String);
+  public long getLong(String);
+  public float getFloat(String);
+  public double getDouble(String);
+  public String getString(String);
+  public byte[] getByteArray(String);
+  public int[] getIntArray(String);
+  public boolean getBoolean(String);
+  public JSNBT getCompoundTag(String);
+  public JSNBTList getTagList(String);
+  public JSNBTList getStringList(String);
+  public JSNBTList getIntArrayList(String);
+  public JSNBTList getDoubleList(String);
+  public JSNBTList getFloatList(String);
+  public String toString();
+  public boolean equals(Object);

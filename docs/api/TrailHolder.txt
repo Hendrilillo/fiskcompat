@@ -1,0 +1,2 @@
+public class TrailHolder extends ResourceHolder<JsonTrail> {
+  public TrailHolder(String);

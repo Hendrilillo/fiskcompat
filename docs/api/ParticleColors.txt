@@ -1,0 +1,5 @@
+public class ParticleColors {
+  public ParticleColors(ParticleColor[], Random);
+  public float red(float);
+  public float green(float);
+  public float blue(float);

@@ -1,0 +1,7 @@
+public class HeroEffectArmAnimation extends HeroEffectJson {
+  public HeroEffectArmAnimation();
+  public boolean shouldRenderPass(ModelBipedMultiLayer, Entity, int);
+  public float rightArm(Entity);
+  public float leftArm(Entity);
+  public float swordPose(Entity);
+  public void read(com.google.gson.stream.JsonReader, String, com.google.gson.stream.JsonToken) throws java.io.IOException;

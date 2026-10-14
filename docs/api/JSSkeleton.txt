@@ -1,0 +1,7 @@
+public class JSSkeleton extends JSEntityLiving {
+  public static final JSSkeleton NULL;
+  public static JSSkeleton wrap(Entity);
+  public String type();
+  public boolean is(String);
+  public JSEntity as(String);
+  public boolean isWitherSkeleton();

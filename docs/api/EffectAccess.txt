@@ -1,0 +1,5 @@
+public class EffectAccess {
+  public EffectAccess();
+  public static void contextualize(HeroEffectJS, HeroRendererJS);
+  public static float getExtrude(HeroEffectChest);
+  public static float getYOffset(HeroEffectChest);

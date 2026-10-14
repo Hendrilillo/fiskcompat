@@ -1,0 +1,707 @@
+{
+ "ability_cooldowns": {
+  "default": null,
+  "interp": false,
+  "type": "OBJECT"
+ },
+ "aim_sprint_cooldown": {
+  "default": 0,
+  "interp": false,
+  "type": "BYTE"
+ },
+ "aimed_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "aiming": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "aiming_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "barrel_roll_timer": {
+  "default": 0.0,
+  "interp": false,
+  "type": "FLOAT"
+ },
+ "beam_charge": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "beam_charging": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "beam_shooting": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "beam_shooting_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "blade": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "blade_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "cryo_charge": {
+  "default": 0.0,
+  "interp": false,
+  "type": "FLOAT"
+ },
+ "cryo_charging": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "current_arrow": {
+  "default": null,
+  "interp": false,
+  "type": "OBJECT"
+ },
+ "disguise": {
+  "default": null,
+  "interp": false,
+  "type": "OBJECT"
+ },
+ "energy_charge": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "energy_charging": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "energy_projection": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "energy_projection_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "equipped_ammo_bag": {
+  "default": -1,
+  "interp": false,
+  "type": "BYTE"
+ },
+ "equipped_quiver": {
+  "default": null,
+  "interp": false,
+  "type": "OBJECT"
+ },
+ "equipped_quiver_slot": {
+  "default": -1,
+  "interp": false,
+  "type": "BYTE"
+ },
+ "equipped_tachyon_device_slot": {
+  "default": -1,
+  "interp": false,
+  "type": "BYTE"
+ },
+ "flight_animation": {
+  "default": 0,
+  "interp": false,
+  "type": "BYTE"
+ },
+ "flight_boost_timer": {
+  "default": 0.0,
+  "interp": false,
+  "type": "FLOAT"
+ },
+ "flight_diving": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "flight_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "flying": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "glide_flying": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "gliding": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "gliding_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "grab_distance": {
+  "default": 0.0,
+  "interp": false,
+  "type": "FLOAT"
+ },
+ "grab_id": {
+  "default": -1,
+  "interp": false,
+  "type": "INTEGER"
+ },
+ "grabbed_by": {
+  "default": -1,
+  "interp": false,
+  "type": "INTEGER"
+ },
+ "gravity_amount": {
+  "default": 0.0,
+  "interp": false,
+  "type": "FLOAT"
+ },
+ "gravity_manip": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "gun_shooting_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "hat_tip": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "heat_vision": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "heat_vision_length": {
+  "default": 0.0,
+  "interp": true,
+  "type": "DOUBLE"
+ },
+ "heat_vision_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "horizontal_bow": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "horizontal_bow_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "hovering": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "intangibility_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "intangible": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "invisibility_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "invisible": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "is_swing_in_progress": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "jetpacking": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "jetpacking_timer": {
+  "default": 0.0,
+  "interp": false,
+  "type": "FLOAT"
+ },
+ "levitate_timer": {
+  "default": 0.0,
+  "interp": false,
+  "type": "FLOAT"
+ },
+ "lightsout": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "lightsout_id": {
+  "default": -1,
+  "interp": false,
+  "type": "INTEGER"
+ },
+ "lightsout_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "mask_open": {
+  "default": false,
+  "interp": true,
+  "type": "BOOLEAN"
+ },
+ "mask_open_timer": {
+  "default": 0,
+  "interp": false,
+  "type": "BYTE"
+ },
+ "mask_open_timer2": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "metal_heat": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "metal_heat_cooldown": {
+  "default": 0,
+  "interp": false,
+  "type": "SHORT"
+ },
+ "moving": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "penetrate_martian_invis": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "player_animation": {
+  "default": null,
+  "interp": false,
+  "type": "OBJECT"
+ },
+ "prev_on_ground": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "prev_utility_belt_type": {
+  "default": -1,
+  "interp": false,
+  "type": "BYTE"
+ },
+ "prev_weapon_cooldown": {
+  "default": 0,
+  "interp": false,
+  "type": "INTEGER"
+ },
+ "punch_charge": {
+  "default": 0.0,
+  "interp": false,
+  "type": "FLOAT"
+ },
+ "punch_charged": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "punchmode": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "punchmode_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "qr_origin": {
+  "default": null,
+  "interp": false,
+  "type": "OBJECT"
+ },
+ "qr_timer": {
+  "default": 0.0,
+  "interp": false,
+  "type": "FLOAT"
+ },
+ "recoil": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "reload_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "scale": {
+  "default": 1.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "scope_timer": {
+  "default": 0.0,
+  "interp": false,
+  "type": "FLOAT"
+ },
+ "scoping": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "selected_arrow": {
+  "default": 0,
+  "interp": false,
+  "type": "BYTE"
+ },
+ "shadowform": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "shadowform_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "shape_shift_timer": {
+  "default": 0.0,
+  "interp": false,
+  "type": "FLOAT"
+ },
+ "shape_shifting": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "shape_shifting_from": {
+  "default": null,
+  "interp": false,
+  "type": "OBJECT"
+ },
+ "shape_shifting_to": {
+  "default": null,
+  "interp": false,
+  "type": "OBJECT"
+ },
+ "shield": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "shield_blocking": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "shield_blocking_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "shield_cooldown": {
+  "default": 0,
+  "interp": false,
+  "type": "SHORT"
+ },
+ "shield_damage": {
+  "default": 0.0,
+  "interp": false,
+  "type": "FLOAT"
+ },
+ "shield_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "size_state": {
+  "default": 0,
+  "interp": false,
+  "type": "BYTE"
+ },
+ "slow_motion": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "sonic_waves": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "speed": {
+  "default": 4,
+  "interp": false,
+  "type": "BYTE"
+ },
+ "speed_experience_bar": {
+  "default": 0.0,
+  "interp": false,
+  "type": "FLOAT"
+ },
+ "speed_experience_level": {
+  "default": 0,
+  "interp": false,
+  "type": "BYTE"
+ },
+ "speed_experience_total": {
+  "default": 0,
+  "interp": false,
+  "type": "INTEGER"
+ },
+ "speed_level_up_cooldown": {
+  "default": 0,
+  "interp": false,
+  "type": "INTEGER"
+ },
+ "speed_sprinting": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "speeding": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "spell_fraction": {
+  "default": 0.0,
+  "interp": false,
+  "type": "FLOAT"
+ },
+ "spellcast_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "spodermen": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "suit_open": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "suit_open_timer": {
+  "default": 0,
+  "interp": true,
+  "type": "BYTE"
+ },
+ "superhero_landing": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "swing_progress": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "swing_progress_int": {
+  "default": 0,
+  "interp": false,
+  "type": "BYTE"
+ },
+ "tachyon_charge": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "tachyon_device_on": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "telekinesis": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "teleport_delay": {
+  "default": 0,
+  "interp": false,
+  "type": "BYTE"
+ },
+ "teleport_dest": {
+  "default": null,
+  "interp": false,
+  "type": "OBJECT"
+ },
+ "teleport_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "tentacle_extend_timer": {
+  "default": 0.0,
+  "interp": false,
+  "type": "FLOAT"
+ },
+ "tentacle_lift": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "tentacles": {
+  "default": null,
+  "interp": false,
+  "type": "OBJECT"
+ },
+ "tentacles_retracting": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "ticks_since_gunshot": {
+  "default": 32767,
+  "interp": false,
+  "type": "SHORT"
+ },
+ "ticks_since_shield_damaged": {
+  "default": null,
+  "interp": false,
+  "type": "OBJECT"
+ },
+ "ticks_since_sprinting": {
+  "default": null,
+  "interp": false,
+  "type": "OBJECT"
+ },
+ "ticks_since_swinging": {
+  "default": 32767,
+  "interp": false,
+  "type": "SHORT"
+ },
+ "ticks_since_webshoot": {
+  "default": 32767,
+  "interp": false,
+  "type": "SHORT"
+ },
+ "time_since_damaged": {
+  "default": null,
+  "interp": false,
+  "type": "OBJECT"
+ },
+ "tonfa_state": {
+  "default": 0,
+  "interp": false,
+  "type": "BYTE"
+ },
+ "treadmill_decreasing": {
+  "default": true,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "treadmill_limb_factor": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "treadmill_limb_progress": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "utility_belt_type": {
+  "default": -1,
+  "interp": false,
+  "type": "BYTE"
+ },
+ "vel9_convert": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "wall_crawling": {
+  "default": null,
+  "interp": false,
+  "type": "OBJECT"
+ },
+ "weapon_animation_spin_timer": {
+  "default": 0.0,
+  "interp": false,
+  "type": "FLOAT"
+ },
+ "weapon_animation_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "web_aim_left_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "web_aim_right_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "web_rappel_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ },
+ "web_rope_id": {
+  "default": -1,
+  "interp": false,
+  "type": "INTEGER"
+ },
+ "web_swinging": {
+  "default": false,
+  "interp": false,
+  "type": "BOOLEAN"
+ },
+ "web_swinging_timer": {
+  "default": 0.0,
+  "interp": false,
+  "type": "FLOAT"
+ },
+ "wing_animation_timer": {
+  "default": 0.0,
+  "interp": true,
+  "type": "FLOAT"
+ }
+}

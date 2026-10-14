@@ -1,0 +1,5 @@
+public class JSPower {
+  public static JSPower wrap(Power);
+  public String name();
+  public String toString();
+  public boolean equals(Object);

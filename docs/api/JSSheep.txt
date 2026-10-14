@@ -1,0 +1,8 @@
+public class JSSheep extends JSAnimal {
+  public static final JSSheep NULL;
+  public static JSSheep wrap(Entity);
+  public String type();
+  public boolean is(String);
+  public JSEntity as(String);
+  public boolean isSheared();
+  public int getWoolColor();

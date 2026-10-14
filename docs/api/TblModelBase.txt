@@ -1,0 +1,8 @@
+public class TblModelBase extends ModelBase {
+  public TblModelBase(List<? extends AbstractTblCube>, int, int);
+  public AbstractTblModelRenderer get(String);
+  public void render(float);
+  public AxisAlignedBB getBounds();
+  public TblModelBase$CubePairMap findPairsFromSource(TblModelBase);
+  public void resetDefaults();
+  public void func_78088_a(Entity, float, float, float, float, float, float);

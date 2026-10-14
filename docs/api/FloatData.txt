@@ -1,0 +1,8 @@
+public class FloatData {
+  public static final FloatData NULL;
+  public float get(Entity, Object, float);
+  public float get(Entity, float);
+  public static FloatData create(function.Function<Entity, Float>);
+  public static FloatData create(float);
+  public static FloatData read(String);
+  public static FloatData read(com.google.gson.stream.JsonReader) throws java.io.IOException;

@@ -1,0 +1,3 @@
+public class BeamConstlnHolder extends InitializableResource {
+  public BeamConstlnHolder();
+  public BeamConstlnHolder$Beam bindBeam(Object);

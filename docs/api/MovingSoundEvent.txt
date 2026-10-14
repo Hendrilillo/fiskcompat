@@ -1,0 +1,19 @@
+public class MovingSoundEvent extends MovingSound implements IDistantSound {
+  public final Entity theEntity;
+  public final JsonSound event;
+  public final float soundRange;
+  public final boolean isBeam;
+  public final boolean isStatic;
+  public int ticks;
+  public int fade;
+  public MovingSoundEvent(Entity, JsonSound, Object, float, boolean, boolean);
+  public MovingSoundEvent(double, double, double, JsonSound, Object, float);
+  public float getSoundRange();
+  public void setVolume(float);
+  public void setPitch(float);
+  public void setRange(float);
+  public float getRange();
+  public float getFadeProgress();
+  public void setUUID(String);
+  public Object getContext();
+  public void func_73660_a();

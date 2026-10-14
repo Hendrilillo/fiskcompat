@@ -1,0 +1,27 @@
+public class HeroRendererJS extends HeroRenderer {
+  public static final PrioritizedExecutor ANIMATIONS;
+  public HeroRendererJS(String, JSHeroRenderer);
+  public HeroRendererJS(String, JSHeroRenderer, ModelBipedMultiLayer);
+  public void loadTextures(IResourceManager) throws java.io.IOException;
+  public ResourceLocation getResource(Entity, ItemStack, String);
+  public ResourceLocation getTexture(ItemStack, Entity, int);
+  public ResourceLocation getLightsTexture(Entity, int);
+  public String[] getItemIcons();
+  public void setupRenderLayers(ModelBiped, int);
+  public boolean showModel(BodyPart, int);
+  public boolean fixHatLayer(EntityPlayer, int);
+  public void preRender(Entity, boolean);
+  public void postRenderBody(Entity, int, float, float, float, float, float, float);
+  public void postRenderArm(EntityPlayer, ItemStack, HeroIteration, int, int, List<Runnable>[]);
+  public void onClientTick(EntityLivingBase, HeroIteration, int, cpw.mods.fml.common.gameevent.TickEvent$Phase);
+  public void commitEffect(HeroEffectRenderer, boolean);
+  public boolean hasEffect(Class);
+  public <T extends HeroEffectJS> T getEffect(Class<T>);
+  public <T extends HeroRenderProp> stream.Stream<T> getPropStream(Class<T>, function.Predicate<T>);
+  public BodyAnimation[] getAnimations(Entity, String);
+  public Collection<AnimationHolder> getCustomAnimations();
+  public Float getDefaultAnimationPriority(DefaultAnimation);
+  public void collectAnimations(Entity, AnimationState, function.BiConsumer<BodyAnimation, float[]>, function.BiConsumer<AnimationEntry, Float>);
+  public void applyAngles(EntityLivingBase, Vec3, Vec3, boolean, ModelBiped, AnimationState, ItemStack, float, float, float, float, float, float, float);
+  public void applyRotations(EntityLivingBase, Vec3, Vec3, GLProxy, AnimationState, float, float, float, float, float, float, float);
+  public void applyFirstPerson(EntityPlayer, Vec3, Vec3, AnimationState, ItemStack, float);

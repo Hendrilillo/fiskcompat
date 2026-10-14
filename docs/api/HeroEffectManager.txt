@@ -1,0 +1,3 @@
+public class HeroEffectManager {
+  public HeroEffectManager();
+  public static void register();

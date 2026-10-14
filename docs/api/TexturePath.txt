@@ -1,0 +1,8 @@
+public class TexturePath {
+  public final String textureDir;
+  public void load(TextureManager, ResourceVarTx, Map<String, String>);
+  public String formatRaw(Object...);
+  public String formatPath(Object...);
+  public static TexturePath of(ResourceVarTx, String);
+  public static String format(String, String);
+  public String toString();

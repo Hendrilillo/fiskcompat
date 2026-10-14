@@ -1,0 +1,9 @@
+public class JsonMesh implements IJsonObject<JsonMesh> {
+  public static final com.google.gson.GsonBuilder GSON_FACTORY;
+  public static final JsonObjectReader<JsonMesh> READER;
+  public JsonMesh();
+  public String getParent();
+  public void inherit(JsonMesh) throws java.io.IOException;
+  public void init(IResourceManager) throws java.io.IOException;
+  public IMesh get();
+  public void inherit(IJsonObject) throws java.io.IOException;

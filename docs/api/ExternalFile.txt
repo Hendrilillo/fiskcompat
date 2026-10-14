@@ -1,0 +1,3 @@
+public class ExternalFile {
+  public ExternalFile(String);
+  public javax.script.Bindings instantiate() throws javax.script.ScriptException;

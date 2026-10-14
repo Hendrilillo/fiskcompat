@@ -1,0 +1,5 @@
+public class CoreRender {
+  public CoreRender();
+  public int getColor();
+  public boolean isAdditive();
+  public static CoreRender read(com.google.gson.stream.JsonReader) throws java.io.IOException;

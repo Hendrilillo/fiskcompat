@@ -1,0 +1,7 @@
+public final class BeamRenderType extends Enum<BeamRenderType> {
+  public static final BeamRenderType LASER;
+  public static final BeamRenderType LIGHTNING;
+  public static final BeamRenderType LINE;
+  public final function.Supplier<IBeamRenderer> renderer;
+  public static BeamRenderType[] values();
+  public static BeamRenderType valueOf(String);

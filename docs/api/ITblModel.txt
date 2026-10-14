@@ -1,0 +1,5 @@
+public interface ITblModel {
+  public abstract TblModelBase create();
+  public abstract ITblModel copy();
+  public abstract ITblModel inverted();
+  public abstract ITblModel inflated(float);

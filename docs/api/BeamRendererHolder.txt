@@ -1,0 +1,2 @@
+public class BeamRendererHolder extends ResourceHolder<JsonBeam> {
+  public BeamRendererHolder(String);

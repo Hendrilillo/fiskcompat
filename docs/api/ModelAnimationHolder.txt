@@ -1,0 +1,3 @@
+public class ModelAnimationHolder extends ResourceHolder<ModelAnimation> {
+  public ModelAnimationHolder(String);
+  public ModelAnimationHolder setData(function.BiConsumer<JSEntity, DataLoader>);

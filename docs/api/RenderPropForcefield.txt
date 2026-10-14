@@ -1,0 +1,10 @@
+public class RenderPropForcefield extends AbstractRenderPropColor {
+  public float opacity;
+  public RenderPropForcefield();
+  public HeroRenderProp setOffset(float, float, float);
+  public HeroRenderProp setRotation(float, float, float);
+  public HeroRenderProp setScale(float, float, float);
+  public HeroRenderProp setScale(float);
+  public HeroRenderProp setShape(int, int);
+  public boolean shouldRender(Entity);
+  public void renderForcefield(Entity, float);

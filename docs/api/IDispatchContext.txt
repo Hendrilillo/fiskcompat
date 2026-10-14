@@ -1,0 +1,4 @@
+public interface IDispatchContext {
+  public abstract DispatchContextType getContextType();
+  public abstract Object createContext();
+  public abstract void serializeContext(io.netty.buffer.ByteBuf);

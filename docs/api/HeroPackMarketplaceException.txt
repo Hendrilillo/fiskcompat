@@ -1,0 +1,4 @@
+public class HeroPackMarketplaceException extends HeroPackException {
+  public final MarketplaceInstallation installation;
+  public HeroPackMarketplaceException(MarketplaceInstallation, String);
+  public HeroPackMarketplaceException$MissingInfo getInfo();

@@ -1,0 +1,1 @@
+public abstract class JSClass<T extends JSClass<T>> {

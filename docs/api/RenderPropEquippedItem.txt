@@ -1,0 +1,5 @@
+public class RenderPropEquippedItem extends HeroRenderProp {
+  public int slotIndex;
+  public RenderPropEquippedItem();
+  public HeroRenderProp setItems(Object);
+  public HeroRenderProp addOffset(String, float, float, float);

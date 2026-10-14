@@ -1,0 +1,7 @@
+public class HeroEffectChest extends HeroEffectJS {
+  public float opacity;
+  public HeroEffectChest();
+  public HeroEffectJS setAnchor(String);
+  public HeroEffectJS setExtrude(float);
+  public HeroEffectJS setYOffset(float);
+  public void render();

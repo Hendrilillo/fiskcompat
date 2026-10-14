@@ -1,0 +1,10 @@
+public final class TextureTransform extends Enum<TextureTransform> implements function.BiConsumer<int[], int[]> {
+  public static final TextureTransform MIRROR_X;
+  public static final TextureTransform MIRROR_Y;
+  public static final TextureTransform ROTATE_180;
+  public static final TextureTransform ROTATE_RIGHT;
+  public static final TextureTransform ROTATE_LEFT;
+  public static TextureTransform[] values();
+  public static TextureTransform valueOf(String);
+  public void accept(int[], int[]);
+  public void accept(Object, Object);

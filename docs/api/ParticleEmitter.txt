@@ -1,0 +1,13 @@
+public class ParticleEmitter {
+  public final ParticleConstructor constructor;
+  public final BodyPart anchor;
+  public final PerspectiveArg<Integer> amount;
+  public final PerspectiveArg<float[]> offset;
+  public final PerspectiveArg<float[]> motion;
+  public final PerspectiveArg<float[]> randOffset;
+  public final PerspectiveArg<float[]> randMotion;
+  public final PerspectiveBoolean condition;
+  public final PerspectiveBoolean mirror;
+  public final PerspectiveBoolean lockFPYaw;
+  public final boolean isRGB;
+  public static ParticleEmitter read(com.google.gson.stream.JsonReader) throws java.io.IOException;

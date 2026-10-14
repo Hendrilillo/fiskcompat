@@ -1,0 +1,3 @@
+public class RenderPropTrail extends HeroRenderProp {
+  public RenderPropTrail();
+  public HeroRenderProp setTrail(TrailHolder);

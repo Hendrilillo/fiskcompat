@@ -1,0 +1,11 @@
+public final class DispatchTargetFormat extends Enum<DispatchTargetFormat> {
+  public static final DispatchTargetFormat SUIT;
+  public static final DispatchTargetFormat MODIFIER;
+  public static final DispatchTargetFormat SPELL;
+  public static final DispatchTargetFormat EQUIPMENT;
+  public static final DispatchTargetFormat INTEGRATED;
+  public static final DispatchTargetFormat WEAPON;
+  public static final DispatchTargetFormat FISKTAG;
+  public static DispatchTargetFormat[] values();
+  public static DispatchTargetFormat valueOf(String);
+  public IDispatchTarget fromBytes(io.netty.buffer.ByteBuf);

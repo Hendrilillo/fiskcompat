@@ -1,0 +1,2 @@
+public interface JsonReaderFunc<T> {
+  public abstract T read(com.google.gson.stream.JsonReader) throws java.io.IOException;

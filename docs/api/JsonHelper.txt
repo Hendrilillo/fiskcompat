@@ -1,0 +1,22 @@
+public class JsonHelper {
+  public JsonHelper();
+  public static int readInt(com.google.gson.stream.JsonReader, int) throws java.io.IOException;
+  public static float[] readArray(com.google.gson.stream.JsonReader, float[], function.Function<Float, Float>) throws java.io.IOException;
+  public static int[] readArray(com.google.gson.stream.JsonReader, int[]) throws java.io.IOException;
+  public static float[] readArray2f(com.google.gson.stream.JsonReader) throws java.io.IOException;
+  public static float[] readArray3f(com.google.gson.stream.JsonReader) throws java.io.IOException;
+  public static float[] readArray(com.google.gson.stream.JsonReader, function.Function<Float, Float>) throws java.io.IOException;
+  public static int[] readArrayi(com.google.gson.stream.JsonReader) throws java.io.IOException;
+  public static <T extends Enum<T>, C extends Collection<T>> C readEnumCollection(com.google.gson.stream.JsonReader, C, function.Function<String, T>) throws java.io.IOException;
+  public static <T extends Enum<T>> Set<T> readEnumSet(com.google.gson.stream.JsonReader, function.Function<String, T>) throws java.io.IOException;
+  public static <T extends Enum<T>> List<T> readEnumList(com.google.gson.stream.JsonReader, function.Function<String, T>) throws java.io.IOException;
+  public static void iterateStrings(com.google.gson.stream.JsonReader, HandledConsumer<String, java.io.IOException>) throws java.io.IOException;
+  public static <T extends Collection<String>> T readStringCollection(com.google.gson.stream.JsonReader, T) throws java.io.IOException;
+  public static List<String> readStringList(com.google.gson.stream.JsonReader) throws java.io.IOException;
+  public static List<String> readStringList(com.google.gson.stream.JsonReader, boolean) throws java.io.IOException;
+  public static String[] readStringArray(com.google.gson.stream.JsonReader) throws java.io.IOException;
+  public static Set<String> readStringSet(com.google.gson.stream.JsonReader, boolean) throws java.io.IOException;
+  public static com.google.gson.JsonElement elementFromJS(Object);
+  public static String fromJS(Object);
+  public static String fromJSSafe(Object);
+  public static IChatComponent readChatComponent(com.google.gson.stream.JsonReader) throws java.io.IOException;

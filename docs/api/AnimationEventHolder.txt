@@ -1,0 +1,4 @@
+public class AnimationEventHolder extends InitializableResource {
+  public float priority;
+  public AnimationEventHolder();
+  public AnimationHolder bindAnimation(AnimationHolder, float);

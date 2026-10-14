@@ -1,0 +1,12 @@
+public class JSDisplayEntity extends JSEntityLiving {
+  public static final JSDisplayEntity NULL;
+  public static JSDisplayEntity wrap(Entity);
+  public String type();
+  public boolean is(String);
+  public JSEntity as(String);
+  public boolean isDisplayStand();
+  public boolean isBookPlayer();
+  public boolean isStatic();
+  public String getDisplayType();
+  public boolean isInGui();
+  public boolean isSkinShown();

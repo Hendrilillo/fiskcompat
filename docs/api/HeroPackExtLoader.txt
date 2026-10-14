@@ -1,0 +1,9 @@
+public class HeroPackExtLoader implements IHeroPackObjectLoader {
+  public HeroPackExtLoader(String, String, byte, function.Function<ExternalFileMap, Map<ResourceLocation, ExternalFile>>);
+  public regex.Pattern getPattern();
+  public String fileExtension();
+  public String directory();
+  public String name();
+  public byte index();
+  public void load(IHeroPack, ReloadContainer, ResourceLocation, String) throws Exception;
+  public void load(IHeroPack, ReloadContainer, ResourceLocation, concurrent.Callable<java.io.InputStream>, AbstractHeroPackSerializer) throws Exception;

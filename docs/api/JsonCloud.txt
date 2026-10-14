@@ -1,0 +1,12 @@
+public class JsonCloud implements IJsonObject<JsonCloud> {
+  public static final String MODEL_DIR;
+  public static final com.google.gson.GsonBuilder GSON_FACTORY;
+  public static final JsonObjectReader<JsonCloud> READER;
+  public String parent;
+  public Integer fade;
+  public ParticleColor[] color;
+  public JsonCloud();
+  public String getParent();
+  public void inherit(JsonCloud) throws java.io.IOException;
+  public void init(IResourceManager) throws java.io.IOException;
+  public void inherit(IJsonObject) throws java.io.IOException;

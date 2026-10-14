@@ -1,0 +1,4 @@
+public interface IHeroResourcePack {
+  public default java.io.InputStream getInputStream(ResourceLocation, HandledSupplier<java.io.InputStream, java.io.IOException>) throws java.io.IOException;
+  public default boolean resourceExists(ResourceLocation);
+  public default Set getResourceDomains(Set);

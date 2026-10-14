@@ -1,0 +1,3 @@
+public class RenderPropOpacity extends HeroRenderProp {
+  public RenderPropOpacity();
+  public HeroRenderProp setOpacity(function.BiFunction<JSEntity, String, Double>);

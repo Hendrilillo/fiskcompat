@@ -1,0 +1,24 @@
+public class JSItem {
+  public static final JSItem EMPTY;
+  public static JSItem wrap(ItemStack);
+  public boolean matches(JSItem);
+  public boolean isEmpty();
+  public String name();
+  public int stackSize();
+  public int maxStackSize();
+  public int damage();
+  public int maxDamage();
+  public String displayName();
+  public boolean isWeapon();
+  public boolean isRifle();
+  public boolean isGun();
+  public boolean isLaserGun();
+  public boolean doesNeedTwoHands();
+  public boolean isRenamed();
+  public boolean isEnchanted();
+  public int getEnchantmentLevel(int);
+  public boolean hasEnchantment(int);
+  public String suitType();
+  public JSNBT nbt();
+  public String toString();
+  public boolean equals(Object);

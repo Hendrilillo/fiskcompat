@@ -1,0 +1,11 @@
+public class MultiTexture {
+  public void set(String, String);
+  public void set(String);
+  public void set(MultiTexture);
+  public String get(int);
+  public boolean hasTexture(int);
+  public boolean isModified();
+  public static MultiTexture read(com.google.gson.stream.JsonReader) throws java.io.IOException;
+  public static MultiTexture empty();
+  public static MultiTexture undefined();
+  public static MultiTexture copy(MultiTexture);

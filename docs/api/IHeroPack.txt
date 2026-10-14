@@ -1,0 +1,8 @@
+public interface IHeroPack {
+  public abstract Map<ResourceLocation, Hero> getHeroes();
+  public abstract Map<ResourceLocation, AugmentSet> getAugments();
+  public abstract Map<ResourceLocation, Power> getPowers();
+  public abstract Map<ResourceLocation, FabricatorNode> getFabricatorNodes();
+  public abstract Map<ResourceLocation, FabricatorRecipe> getFabricatorRecipes();
+  public abstract Map<ResourceLocation, com.fiskmods.fisktag.common.weapon.FiskTagWeapon> getFTWeapons();
+  public abstract Map<ResourceLocation, com.fiskmods.fisktag.common.configuration.FiskTagConfig> getFTConfigs();

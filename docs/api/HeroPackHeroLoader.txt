@@ -1,0 +1,10 @@
+public class HeroPackHeroLoader implements IHeroPackObjectLoader {
+  public HeroPackHeroLoader();
+  public regex.Pattern getPattern();
+  public String fileExtension();
+  public String directory();
+  public String name();
+  public byte index();
+  public void load(IHeroPack, ReloadContainer, ResourceLocation, String) throws Exception;
+  public void load(IHeroPack, ReloadContainer, ResourceLocation, concurrent.Callable<java.io.InputStream>, AbstractHeroPackSerializer) throws Exception;
+  public static DamageProfile getDamageProfile(JSHero, String);

@@ -1,0 +1,11 @@
+public class RenderPropTentacles extends HeroRenderProp {
+  public final AnchorHolder anchor;
+  public float segmentLength;
+  public int segments;
+  public RenderPropTentacles();
+  public HeroRenderProp setTentacles(Object);
+  public HeroRenderProp setSegmentModel(ModelHolder);
+  public HeroRenderProp setHeadModel(ModelHolder);
+  public HeroRenderProp setOffset(float, float, float);
+  public ModelHolder getSegment();
+  public ModelHolder getHead();

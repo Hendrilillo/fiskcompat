@@ -1,0 +1,5 @@
+public class JSClassReader<T extends JSClass<T>> {
+  public JSClassReader(JSClassReader$Constructor<T>, String);
+  public void clearCache();
+  public T read(IResourceManager, ResourceLocation, String) throws java.io.IOException, javax.script.ScriptException, NoSuchMethodException;
+  public T readInternal(IResourceManager, ResourceLocation, T) throws java.io.IOException, javax.script.ScriptException, NoSuchMethodException;

@@ -1,0 +1,3 @@
+public interface IMesh {
+  public default void loadData(JSEntity, Object, float, float, MeshResolution);
+  public abstract void evaluate(MeshVertex, float, float, float, float);

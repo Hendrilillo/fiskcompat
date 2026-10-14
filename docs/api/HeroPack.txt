@@ -1,0 +1,17 @@
+public class HeroPack extends HeroPackInfo implements IHeroPack {
+  public HeroPack(java.io.File, boolean, HeroPackDomainFilter);
+  public boolean isMarketplace();
+  public boolean isHidden();
+  public String getWatermark();
+  public PackSounds getSounds();
+  public Map getAlts();
+  public Map getRemaps();
+  public Map getDataVars();
+  public Map<ResourceLocation, Hero> getHeroes();
+  public Map<ResourceLocation, AugmentSet> getAugments();
+  public Map<ResourceLocation, Power> getPowers();
+  public Map<ResourceLocation, FabricatorNode> getFabricatorNodes();
+  public Map<ResourceLocation, FabricatorRecipe> getFabricatorRecipes();
+  public Map<ResourceLocation, com.fiskmods.fisktag.common.weapon.FiskTagWeapon> getFTWeapons();
+  public Map<ResourceLocation, com.fiskmods.fisktag.common.configuration.FiskTagConfig> getFTConfigs();
+  public boolean reload(AbstractHeroPackSerializer, ReloadContainer) throws Exception;

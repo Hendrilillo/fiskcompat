@@ -1,0 +1,7 @@
+public class HeroEffectChestplate extends HeroEffectJson {
+  public HeroEffectChestplate();
+  public boolean shouldRenderPass(ModelBipedMultiLayer, Entity, int);
+  public void postRenderBody(ModelBipedMultiLayer, Entity, int, float, float, float, float, float, float);
+  public void postRenderArm(ModelBipedMultiLayer, EntityPlayer, ItemStack, HeroIteration, int);
+  public void read(com.google.gson.stream.JsonReader, String, com.google.gson.stream.JsonToken) throws java.io.IOException;
+  public void init(JsonHeroRenderer);

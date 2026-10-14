@@ -1,0 +1,13 @@
+public class JSBlock {
+  public static final JSBlock EMPTY;
+  public static JSBlock wrap(World, int, int, int);
+  public boolean matches(JSBlock);
+  public boolean isEmpty();
+  public String name();
+  public int metadata();
+  public float hardness();
+  public boolean isSolid();
+  public JSItem item();
+  public JSItem itemDropped();
+  public String toString();
+  public boolean equals(Object);

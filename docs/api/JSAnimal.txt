@@ -1,0 +1,8 @@
+public class JSAnimal extends JSEntityGeneric {
+  public static final JSAnimal NULL;
+  public static JSAnimal wrap(Entity);
+  public String type();
+  public boolean is(String);
+  public JSEntity as(String);
+  public boolean isInLove();
+  public boolean isBreedingItem(JSItem);

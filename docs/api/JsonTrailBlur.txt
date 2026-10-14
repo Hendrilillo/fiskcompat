@@ -1,0 +1,5 @@
+public class JsonTrailBlur extends JsonConstantContainer {
+  public JsonTrailBlur();
+  public Integer getColor();
+  public Vec3 getVecColor();
+  public Float getOpacity();

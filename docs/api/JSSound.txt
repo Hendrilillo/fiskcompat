@@ -1,0 +1,12 @@
+public class JSSound {
+  public static JSSound wrap(MovingSoundEvent);
+  public String id();
+  public Object context();
+  public int ticksPlaying();
+  public double volume();
+  public double pitch();
+  public double range();
+  public double fadeProgress();
+  public void setVolume(float);
+  public void setPitch(float);
+  public void setRange(float);

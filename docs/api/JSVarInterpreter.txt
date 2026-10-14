@@ -1,0 +1,6 @@
+public class JSVarInterpreter {
+  public Object apply(Entity, Object);
+  public Object apply(Entity);
+  public static JSVarInterpreter create(String, boolean);
+  public static void clear();
+  public static void flush();

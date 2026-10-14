@@ -1,0 +1,2 @@
+public class RenderPropChargedBeam extends AbstractRenderPropBeam {
+  public RenderPropChargedBeam();

@@ -1,0 +1,7 @@
+public class BeamAspect {
+  public final IBeamRenderer renderer;
+  public final float opacityStart;
+  public final float opacityEnd;
+  public final float scale;
+  public BeamAspect(IBeamRenderer, float, float, float);
+  public static BeamAspect read(com.google.gson.stream.JsonReader) throws java.io.IOException;

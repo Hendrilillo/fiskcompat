@@ -1,0 +1,5 @@
+public class JsonToString {
+  public JsonToString(com.google.gson.stream.JsonReader);
+  public static String toString(com.google.gson.stream.JsonReader) throws java.io.IOException;
+  public void read() throws java.io.IOException;
+  public String toString();

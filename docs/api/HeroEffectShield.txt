@@ -1,0 +1,8 @@
+public class HeroEffectShield extends AbstractHeroEffectPositioned {
+  public final MultiTexture texture;
+  public float unfold;
+  public float opacity;
+  public boolean large;
+  public HeroEffectShield();
+  public HeroEffectJS setCurve(float, float);
+  public void render();

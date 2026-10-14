@@ -1,0 +1,5 @@
+public class JSAttributeProfile {
+  public static JSAttributeProfile wrap(IAttributeProfile);
+  public void addAttribute(String, double, int);
+  public void inheritDefaults();
+  public void revokeAugments();

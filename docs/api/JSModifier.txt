@@ -1,0 +1,8 @@
+public class JSModifier {
+  public static JSModifier wrap(ModifierEntry);
+  public JSPower power();
+  public String name();
+  public String id();
+  public Object getProperty(String);
+  public String toString();
+  public boolean equals(Object);

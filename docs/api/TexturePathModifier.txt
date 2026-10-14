@@ -1,0 +1,7 @@
+public class TexturePathModifier extends TexturePath {
+  public final TexturePath pathIn;
+  public final com.google.common.collect.ImmutableList<Pair<TextureOperation, Object>> transforms;
+  public TexturePathModifier(ResourceVarTx, String, String, List<Pair<TextureOperation, Object>>);
+  public TexturePathModifier(ResourceVarTx, String);
+  public void load(TextureManager, ResourceVarTx, Map<String, String>);
+  public static function.Function<ResourceVarTx, TexturePath> read(com.google.gson.stream.JsonReader, String) throws java.io.IOException;

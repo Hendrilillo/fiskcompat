@@ -1,0 +1,4 @@
+public abstract class AbstractHeroEffectOverlay extends HeroEffectJS {
+  public AbstractHeroEffectOverlay();
+  public void includeEffects(Object...);
+  public void render();

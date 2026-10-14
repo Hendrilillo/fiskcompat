@@ -1,0 +1,7 @@
+public class HeroEffectBeam extends HeroEffectJson {
+  public HeroEffectBeam();
+  public boolean shouldRenderPass(ModelBipedMultiLayer, Entity, int);
+  public void postRenderBody(ModelBipedMultiLayer, Entity, int, float, float, float, float, float, float);
+  public void postRenderArm(ModelBipedMultiLayer, EntityPlayer, ItemStack, HeroIteration, int);
+  public void renderBeam(Entity, float, float, float, boolean, boolean, float);
+  public void read(com.google.gson.stream.JsonReader, String, com.google.gson.stream.JsonToken) throws java.io.IOException;

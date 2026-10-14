@@ -1,0 +1,7 @@
+public class JSOwnable extends JSEntityGeneric {
+  public static final JSOwnable NULL;
+  public static JSOwnable wrap(Entity);
+  public String type();
+  public boolean is(String);
+  public JSEntity as(String);
+  public JSEntity getOwner();

@@ -1,0 +1,13 @@
+public class SoundDispatcher {
+  public static final SoundDispatcher EMPTY;
+  public SoundDispatcher();
+  public SoundDispatcher load(Map<String, Set<String>>);
+  public void addTriggerOverride(String, SoundTrigger, Set<String>);
+  public boolean hasTrigger(SoundTrigger);
+  public void dispatchAtEntity(Entity, SoundTrigger, IDispatchTarget, boolean);
+  public void dispatchAtEntity(Entity, SoundDispatchData);
+  public void dispatchAt(World, double, double, double, SoundTrigger, IDispatchTarget);
+  public void dispatchAt(World, double, double, double, SoundDispatchData);
+  public void broadcastAtEntity(Entity, SoundTrigger, IDispatchTarget);
+  public void broadcastAtEntity(Entity, SoundDispatchData);
+  public static SoundDispatcher read(com.google.gson.stream.JsonReader) throws java.io.IOException;

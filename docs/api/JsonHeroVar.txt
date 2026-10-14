@@ -1,0 +1,4 @@
+public class JsonHeroVar {
+  public JsonHeroVar(String);
+  public Object get(Entity, ItemStack);
+  public boolean test(Entity, ItemStack);

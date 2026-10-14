@@ -1,0 +1,10 @@
+public class HeroEffectWings extends HeroEffectJS {
+  public final MultiTexture texture;
+  public final AnchorHolder anchor;
+  public float unfold;
+  public float shieldUnfold;
+  public float opacity;
+  public HeroEffectWings();
+  public HeroEffectJS setYOffset(float);
+  public WingAnimationHolder bindAnimation(String);
+  public void render();

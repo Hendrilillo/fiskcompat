@@ -1,0 +1,8 @@
+public class ResourceVar implements IResourceVar {
+  public final String path;
+  public final ResourceLocation resource;
+  public ResourceVar(String, String);
+  public void load(TextureManager);
+  public ResourceLocation get(Entity, ItemStack);
+  public com.google.common.collect.ImmutableSet<ResourceLocation> getResources();
+  public static ResourceVar read(com.google.gson.stream.JsonReader, String) throws java.io.IOException;

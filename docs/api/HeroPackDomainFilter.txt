@@ -1,0 +1,7 @@
+public interface HeroPackDomainFilter {
+  public static final HeroPackDomainFilter ALLOW_ALL;
+  public abstract boolean isAllowedData(String);
+  public abstract boolean isAllowedResource(String);
+  public abstract void log(IHeroPackObjectLoader, ResourceLocation);
+  public static HeroPackDomainFilter filterAllOrIgnore(String);
+  public static HeroPackDomainFilter filterDataOrWarn(String);

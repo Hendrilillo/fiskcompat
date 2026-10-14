@@ -1,0 +1,3 @@
+public class SoundDispatcherClient extends SoundDispatcher {
+  public SoundDispatcherClient();
+  public void addTriggerOverride(String, SoundTrigger, Set<String>);

@@ -1,0 +1,2 @@
+public class ParticleHolder extends ResourceHolder<JsonParticles> {
+  public ParticleHolder(String);

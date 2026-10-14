@@ -1,0 +1,7 @@
+public final class SlotType extends Enum<SlotType> {
+  public static final SlotType HELMET;
+  public static final SlotType CHESTPLATE;
+  public static final SlotType LEGGINGS;
+  public static final SlotType BOOTS;
+  public static SlotType[] values();
+  public static SlotType valueOf(String);

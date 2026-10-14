@@ -1,0 +1,5 @@
+public class AnimationHolder extends ResourceHolder<BodyAnimation> {
+  public float priority;
+  public AnimationHolder(String);
+  public AnimationHolder setCondition(function.Predicate<JSEntity>);
+  public AnimationHolder setData(function.BiConsumer<JSEntity, DataLoader>);

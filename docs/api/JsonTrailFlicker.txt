@@ -1,0 +1,13 @@
+public class JsonTrailFlicker extends JsonConstantContainer implements ITrailAspect {
+  public JsonTrailFlicker();
+  public Integer getColor();
+  public Integer getColor(EntityLivingBase);
+  public Vec3 getVecColor();
+  public Vec3 getVecColor(EntityLivingBase);
+  public boolean isLightning();
+  public Integer getDensity();
+  public Float getFrequency();
+  public Float getLength();
+  public Float getSpread();
+  public Float getOpacity();
+  public Boolean isConfined();

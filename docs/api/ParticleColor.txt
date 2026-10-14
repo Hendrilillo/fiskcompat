@@ -1,0 +1,8 @@
+public class ParticleColor {
+  public ParticleColor(float[], float[]);
+  public ParticleColor(float[][], float[][], int);
+  public ParticleColor(float, float);
+  public ParticleColor(float[], float[], int);
+  public ParticleColor(float, float, float, float);
+  public ParticleColor(float);
+  public static ParticleColor read(com.google.gson.stream.JsonReader) throws java.io.IOException;

@@ -1,0 +1,10 @@
+public class JSTeam {
+  public static final JSTeam NULL;
+  public static JSTeam wrap(Team);
+  public boolean matches(JSTeam);
+  public boolean exists();
+  public String name();
+  public String displayName();
+  public boolean allowsFriendlyFire();
+  public boolean canSeeFriendlyInvisibles();
+  public String formatText(String);

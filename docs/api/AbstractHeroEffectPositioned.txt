@@ -1,0 +1,8 @@
+public abstract class AbstractHeroEffectPositioned extends HeroEffectJS {
+  public final AnchorHolder anchor;
+  public boolean mirror;
+  public HeroEffectJS setOffset(float, float, float);
+  public HeroEffectJS setRotation(float, float, float);
+  public HeroEffectJS setRotationOrder(String);
+  public HeroEffectJS setScale(float, float, float);
+  public HeroEffectJS setScale(float);

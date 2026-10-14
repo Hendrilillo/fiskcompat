@@ -1,0 +1,12 @@
+public class CachedColor {
+  public CachedColor(boolean);
+  public CachedColor();
+  public CachedColor(CachedColor);
+  public CachedColor set(int);
+  public CachedColor setRGB(float, float, float);
+  public CachedColor setHSB(float, float, float);
+  public int getHex();
+  public float[] getRGB();
+  public Vec3 toVector();
+  public boolean isNull();
+  public String toString();

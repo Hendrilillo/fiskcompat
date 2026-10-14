@@ -1,0 +1,7 @@
+public class HeroPackSnooper extends AbstractHeroPackSerializer implements IAssetSnooper {
+  public HeroPackSnooper();
+  public Map<ResourceLocation, HandledSupplier<java.io.InputStream, java.io.IOException>> getAssets();
+  public Set<String> getResourceDomains();
+  public void toBytes(io.netty.buffer.ByteBuf) throws java.io.IOException;
+  public void fromBytes(io.netty.buffer.ByteBuf) throws java.io.IOException;
+  public int reload(ReloadContainer) throws HeroPackException;

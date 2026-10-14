@@ -1,0 +1,9 @@
+public class HeroEffectOpeningMask extends HeroEffectJS {
+  public final MultiTexture texture;
+  public final AnchorHolder anchor;
+  public float progress;
+  public float opacity;
+  public HeroEffectOpeningMask();
+  public HeroEffectJS setOffset(float, float, float);
+  public HeroEffectJS setRotation(float, float, float);
+  public void render();

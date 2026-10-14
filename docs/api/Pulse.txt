@@ -1,0 +1,6 @@
+public class Pulse {
+  public Pulse();
+  public double getLength();
+  public double getSize();
+  public double getFrequency();
+  public static Pulse read(com.google.gson.stream.JsonReader) throws java.io.IOException;

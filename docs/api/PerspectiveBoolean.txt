@@ -1,0 +1,4 @@
+public class PerspectiveBoolean {
+  public PerspectiveBoolean(boolean);
+  public boolean get(JSEntity, boolean);
+  public void read(com.google.gson.stream.JsonReader, com.google.gson.stream.JsonToken) throws java.io.IOException;

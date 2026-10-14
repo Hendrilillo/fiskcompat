@@ -1,0 +1,11 @@
+public class JsonTrailParticles extends JsonConstantContainer {
+  public JsonTrailParticles();
+  public void postInit(JsonTrail) throws java.io.IOException;
+  public ResourceLocation getTexture();
+  public Float getMotion();
+  public Float getSpeed();
+  public Integer getFade();
+  public Integer getDensity();
+  public Float getDiffer();
+  public Float getOpacity();
+  public Float getScale();

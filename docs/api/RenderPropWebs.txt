@@ -1,0 +1,6 @@
+public class RenderPropWebs extends HeroRenderProp {
+  public final MultiTexture textureSmall;
+  public final MultiTexture textureLarge;
+  public final MultiTexture textureRope;
+  public final MultiTexture textureRopeBase;
+  public RenderPropWebs();

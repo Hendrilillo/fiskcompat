@@ -1,0 +1,5 @@
+public class JsonModel {
+  public static final String MODEL_DIR;
+  public JsonModel();
+  public static void clearCache();
+  public static ITblModel read(IResourceManager, ResourceLocation) throws java.io.IOException;

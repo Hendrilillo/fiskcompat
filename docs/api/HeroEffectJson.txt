@@ -1,0 +1,27 @@
+public abstract class HeroEffectJson implements HeroRenderer$Pass {
+  public final Conditionals conditionals;
+  public Set<SlotType> applicable;
+  public String id;
+  public HeroRendererJson renderer;
+  public JsonHeroRenderer json;
+  public HeroEffectJson();
+  public static void register(String, Class<? extends HeroEffectJson>);
+  public static Class<? extends HeroEffectJson> get(String);
+  public static String getKey(Class<? extends HeroEffectJson>);
+  public static com.google.common.collect.ImmutableSet<String> getKeys();
+  public HeroEffectJson provideContext(HeroRendererJson);
+  public abstract boolean shouldRenderPass(ModelBipedMultiLayer, Entity, int);
+  public void postRenderBody(ModelBipedMultiLayer, Entity, int, float, float, float, float, float, float);
+  public void postRenderArm(ModelBipedMultiLayer, EntityPlayer, ItemStack, HeroIteration, int);
+  public void onClientTick(EntityLivingBase, HeroIteration, int, cpw.mods.fml.common.gameevent.TickEvent$Phase);
+  public abstract void read(com.google.gson.stream.JsonReader, String, com.google.gson.stream.JsonToken) throws java.io.IOException;
+  public void init(JsonHeroRenderer);
+  public void load(JsonHeroRenderer, IResourceManager, TextureManager) throws java.io.IOException;
+  public void pushTexture();
+  public void popTexture();
+  public void bindDefaultTexture(int);
+  public void bindTexture(Entity, ItemStack, String, int);
+  public void bindTexture(Entity, int, String, int);
+  public void bindTexture(Entity, ItemStack, MultiTexture, int);
+  public void bindTexture(Entity, int, MultiTexture, int);
+  public static HeroEffectJson read(String, com.google.gson.stream.JsonReader) throws java.io.IOException;

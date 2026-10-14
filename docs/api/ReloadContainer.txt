@@ -1,0 +1,25 @@
+public class ReloadContainer implements IHeroPack {
+  public final Map<String, PackReference> packs;
+  public final ExternalFileMap externals;
+  public final Map<ResourceLocation, Hero> heroes;
+  public final Map<ResourceLocation, Power> powers;
+  public final Map<ResourceLocation, AugmentSet> augments;
+  public final Map<ResourceLocation, FabricatorNode> fabricatorNodes;
+  public final Map<ResourceLocation, FabricatorRecipe> fabricatorRecipes;
+  public final Map<ResourceLocation, com.fiskmods.fisktag.common.weapon.FiskTagWeapon> fisktagWeapons;
+  public final Map<ResourceLocation, com.fiskmods.fisktag.common.configuration.FiskTagConfig> fisktagConfigs;
+  public final Map<ResourceLocation, Map<String, HeroIteration$Candidate>> iterations;
+  public final Map<String, DataVar> dataVars;
+  public final Map<String, PackSounds> sounds;
+  public final Map<?, ?> remaps;
+  public ReloadContainer();
+  public void inject(HeroPack) throws HeroPackDuplicateException;
+  public void processIterations(Map<?, ?>, String);
+  public void processDataVars(Map<?, ?>, String);
+  public Map<ResourceLocation, Hero> getHeroes();
+  public Map<ResourceLocation, AugmentSet> getAugments();
+  public Map<ResourceLocation, Power> getPowers();
+  public Map<ResourceLocation, FabricatorNode> getFabricatorNodes();
+  public Map<ResourceLocation, FabricatorRecipe> getFabricatorRecipes();
+  public Map<ResourceLocation, com.fiskmods.fisktag.common.weapon.FiskTagWeapon> getFTWeapons();
+  public Map<ResourceLocation, com.fiskmods.fisktag.common.configuration.FiskTagConfig> getFTConfigs();

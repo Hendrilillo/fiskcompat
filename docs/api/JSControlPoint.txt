@@ -1,0 +1,14 @@
+public class JSControlPoint {
+  public static final JSControlPoint EMPTY;
+  public static JSControlPoint wrap(com.fiskmods.fisktag.common.game.ControlPoint);
+  public boolean matches(JSControlPoint);
+  public boolean exists();
+  public int index();
+  public boolean isEmpty();
+  public boolean contains(JSEntity);
+  public float getRange();
+  public float getProgress();
+  public int getBalance();
+  public boolean isNeutral();
+  public boolean isRed();
+  public boolean isBlue();

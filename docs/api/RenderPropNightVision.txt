@@ -1,0 +1,6 @@
+public class RenderPropNightVision extends HeroRenderProp {
+  public float factor;
+  public float fogStrength;
+  public boolean firstPersonOnly;
+  public boolean underwaterOnly;
+  public RenderPropNightVision();
