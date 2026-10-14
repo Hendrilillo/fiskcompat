@@ -2,5 +2,12 @@
   "item.fiskcompat.suit_helmet": "Suit Helmet",
   "item.fiskcompat.suit_chestplate": "Suit Chestplate",
   "item.fiskcompat.suit_leggings": "Suit Leggings",
-  "item.fiskcompat.suit_boots": "Suit Boots"
+  "item.fiskcompat.suit_boots": "Suit Boots",
+  "key.fiskcompat.ability1": "Suit ability 1",
+  "key.fiskcompat.ability2": "Suit ability 2",
+  "key.fiskcompat.ability3": "Suit ability 3",
+  "key.fiskcompat.ability4": "Suit ability 4",
+  "key.fiskcompat.ability5": "Suit ability 5",
+  "key.fiskcompat.mask": "Open/close mask",
+  "key.categories.fiskcompat": "FiskCompat (heropacks)"
 }

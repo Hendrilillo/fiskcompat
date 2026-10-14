@@ -123,9 +123,13 @@ public final class HeroRendererScript {
 
     public void unbindResource(Object resource) {}
 
+    final Map<String, Object> customAnimations = new LinkedHashMap<>();
+
     public void addAnimationEvent(String key, Object holder) { Unimplemented.report("renderer.addAnimationEvent"); }
-    public void addCustomAnimation(String key, Object holder) { Unimplemented.report("renderer.addCustomAnimation"); }
-    public void removeCustomAnimation(String key) {}
+    public void addCustomAnimation(String key, Object holder) { customAnimations.put(key, holder); }
+    public void removeCustomAnimation(String key) { customAnimations.remove(key); }
+
+    public Map<String, Object> customAnimations() { return customAnimations; }
     public void reprioritizeDefaultAnimation(String key, double priority) {}
 
     // ----------------------------------------------------------------- Lectura desde Java

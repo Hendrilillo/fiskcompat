@@ -36,7 +36,8 @@ public final class JSItem {
 
     public JSNbt nbt() {
         CustomData data = stack.get(DataComponents.CUSTOM_DATA);
-        return new JSNbt(data == null ? null : data.copyTag());
+        net.minecraft.nbt.CompoundTag tag = data == null ? new net.minecraft.nbt.CompoundTag() : data.copyTag();
+        return new JSNbt(tag, () -> { if (!stack.isEmpty()) stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag)); });
     }
 
     @Override public String toString() { return stack.toString(); }

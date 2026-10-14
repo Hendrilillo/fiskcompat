@@ -211,7 +211,7 @@ public final class ModelResource extends AbstractJSObject {
     public static final class DataLoader extends AbstractJSObject {
         private final double[] data;
 
-        DataLoader(double[] data) {
+        public DataLoader(double[] data) {
             this.data = data;
         }
 

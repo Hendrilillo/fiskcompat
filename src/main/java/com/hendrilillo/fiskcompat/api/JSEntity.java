@@ -103,6 +103,19 @@ public class JSEntity {
     public boolean isLivingEntity() { return entity instanceof LivingEntity; }
     public boolean isDisplayStand() { return entity instanceof ArmorStand; }
     public boolean isBookPlayer() { return false; }
+    // --- JSPlayer
+    public boolean isCreativeMode() { return entity instanceof Player p && p.isCreative(); }
+    public int getFoodLevel() { return entity instanceof Player p ? p.getFoodData().getFoodLevel() : 20; }
+    public float getFoodSaturation() { return entity instanceof Player p ? p.getFoodData().getSaturationLevel() : 0; }
+    public int getExperience() { return entity instanceof Player p ? p.totalExperience : 0; }
+    public int getExperienceLevel() { return entity instanceof Player p ? p.experienceLevel : 0; }
+    public boolean isUsingItem() { return living() != null && living().isUsingItem(); }
+    public boolean isBlocking() { return living() != null && living().isBlocking(); }
+    public boolean isInControlPoint() { return false; }
+    public void addChatMessage(Object msg) {
+        if (entity instanceof Player p && !p.level().isClientSide) p.sendSystemMessage(net.minecraft.network.chat.Component.literal(String.valueOf(msg)));
+    }
+
     public boolean isStatic() { return entity instanceof ArmorStand; }
     public String getDisplayType() { return entity instanceof ArmorStand ? "DISPLAY_STAND" : ""; }
     public boolean isInGui() { return false; }

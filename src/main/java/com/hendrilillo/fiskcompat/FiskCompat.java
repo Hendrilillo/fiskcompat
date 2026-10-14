@@ -21,12 +21,15 @@ public class FiskCompat {
 
     public FiskCompat(IEventBus modBus) {
         ModItems.register(modBus);
+        com.hendrilillo.fiskcompat.net.Net.register(modBus);
         reloadHeroPacks();
     }
 
     public static void reloadHeroPacks() {
         HeroPackManager.load(FMLPaths.GAMEDIR.get());
         DataVars.load();
+        com.hendrilillo.fiskcompat.power.PowerRegistry.clear();
+        com.hendrilillo.fiskcompat.hero.ActiveHero.clearCache();
         HeroRegistry.loadAll();
     }
 }

@@ -13,6 +13,12 @@ Mod para **Minecraft 1.21.1 (NeoForge)** que carga **heropacks de Fisk's Superhe
    - el jar original de Fisk's Superheroes (`FiskHeroes-1.7.10-2.4.0_1.jar`). Muchos heropacks usan sus scripts y texturas base; el mod solo los lee.
 4. Los trajes salen en la pestaña creativa **"FiskCompat - Heropacks"**.
 
+## Controles
+
+- **Volar**: doble salto en el aire. Adelante vuela hacia donde miras, correr = turbo, salto/agacharse = subir/bajar. Al tocar el suelo aterrizas.
+- **Habilidades 1-5**: C, V, B, N, G (se pueden cambiar en Controles). Arriba a la izquierda sale qué hace cada una con el traje puesto.
+- **Máscara**: M.
+
 ## Estado
 
 | Parte | Estado |
@@ -27,9 +33,12 @@ Mod para **Minecraft 1.21.1 (NeoForge)** que carga **heropacks de Fisk's Superhe
 | Brazo en primera persona | ✅ |
 | Modelos Tabula (`.tbl`, formatos nuevo y antiguo) | ✅ |
 | Animaciones de modelos (`.fsk`) | ✅ 162/162 compilan |
-| Animaciones del cuerpo (`out "rotate"`...) | ⏳ |
-| Poderes (vuelo, repulsores, beams...) y teclas | ⏳ |
-| Variables de datos sincronizadas | ⏳ |
+| Animaciones del cuerpo (pose de vuelo, etc.) | ✅ |
+| Variables de datos sincronizadas cliente/servidor | ✅ |
+| Scripts por tick (`setTickHandler`) y teclas de los scripts | ✅ |
+| Teclas de habilidad (C, V, B, N, G) y máscara (M) con lista en pantalla | ✅ |
+| Vuelo (doble salto), transformación, cooldown, escudo, inmunidades, atributos | ✅ |
+| Repulsores, rayos, unibeam, cohetes... | ⏳ |
 | Sonidos, HUD, partículas | ⏳ |
 
 ## Desarrollo

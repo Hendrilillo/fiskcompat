@@ -48,7 +48,29 @@ public final class AutoTestClient {
         if (ticks == 240) shot(mc, "fiskcompat_hotbar.png");
         if (ticks == 245) mc.player.getInventory().selected = 6;
         if (ticks == 270) shot(mc, "fiskcompat_arm.png");
-        if (ticks == 290) mc.stop();
+        if (ticks == 275) {
+            mc.options.hideGui = false;
+            mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT);
+            com.hendrilillo.fiskcompat.data.Sync.setLocal(mc.player, "fiskcompat:dummy", 0);
+            com.hendrilillo.fiskcompat.data.Sync.setLocal(mc.player, "fiskheroes:mask_open", true);
+            com.hendrilillo.fiskcompat.data.Sync.setLocal(mc.player, "fiskheroes:flying", true);
+            mc.player.setPos(mc.player.getX(), mc.player.getY() + 6, mc.player.getZ());
+        }
+        if (ticks == 300) shot(mc, "fiskcompat_flying_mask.png");
+        if (ticks == 301) {
+            mc.options.setCameraType(CameraType.THIRD_PERSON_BACK);
+            mc.options.keyUp.setDown(true);
+            mc.options.keySprint.setDown(true);
+        }
+        if (ticks == 322) shot(mc, "fiskcompat_flying_boost.png");
+        if (ticks == 323) { mc.player.setYRot(mc.player.getYRot() + 90); mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT); }
+        if (ticks == 330) shot(mc, "fiskcompat_flying_side.png");
+        if (ticks == 331) { mc.options.keyUp.setDown(false); mc.options.keySprint.setDown(false); }
+        if (ticks == 350) {
+            FiskCompat.LOGGER.info("[autotest] flying={} y={} timer={}", com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "fiskheroes:flying"),
+                    mc.player.getY(), com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "fiskheroes:flight_timer"));
+            mc.stop();
+        }
     }
 
     private static void shot(Minecraft mc, String name) {

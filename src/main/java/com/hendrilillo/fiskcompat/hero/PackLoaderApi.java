@@ -17,7 +17,7 @@ public final class PackLoaderApi {
 
     public void printChat(Object o) { FiskCompat.LOGGER.info("[script chat] {}", o); }
 
-    public String getSide() { return Side.isClient() ? "CLIENT" : "SERVER"; }
+    public String getSide() { return net.neoforged.fml.util.thread.EffectiveSide.get().isClient() ? "CLIENT" : "SERVER"; }
 
     public JSVector.Vec3 asVec3(double x, double y, double z) { return new JSVector.Vec3(x, y, z); }
 

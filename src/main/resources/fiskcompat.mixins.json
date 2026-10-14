@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "com.hendrilillo.fiskcompat.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
-  "client": ["CapeLayerMixin"],
+  "mixins": ["ServerGamePacketListenerAccessor"],
+  "client": ["CapeLayerMixin", "LivingEntityRendererMixin"],
   "injectors": { "defaultRequire": 1 }
 }

@@ -61,7 +61,9 @@ public final class DataVars {
                     type = Type.FLOAT;
                 }
                 String name = pack.domain() + ":dyn/" + key;
-                VARS.put(name, new Var(name, type, convert(type, null), interp, reset));
+                JsonElement def = e.isJsonObject() ? e.getAsJsonObject().get("default") : null;
+                Object defVal = def != null ? convert(type, def) : type == Type.STRING ? "{}" : convert(type, null);
+                VARS.put(name, new Var(name, type, defVal, interp, reset));
             }
         }
     }
@@ -78,6 +80,30 @@ public final class DataVars {
             case DOUBLE -> n ? 0d : e.getAsDouble();
             case STRING -> n ? "" : e.getAsString();
             case OBJECT -> null;
+        };
+    }
+
+    /** Convierte un valor (normalmente de JS) al tipo de la variable. null = no se puede guardar. */
+    public static Object coerce(String name, Object value) {
+        Var var = VARS.get(name);
+        Type type = var != null ? var.type() : null;
+        if (value instanceof Boolean b && type == null) return b;
+        if (type == null) {
+            if (value instanceof Number n) return n.doubleValue() == Math.rint(n.doubleValue()) && !(value instanceof Float || value instanceof Double) ? n.intValue() : n.doubleValue();
+            if (value instanceof CharSequence) return value.toString();
+            return value instanceof Boolean ? value : null;
+        }
+        double d = value instanceof Number n ? n.doubleValue() : value instanceof Boolean b ? (b ? 1 : 0) : 0;
+        return switch (type) {
+            case BOOLEAN -> value instanceof Boolean b ? b : d != 0;
+            case BYTE -> (byte) d;
+            case SHORT -> (short) d;
+            case INTEGER -> (int) d;
+            case LONG -> (long) d;
+            case FLOAT -> (float) d;
+            case DOUBLE -> d;
+            case STRING -> value == null ? "" : value.toString();
+            case OBJECT -> value;
         };
     }
 

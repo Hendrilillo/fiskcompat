@@ -2,5 +2,12 @@
   "item.fiskcompat.suit_helmet": "Casco de traje",
   "item.fiskcompat.suit_chestplate": "Pechera de traje",
   "item.fiskcompat.suit_leggings": "Grebas de traje",
-  "item.fiskcompat.suit_boots": "Botas de traje"
+  "item.fiskcompat.suit_boots": "Botas de traje",
+  "key.fiskcompat.ability1": "Habilidad del traje 1",
+  "key.fiskcompat.ability2": "Habilidad del traje 2",
+  "key.fiskcompat.ability3": "Habilidad del traje 3",
+  "key.fiskcompat.ability4": "Habilidad del traje 4",
+  "key.fiskcompat.ability5": "Habilidad del traje 5",
+  "key.fiskcompat.mask": "Abrir/cerrar máscara",
+  "key.categories.fiskcompat": "FiskCompat (heropacks)"
 }
