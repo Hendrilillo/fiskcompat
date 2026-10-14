@@ -63,7 +63,7 @@ public final class BodyAnimator {
         pose.translate(0, 1.501f, 0);
         pose.scale(1 / scale, 1 / scale, 1 / scale);
         pose.scale(-1, -1, 1);
-        applyOutputs(outputs, pose, false);
+        applyOutputs(outputs, pose, false, false);
         pose.scale(-1, -1, 1);
         pose.scale(scale, scale, scale);
         pose.translate(0, -1.501f, 0);
@@ -74,11 +74,41 @@ public final class BodyAnimator {
      * out "firstPerson" (true), sobre la pose del brazo que prepara Minecraft. Las partes no se mueven.
      */
     public static void applyFirstPerson(LivingEntity entity, PoseStack pose, float pt) {
+        FirstPerson fp = firstPerson(entity, null, pt);
+        if (fp != null) applyOutputs(fp.outputs, pose, true, false);
+    }
+
+    /** Resultado de las animaciones para la vista en primera persona. */
+    public record FirstPerson(List<FskScript.Output> outputs, boolean bothArms) {
+        /** Igual que con el brazo derecho, pero en espejo para el izquierdo. */
+        public void applyLeft(PoseStack pose) {
+            applyOutputs(outputs, pose, true, true);
+        }
+    }
+
+    /**
+     * Ejecuta las animaciones como en primera persona. Si se da un modelo de prueba, mira también si
+     * la animación levanta el brazo izquierdo hacia delante (apuntar con las dos manos, etc.).
+     */
+    public static FirstPerson firstPerson(LivingEntity entity, HumanoidModel<?> probe, float pt) {
         Vec3 look = entity.getViewVector(pt);
         double[] b = {entity.getX() - entity.xo, entity.getY() - entity.yo, entity.getZ() - entity.zo, look.x, look.y, look.z,
                 0, 0, entity.tickCount + pt, 0, 0, 0};
-        List<FskScript.Output> outputs = run(entity, null, pt, b);
-        if (outputs != null) applyOutputs(outputs, pose, true);
+        if (probe != null) {
+            for (int i = 0; i < PARTS.length; i++) {
+                ModelPart p = part(probe, i);
+                p.xRot = p.yRot = p.zRot = 0;
+            }
+        }
+        List<FskScript.Output> outputs = run(entity, probe, pt, b);
+        if (outputs == null) return null;
+        boolean fpOutputs = false, fp = false;
+        for (FskScript.Output o : outputs) {
+            if (o.channel().equals("firstPerson")) fp = o.args().length > 0 && o.args()[0] == 1;
+            else if (fp) fpOutputs = true;
+        }
+        boolean both = probe != null && fpOutputs && probe.leftArm.xRot < -0.6f;
+        return new FirstPerson(outputs, both);
     }
 
     /** Ejecuta las animaciones del héroe (por prioridad). Con modelo, mueve sus partes. Null si no hay. */
@@ -144,7 +174,8 @@ public final class BodyAnimator {
     }
 
     /** Aplica las salidas de la vista indicada (como Fisk: el pivote va en fracciones de 0.6 x 1.8 x 0.6). */
-    private static void applyOutputs(List<FskScript.Output> outputs, PoseStack pose, boolean firstPersonView) {
+    private static void applyOutputs(List<FskScript.Output> outputs, PoseStack pose, boolean firstPersonView, boolean mirror) {
+        double m = mirror ? -1 : 1;
         double[] pivot = null;
         boolean firstPerson = false;
         for (FskScript.Output o : outputs) {
@@ -155,12 +186,13 @@ public final class BodyAnimator {
             }
             if (firstPerson != firstPersonView) continue;
             switch (o.channel()) {
-                case "pivot" -> pivot = new double[]{a.length > 0 ? a[0] : 0, a.length > 1 ? a[1] : 0, a.length > 2 ? a[2] : 0};
-                case "translate" -> { if (a.length >= 3) pose.translate(a[0], a[1], a[2]); }
+                case "pivot" -> pivot = new double[]{a.length > 0 ? m * a[0] : 0, a.length > 1 ? a[1] : 0, a.length > 2 ? a[2] : 0};
+                case "translate" -> { if (a.length >= 3) pose.translate(m * a[0], a[1], a[2]); }
                 case "rotate" -> {
                     if (a.length >= 4 && a[0] != 0 && (a[1] != 0 || a[2] != 0 || a[3] != 0)) {
                         if (pivot != null) pose.translate(pivot[0] * 0.6, pivot[1] * 1.8, pivot[2] * 0.6);
-                        pose.mulPose(new Quaternionf().rotationAxis((float) Math.toRadians(a[0]), (float) a[1], (float) a[2], (float) a[3]));
+                        // En espejo (brazo izquierdo): el eje pasa a (x, -y, -z)
+                        pose.mulPose(new Quaternionf().rotationAxis((float) Math.toRadians(a[0]), (float) a[1], (float) (m * a[2]), (float) (m * a[3])));
                         if (pivot != null) pose.translate(-pivot[0] * 0.6, -pivot[1] * 1.8, -pivot[2] * 0.6);
                     }
                 }
