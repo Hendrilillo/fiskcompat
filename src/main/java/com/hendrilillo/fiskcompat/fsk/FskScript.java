@@ -34,6 +34,8 @@ public final class FskScript {
             if (c >= 0) line = line.substring(0, c);
             line = line.trim();
             if (line.isEmpty()) continue;
+            // Como Fisk: si un operador (+ * / ^ % < > ==...) va seguido de un menos, la línea no hace nada
+            if (DROPPED.matcher(expressionPart(line)).find()) continue;
             try {
                 s.statements.add(new Parser(s, line).statement());
             } catch (RuntimeException e) {
@@ -41,6 +43,16 @@ public final class FskScript {
             }
         }
         return s;
+    }
+
+    private static final java.util.regex.Pattern DROPPED = java.util.regex.Pattern.compile("[+*/^%<>=!]\\s*-");
+    private static final java.util.regex.Pattern TARGET = java.util.regex.Pattern.compile("^\\{[^}]*}\\s*(?:[+\\-*/]?=)?");
+
+    /** La línea sin la variable de destino ni su "=", "+="..., y sin las flechas "->" / "-'>". */
+    static String expressionPart(String line) {
+        String rest = TARGET.matcher(line).replaceFirst("");
+        rest = rest.replaceAll("\"[^\"]*\"", "\"\"");
+        return rest.replace("-'>", " ~ ").replace("->", " ~ ");
     }
 
     public int slot(String name) {

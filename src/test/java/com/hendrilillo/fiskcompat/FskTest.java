@@ -31,6 +31,20 @@ public class FskTest {
     }
 
     /** Compila todas las animaciones de los heropacks de prueba y muestra las líneas que fallan. */
+    /** Comportamientos de Fisk comprobados con su intérprete. */
+    @Test
+    public void fiskQuirks() {
+        // Un operador seguido de un menos anula la línea entera
+        assertEquals(7, run("{a} = 7\n{a} = 1 + -2", "a"), 1e-9);
+        assertEquals(7, run("{a} = 7\n{a} = 0.5^-3 * 10", "a"), 1e-9);
+        assertEquals(7, run("{a} = 7\n{a} += 5' + -5'", "a"), 1e-9);
+        // ...pero no después de "=", "+=", "-", "(" o ","
+        assertEquals(1.5, run("{a} = 0.5 - -1", "a"), 1e-9);
+        assertEquals(-1.5, run("{a} = 3 * (-0.5)", "a"), 1e-9);
+        assertEquals(6, run("{a} = lerp(0.5, 10, 2)", "a"), 1e-9);
+        assertEquals(-10, run("{a} = wrapto180(350)", "a"), 1e-9);
+    }
+
     @Test
     public void compileAllPackAnimations() throws Exception {
         Path dir = Path.of(System.getProperty("fiskcompat.testGameDir", "../testgame"), "fsk");

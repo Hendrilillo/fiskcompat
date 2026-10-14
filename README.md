@@ -37,14 +37,14 @@ Mod para **Minecraft 1.21.1 (NeoForge)** que carga **heropacks de Fisk's Superhe
 | Iconos de inventario | ✅ |
 | Brazo en primera persona | ✅ |
 | Modelos Tabula (`.tbl`, formatos nuevo y antiguo) | ✅ |
-| Animaciones de modelos (`.fsk`) | ✅ 162/162 compilan |
+| Animaciones de modelos (`.fsk`) | ✅ mismo resultado que el intérprete de Fisk en los 254 archivos del Sind y de Fisk |
 | Animaciones del cuerpo (pose de vuelo, etc.) | ✅ |
 | Variables de datos sincronizadas cliente/servidor | ✅ |
 | Scripts por tick (`setTickHandler`) y teclas de los scripts | ✅ |
 | Teclas de habilidad (C, V, B, N, G) y máscara (M) con lista en pantalla | ✅ |
 | Vuelo (doble salto), transformación, cooldown, escudo, inmunidades, atributos | ✅ |
 | Apuntar, repulsores, unibeam, rayos de energía y láseres (daño y dibujo) | ✅ |
-| Animaciones en primera persona (brazo al apuntar, etc.) | ✅ |
+| Animaciones en primera persona (brazo al apuntar, las dos manos cuando la animación las usa) | ✅ |
 | `lightning_cast` (cohetes del brazo), equipo guardado en el traje, bengalas | ✅ |
 | Láseres que derriten hielo y funden bloques (si `mobGriefing` está activado) | ✅ |
 | `entity.world()` para los scripts (bloques, entidades cercanas, bioma) | ✅ |

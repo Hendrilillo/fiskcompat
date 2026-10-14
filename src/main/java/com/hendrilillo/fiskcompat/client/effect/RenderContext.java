@@ -22,6 +22,8 @@ public final class RenderContext {
     public final HeroRendererScript.Slot slot;
     public final HeroRendererScript renderer;
     public final List<String> parts;
+    /** Dibujando el brazo en primera persona. */
+    public boolean firstPerson;
 
     public RenderContext(PoseStack poseStack, MultiBufferSource buffers, int light, SuitModel<?> model, LivingEntity entity,
                          JSEntity jsEntity, HeroRendererScript.Slot slot, HeroRendererScript renderer, List<String> parts) {

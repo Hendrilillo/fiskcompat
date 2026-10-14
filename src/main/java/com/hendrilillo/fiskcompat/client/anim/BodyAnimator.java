@@ -80,6 +80,10 @@ public final class BodyAnimator {
 
     /** Resultado de las animaciones para la vista en primera persona. */
     public record FirstPerson(List<FskScript.Output> outputs, boolean bothArms) {
+        public void applyRight(PoseStack pose) {
+            applyOutputs(outputs, pose, true, false);
+        }
+
         /** Igual que con el brazo derecho, pero en espejo para el izquierdo. */
         public void applyLeft(PoseStack pose) {
             applyOutputs(outputs, pose, true, true);
@@ -133,8 +137,13 @@ public final class BodyAnimator {
                     Object ok = c.call(null, js);
                     if (!(ok instanceof Boolean b && b)) continue;
                 }
+                // Como Fisk: una animación sin datos, o con todos sus datos a 0, no se ejecuta
+                if (!(a.dataFunc instanceof ScriptObjectMirror f && f.isFunction())) continue;
                 double[] data = new double[32];
-                if (a.dataFunc instanceof ScriptObjectMirror f && f.isFunction()) f.call(null, js, new ModelResource.DataLoader(data));
+                f.call(null, js, new ModelResource.DataLoader(data));
+                boolean any = false;
+                for (double d : data) if (d != 0) { any = true; break; }
+                if (!any) continue;
                 double[] vars = new double[s.size()];
                 List<String> names = s.names();
                 int[] map = new int[vars.length];

@@ -22,6 +22,10 @@ public final class AutoTestClient {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null) return;
         ticks++;
+        if (AutoTest.MODE.equals("fp")) {
+            firstPersonTest(mc);
+            return;
+        }
         if (AutoTest.MODE.equals("attacks")) {
             attacks(mc);
             return;
@@ -118,6 +122,33 @@ public final class AutoTestClient {
                 com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "sind:dyn/armrockets_timer"), data);
     }
 
+    /** Primera persona: apuntar y rayos con las dos manos; tercera persona de frente (brazos visibles). */
+    private static void firstPersonTest(Minecraft mc) {
+        var keys = com.hendrilillo.fiskcompat.client.ClientKeys.ABILITIES;
+        if (ticks == 5) { mc.options.hideGui = false; mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT); }
+        if (ticks == 40) {
+            for (var st : mc.level.getEntitiesOfClass(net.minecraft.world.entity.decoration.ArmorStand.class, mc.player.getBoundingBox().inflate(20))) {
+                set(st, "sind:dyn/armgun_timer", 1f);
+                set(st, "sind:dyn/armrockets_timer", 1f);
+                set(st, "sind:dyn/armgun_bool", true);
+            }
+            mc.options.setCameraType(CameraType.FIRST_PERSON);
+            mc.options.fov().set(30);
+        }
+        if (ticks == 50) shot(mc, "fiskcompat_fp_stands.png");
+        if (ticks == 51) { mc.options.fov().set(70); mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT); }
+        if (ticks == 60) shot(mc, "fiskcompat_fp_front.png");
+        if (ticks == 61) { mc.options.setCameraType(CameraType.FIRST_PERSON); keys[0].setDown(true); }
+        if (ticks == 80) shot(mc, "fiskcompat_fp_aim.png");
+        if (ticks == 81) keys[0].setDown(false);
+        if (ticks == 90) keys[4].setDown(true);
+        if (ticks == 110) shot(mc, "fiskcompat_fp_key5.png");
+        if (ticks == 111) mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT);
+        if (ticks == 125) shot(mc, "fiskcompat_fp_key5_front.png");
+        if (ticks == 126) { keys[4].setDown(false); mc.options.setCameraType(CameraType.FIRST_PERSON); }
+        if (ticks == 140) mc.stop();
+    }
+
     /** Prueba de ataques: rayos en un soporte de armadura (vista lateral) y disparos del jugador. */
     private static void attacks(Minecraft mc) {
         var keys = com.hendrilillo.fiskcompat.client.ClientKeys.ABILITIES;
@@ -190,6 +221,8 @@ public final class AutoTestClient {
         if (ticks == 500) { mc.options.keyUse.setDown(true); }
         if (ticks == 502) mc.options.keyUse.setDown(false);
         if (ticks == 504) shot(mc, "fiskcompat_armrocket_front.png");
+        if (ticks == 506) mc.options.setCameraType(CameraType.THIRD_PERSON_BACK);
+        if (ticks == 512) shot(mc, "fiskcompat_armrocket_back.png");
         if (ticks == 520) { keys[3].setDown(false); logNbt(mc, "after rockets"); log(mc, "end"); }
         if (ticks == 530) mc.stop();
     }

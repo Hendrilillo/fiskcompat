@@ -29,6 +29,9 @@ public class ModelEffect extends EffectObject {
         return super.getMember(name);
     }
 
+    /** Cuántos modelos se han dibujado (para saber si el pack dibuja su propio brazo en primera persona). */
+    public static int rendered;
+
     @Override
     protected void render(RenderContext ctx) {
         if (model == null || opacity <= 0.001) return;
@@ -38,11 +41,10 @@ public class ModelEffect extends EffectObject {
         ResourceLocation lights = ClientHeroes.heroTexture(renderer.texturePath(model.texture.lights), ctx.jsEntity);
         if (normal == null && lights == null) return;
         model.animate(tbl, ctx.jsEntity, ctx.entity, JSEntity.partialTicks);
+        rendered++;
 
         ctx.poseStack.pushPose();
         applyTransform(ctx.poseStack, ctx.model, 1);
-        // Los modelos Tabula de Fisk están reflejados en X respecto al espacio de las partes del cuerpo.
-        ctx.poseStack.scale(-1, 1, 1);
         int color = ((int) (Math.min(1, opacity) * 255) << 24) | 0xFFFFFF;
         for (ModelPart root : tbl.roots) {
             if (normal != null) {

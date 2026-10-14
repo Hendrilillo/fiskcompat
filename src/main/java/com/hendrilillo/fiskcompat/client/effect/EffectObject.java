@@ -96,6 +96,9 @@ public class EffectObject extends AbstractJSObject {
     private void safeRender() {
         RenderContext ctx = RenderContext.current;
         if (ctx == null) return;
+        // En primera persona solo se ve el brazo: no se dibujan los efectos anclados a otras partes
+        // ni los que no tienen ancla (brazos "falsos" del pack; ya se dibuja el izquierdo de verdad)
+        if (ctx.firstPerson && (anchor.ignore || anchor.part != null && !ctx.parts.contains(anchor.part))) return;
         render(ctx);
     }
 
@@ -123,8 +126,9 @@ public class EffectObject extends AbstractJSObject {
     protected void applyTransform(PoseStack pose, SuitModel<?> model, float amount) {
         ModelPart part = anchor.ignore ? null : anchorPart(model, anchor.part);
         if (part != null) part.translateAndRotate(pose);
-        pose.translate(offset[0] / 16f, offset[1] / 16f, offset[2] / 16f);
-        // Como en Fisk: orden X, Y, Z y con Y y Z invertidos.
+        // Fisk trabaja aquí en un espacio reflejado en X: el desplazamiento X va al revés y los giros
+        // en Y y Z se invierten (sus modelos Tabula se dibujan reflejados otra vez, así que quedan bien).
+        pose.translate(-offset[0] / 16f, offset[1] / 16f, offset[2] / 16f);
         if (rotation[0] != 0) pose.mulPose(Axis.XP.rotationDegrees(rotation[0] * amount));
         if (rotation[1] != 0) pose.mulPose(Axis.YP.rotationDegrees(-rotation[1] * amount));
         if (rotation[2] != 0) pose.mulPose(Axis.ZP.rotationDegrees(-rotation[2] * amount));

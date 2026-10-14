@@ -73,7 +73,15 @@ final class Functions {
             case "curve" -> v -> curve(a[0].eval(v));
             case "curveCrests" -> v -> curveCrests(a[0].eval(v));
             case "clamp" -> v -> clamp(a[0].eval(v), a[1].eval(v), a[2].eval(v));
+            case "lerp" -> v -> { double t = a[0].eval(v), x = a[1].eval(v); return x + (a[2].eval(v) - x) * t; };
             case "interpolate" -> v -> { double x = a[0].eval(v); return x + (a[1].eval(v) - x) * a[2].eval(v); };
+            case "wrapto180" -> v -> wrapAngleTo180(a[0].eval(v));
+            case "rotlerp" -> v -> {
+                double t = a[0].eval(v), x = a[1].eval(v), d = a[2].eval(v) - x;
+                while (d < -Math.PI) d += Math.PI * 2;
+                while (d >= Math.PI) d -= Math.PI * 2;
+                return x + d * t;
+            };
             case "wrapAngleTo180" -> v -> wrapAngleTo180(a[0].eval(v));
             case "if" -> v -> a[0].eval(v) == 1 ? a[1].eval(v) : a[2].eval(v);
             case "animate" -> n >= 5
