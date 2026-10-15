@@ -30,6 +30,7 @@ public final class Modifiers {
         TICKING.put("fiskheroes:energy_projection", Beams::energyProjection);
         TICKING.put("fiskheroes:heat_vision", Beams::heatVision);
         TICKING.put(SentryMode.TYPE, SentryMode::tick);
+        TICKING.put("fiskheroes:blade", Modifiers::blade);
     }
 
     private Modifiers() {}
@@ -82,9 +83,28 @@ public final class Modifiers {
         c.set(cooldown, (float) Math.max(0, Math.min(1, v)));
     }
 
+    // ------------------------------------------------------------------ blade
+
+    /** fiskheroes:blade: la cuchilla sale (fiskheroes:blade_timer) mientras está activa y con la mano vacía. */
+    static void blade(ModifierContext c, ModifierEntry m, boolean enabled) {
+        boolean on = c.bool("fiskheroes:blade");
+        if (on && (!enabled || !c.entity.getMainHandItem().isEmpty())) {
+            c.set("fiskheroes:blade", false);
+            c.setLocal("fiskheroes:blade", false);
+            on = false;
+        }
+        DataManagerApi.incr(c.entity, "fiskheroes:blade_timer", 8, 8, on, !on);
+        if (c.local && enabled && !m.isToggle()) c.setLocal("fiskheroes:blade", c.keyPressed("BLADE"));
+    }
+
     // ------------------------------------------------------------------ shield
 
     static void shield(ModifierContext c, ModifierEntry m, boolean enabled) {
+        // El escudo solo puede estar fuera con el modificador activo y la mano vacía (como Fisk)
+        if (c.bool("fiskheroes:shield") && (!enabled || !c.entity.getMainHandItem().isEmpty())) {
+            c.set("fiskheroes:shield", false);
+            c.setLocal("fiskheroes:shield", false);
+        }
         // Igual que Fisk: se bloquea con el clic derecho; si no es interruptor, con la tecla SHIELD
         if (enabled && c.local) {
             boolean block = (c.keys & com.hendrilillo.fiskcompat.hero.KeyState.USE) != 0;
@@ -94,8 +114,13 @@ public final class Modifiers {
             }
             c.setLocal("fiskheroes:shield_blocking", block);
         }
+        int cooldown = (int) c.num("fiskheroes:shield_cooldown");
+        if (c.bool("fiskheroes:shield_blocking") && (!c.bool("fiskheroes:shield") || cooldown > 0)) {
+            c.set("fiskheroes:shield_blocking", false);
+        }
         boolean shield = c.bool("fiskheroes:shield"), blocking = c.bool("fiskheroes:shield_blocking");
         DataManagerApi.incr(c.entity, "fiskheroes:shield_timer", 10, 10, shield, !shield);
         DataManagerApi.incr(c.entity, "fiskheroes:shield_blocking_timer", 5, 5, blocking, !blocking);
+        if (!c.entity.level().isClientSide && enabled) com.hendrilillo.fiskcompat.power.ShieldBlock.tick(c.entity, m);
     }
 }

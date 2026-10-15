@@ -38,6 +38,10 @@ public final class AutoTestClient {
             hud(mc);
             return;
         }
+        if (AutoTest.MODE.equals("nano")) {
+            nano(mc);
+            return;
+        }
         if (ticks == 5) {
             mc.options.hideGui = true;
             mc.options.setCameraType(CameraType.FIRST_PERSON);
@@ -103,6 +107,92 @@ public final class AutoTestClient {
                     mc.player.getY(), com.hendrilillo.fiskcompat.data.DataStore.get(mc.player, "fiskheroes:flight_timer"));
             mc.stop();
         }
+    }
+
+    private static void logNano(Minecraft mc, String what) {
+        var p = mc.player;
+        java.util.function.Function<String, Object> d = v -> com.hendrilillo.fiskcompat.data.DataStore.get(p, v);
+        FiskCompat.LOGGER.info("[autotest] {} nanites2={} charging={} charge={} shooting={} shoot_t={} shield={} shield_t={} slot={} swapper={} keys2={} keys3={} keys4={}",
+                what, d.apply("sind:dyn/nanites2"), d.apply("fiskheroes:beam_charging"), d.apply("fiskheroes:beam_charge"), d.apply("fiskheroes:beam_shooting"),
+                d.apply("fiskheroes:beam_shooting_timer"), d.apply("fiskheroes:shield"), d.apply("fiskheroes:shield_timer"), d.apply("sind:dyn/slot"),
+                com.hendrilillo.fiskcompat.api.JSEntity.of(p).getWornChestplate().nbt(),
+                hero(mc).keysInSlot(com.hendrilillo.fiskcompat.api.JSEntity.of(p), 2), hero(mc).keysInSlot(com.hendrilillo.fiskcompat.api.JSEntity.of(p), 3),
+                hero(mc).keysInSlot(com.hendrilillo.fiskcompat.api.JSEntity.of(p), 4));
+    }
+
+    private static com.hendrilillo.fiskcompat.hero.ActiveHero hero(Minecraft mc) {
+        return com.hendrilillo.fiskcompat.hero.ActiveHero.of(mc.player);
+    }
+
+    /** Golpe al suelo (B) y terremoto (G) con el ariete puesto, mirando de frente y desde arriba. */
+    private static void smashTest(Minecraft mc, net.minecraft.client.KeyMapping[] keys, int t) {
+        if (t == 0) { mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT); mc.options.fov().set(90); }
+        if (t == 5) { net.minecraft.client.KeyMapping.click(keys[2].getKey()); keys[2].setDown(true); }
+        if (t == 15 || t == 30) { logNano(mc, "smash"); shot(mc, "fiskcompat_nano_smash" + t + ".png"); }
+        if (t == 40) keys[2].setDown(false);
+        if (t == 60) shot(mc, "fiskcompat_nano_smash60.png");
+        if (t == 80) { net.minecraft.client.KeyMapping.click(keys[4].getKey()); keys[4].setDown(true); }
+        if (t == 90 || t == 105) { logNano(mc, "quake"); shot(mc, "fiskcompat_nano_quake" + t + ".png"); }
+        if (t == 115) keys[4].setDown(false);
+        if (t == 140) shot(mc, "fiskcompat_nano_quake140.png");
+        if (t == 150) { mc.options.keyAttack.setDown(true); }
+        if (t == 153) { mc.options.keyAttack.setDown(false); shot(mc, "fiskcompat_nano_punch.png"); }
+        if (t == 200) mc.options.fov().set(70);
+    }
+
+    /** Trajes de nanobots (Mark 50/85): cañones, escudo y armas. */
+    private static void nano(Minecraft mc) {
+        var keys = com.hendrilillo.fiskcompat.client.ClientKeys.ABILITIES;
+        if (ticks == 5) { mc.options.hideGui = false; mc.options.setCameraType(CameraType.THIRD_PERSON_BACK); }
+        if (ticks == 10) com.hendrilillo.fiskcompat.data.Sync.setLocal(mc.player, "sind:dyn/nanites", true);
+        if (ticks == 60) logNano(mc, "desplegado");
+        if (ticks == 62) { net.minecraft.client.KeyMapping.click(keys[1].getKey()); keys[1].setDown(true); }
+        if (ticks == 80 || ticks == 100) logNano(mc, "cargando");
+        if (ticks == 95) shot(mc, "fiskcompat_nano_beam_back.png");
+        if (ticks == 96) mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT);
+        if (ticks == 102) shot(mc, "fiskcompat_nano_beam_front.png");
+        if (ticks == 130) { keys[1].setDown(false); mc.options.setCameraType(CameraType.THIRD_PERSON_FRONT); }
+        if (ticks == 190) { logNano(mc, "antes escudo"); net.minecraft.client.KeyMapping.click(keys[2].getKey()); keys[2].setDown(true); }
+        if (ticks == 193) keys[2].setDown(false);
+        if (ticks == 215) { logNano(mc, "escudo"); shot(mc, "fiskcompat_nano_shield.png"); }
+        if (ticks == 216) { mc.options.keyUse.setDown(true); }
+        if (ticks == 225 && mc.getSingleplayerServer() != null) {
+            var server = mc.getSingleplayerServer();
+            server.execute(() -> {
+                var p = server.getPlayerList().getPlayers().get(0);
+                var z = net.minecraft.world.entity.EntityType.ZOMBIE.create(p.serverLevel());
+                var front = p.position().add(p.getLookAngle().multiply(2, 0, 2));
+                z.moveTo(front.x, p.getY(), front.z, 0, 0);
+                z.setNoAi(true);
+                p.serverLevel().addFreshEntity(z);
+                p.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+                float before = p.getHealth();
+                p.invulnerableTime = 0;
+                boolean hit = p.hurt(p.damageSources().mobAttack(z), 6);
+                p.invulnerableTime = 0;
+                boolean hit2 = p.hurt(p.damageSources().mobAttack(z), 6);
+                FiskCompat.LOGGER.info("[autotest] segundo golpe {} vida {}", hit2, p.getHealth());
+                p.setGameMode(net.minecraft.world.level.GameType.CREATIVE);
+                FiskCompat.LOGGER.info("[autotest] golpe con escudo: dañado={} vida {} -> {} daño_escudo={} bloqueando={}", hit, before, p.getHealth(),
+                        com.hendrilillo.fiskcompat.data.DataStore.get(p, "fiskheroes:shield_damage"), com.hendrilillo.fiskcompat.data.DataStore.get(p, "fiskheroes:shield_blocking"));
+                z.discard();
+            });
+        }
+        if (ticks == 228) { mc.player.setYRot(mc.player.getYRot() - 60); mc.player.setYBodyRot(mc.player.getYRot()); }
+        if (ticks == 230) { logNano(mc, "escudo bloqueando"); shot(mc, "fiskcompat_nano_shield_block.png"); }
+        if (ticks == 231) { mc.player.setYRot(mc.player.getYRot() + 60); mc.options.keyUse.setDown(false); }
+        if (ticks == 235) { net.minecraft.client.KeyMapping.click(keys[2].getKey()); keys[2].setDown(true); }
+        if (ticks == 238) keys[2].setDown(false);
+        if (ticks == 250) { logNano(mc, "antes swap"); net.minecraft.client.KeyMapping.click(keys[4].getKey()); keys[4].setDown(true); }
+        if (ticks == 253) keys[4].setDown(false);
+        if (ticks == 270) { logNano(mc, "swap"); net.minecraft.client.KeyMapping.click(keys[3].getKey()); keys[3].setDown(true); }
+        if (ticks == 273) keys[3].setDown(false);
+        if (ticks == 295) { logNano(mc, "blunt"); shot(mc, "fiskcompat_nano_blunt.png"); }
+        if (ticks >= 296 && ticks < 520) { smashTest(mc, keys, ticks - 296); return; }
+        if (ticks == 520) { net.minecraft.client.KeyMapping.click(keys[3].getKey()); keys[3].setDown(true); }
+        if (ticks == 523) keys[3].setDown(false);
+        if (ticks == 544) { logNano(mc, "mazo"); shot(mc, "fiskcompat_nano_mallet.png"); }
+        if (ticks == 550) mc.stop();
     }
 
     /** HUD del casco (JARVIS) y partículas. */

@@ -28,7 +28,30 @@ public final class Beams {
 
     // ------------------------------------------------------------------ charged_beam
 
+    /**
+     * Un traje puede tener varios modificadores del mismo tipo (Mark 50: cañones y unirrayo) que comparten
+     * variables; solo actúa el activo. Si ninguno lo está, actúa el primero (para que los contadores bajen).
+     */
+    static boolean skip(ModifierContext c, ModifierEntry m, boolean enabled) {
+        if (enabled) {
+            for (ModifierEntry o : c.hero.modifiers) {
+                if (o == m) return false;
+                if (o.type.equals(m.type) && c.hero.isModifierEnabled(c.js, o)) return true; // ya actuó otro activo
+            }
+            return false;
+        }
+        boolean first = true;
+        for (ModifierEntry o : c.hero.modifiers) {
+            if (!o.type.equals(m.type)) continue;
+            if (o != m && c.hero.isModifierEnabled(c.js, o)) return true;
+            if (o == m) return !first;
+            first = false;
+        }
+        return false;
+    }
+
     static void chargedBeam(ModifierContext c, ModifierEntry m, boolean enabled) {
+        if (skip(c, m, enabled)) return;
         boolean charging = c.bool(CHARGING);
         double charge = c.num(CHARGE);
         if (enabled) {
@@ -63,6 +86,7 @@ public final class Beams {
     }
 
     private static void continuous(ModifierContext c, ModifierEntry m, boolean enabled, String var, String timer, String key, int resetEvery) {
+        if (skip(c, m, enabled)) return;
         boolean on = c.bool(var);
         if (on && enabled) shoot(c, m, 1, resetEvery, false);
         if (c.local && enabled && !m.isToggle()) c.setLocal(var, c.keyPressed(key));

@@ -58,6 +58,7 @@ Como en Fisk, los sonidos no van dentro del heropack: el heropack dice de dónde
 | Modo centinela (`sentry_mode`): salir del traje, centinela que sigue y dispara, volver a entrar | ✅ |
 | HUD del casco en primera persona (JARVIS/FRIDAY de Sind: brújula, altura, velocidad, coordenadas, estado del traje...) | ✅ |
 | Partículas de los trajes (humo de las botas y propulsores, explosiones, burbujas...) | ✅ |
+| Escudos y cuchillas de energía (efecto `fiskheroes:shield`: Mark 50, Mark 85...), bloqueo con escudo, `fiskheroes:blade` | ✅ |
 | Lista de teclas al estilo de Fisk, temblor de cámara con turbo, visión nocturna de los cascos | ✅ |
 
 ## Desarrollo

@@ -37,6 +37,7 @@ public final class FiskCompatClient {
             case "fiskheroes:overlay" -> new com.hendrilillo.fiskcompat.client.effect.OverlayEffect(type, renderer);
             case "fiskheroes:opening_mask" -> new com.hendrilillo.fiskcompat.client.effect.OpeningMaskEffect(type, renderer);
             case "fiskheroes:model" -> new com.hendrilillo.fiskcompat.client.effect.ModelEffect(type, renderer);
+            case "fiskheroes:shield" -> new com.hendrilillo.fiskcompat.client.effect.ShieldEffect(type, renderer);
             default -> new com.hendrilillo.fiskcompat.client.effect.EffectObject(type, renderer);
         };
         com.hendrilillo.fiskcompat.render.HeroRendererScript.propertyFactory =
